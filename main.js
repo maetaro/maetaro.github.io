@@ -11,6 +11,12 @@ var ASSETS = {
         tomato: 'assets/image/tomato.png',
         block: 'assets/image/block.png',
     },
+    sound: {
+        bgm1: 'assets/sound/BGM114-110921-minnnadeyamanobori-wav.wav',
+        se_jump: 'assets/sound/se_jump.wav',
+        se_chakuchi: 'assets/sound/se_chakuchi.wav',
+        se_damage: 'assets/sound/se_damage.wav',
+    },
     //フレームアニメーション情報
     spritesheet: {
         'tomapiko_ss': 'https://rawgit.com/phi-jp/phina.js/develop/assets/tmss/tomapiko.tmss',
@@ -63,6 +69,8 @@ phina.define("MainScene", {
         this.bg2.origin.set(0, 0); // 左上基準に変更
         this.bg2.setPosition(SCREEN_WIDTH, 0); // 左上基準に変更
 
+        SoundManager.playMusic('bgm1');
+
         // プレイヤー
         var player = Player('tomapiko').addChildTo(this);
         player.setPosition(100, 400);
@@ -76,7 +84,7 @@ phina.define("MainScene", {
         // ブロック
         this.block = Sprite("block").addChildTo(this);
         this.block.origin.set(0, 0); // 左上基準に変更
-        this.block.setPosition(240, 400);
+        this.block.setPosition(340, 400);
 
         // 画面タッチ時処理
         this.onpointend = function () {
@@ -103,6 +111,7 @@ phina.define("MainScene", {
             }
             if (225 < angle && angle < 315) {
                 //label.text = 'angle: {0} -> ジャンプ'.format(angle);
+                SoundManager.play('se_jump');
                 if (!JUMP_FLG) {
                     JUMP_FLG = true;
                     player.anim.gotoAndPlay('fly');
@@ -138,6 +147,7 @@ phina.define("MainScene", {
         //プレイヤーのアニメーション
         var player = this.player;
         if (player.y > 410) {  //地面に着地時
+            SoundManager.play('se_chakuchi');
             player.y = 400;
             JUMP_FLG = false;
             player.anim.gotoAndPlay('right');
@@ -151,11 +161,21 @@ phina.define("MainScene", {
         var c2 = Circle(this.block.x, this.block.y, this.block.srcRect.width / 2 * this.block.scaleX);
         // 円判定
         if (Collision.testCircleCircle(c1, c2)) {
-            EGG_DIE = true;
-            //egg.frameIndex = 1;
-            //egg.scaleY = egg.scaleX = 1.1;
-            player.x = this.block.x - 30;
-            player.anim.gotoAndPlay('damage');
+            //if (player.damaging == null) player.damaging = 0;
+            //player.damaging -= app.deltaTime;
+            //if (player.damaging <= 0) {
+            //    player.damaging = 3000;
+            //    SoundManager.play('se_damage');
+                //EGG_DIE = true;
+                //egg.frameIndex = 1;
+                //egg.scaleY = egg.scaleX = 1.1;
+                //player.x = this.block.x + 100;
+                player.anim.gotoAndPlay('damage');
+                //player.tweener.wait(2500).call(function () {
+                //    player.anim.gotoAndPlay('right');
+                //    player.damaging = false;
+                //});
+            //}
         }
 
     }
@@ -175,6 +195,13 @@ phina.main(function () {
     });
 
     app.enableStats();
+
+    app.domElement.addEventListener('touchend', function dummy() {
+        var s = phina.asset.Sound();
+        s.loadFromBuffer();
+        s.play().stop();
+        app.domElement.removeEventListener('touchend', dummy);
+    });
 
     // 実行
     app.run();
