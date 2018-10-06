@@ -7,7 +7,9 @@ var ASSETS = {
     image: {
         bg: 'assets/image/bg.png',
         bg2: 'assets/image/bg.png',
-        tomapiko: 'https://rawgit.com/phi-jp/phina.js/develop/assets/images/tomapiko_ss.png'
+        tomapiko: 'https://rawgit.com/phi-jp/phina.js/develop/assets/images/tomapiko_ss.png',
+        tomato: 'assets/image/tomato.png',
+        block: 'assets/image/block.png',
     },
     //フレームアニメーション情報
     spritesheet: {
@@ -66,6 +68,16 @@ phina.define("MainScene", {
         player.setPosition(100, 400);
         this.player = player;
 
+        // トマト
+        this.tomato = Sprite("tomato").addChildTo(this);
+        this.tomato.origin.set(0, 0); // 左上基準に変更
+        this.tomato.setPosition(200, 400);
+
+        // ブロック
+        this.block = Sprite("block").addChildTo(this);
+        this.block.origin.set(0, 0); // 左上基準に変更
+        this.block.setPosition(240, 400);
+
         // 画面タッチ時処理
         this.onpointend = function () {
             //if (!JUMP_FLG) {
@@ -113,6 +125,16 @@ phina.define("MainScene", {
             this.bg2.x = SCREEN_WIDTH;
         }
 
+        this.block.x -= 1;
+        if (this.block.x < -100) {
+            this.block.x = SCREEN_WIDTH;
+        }
+
+        this.tomato.x -= 1;
+        if (this.tomato.x < -100) {
+            this.tomato.x = SCREEN_WIDTH;
+        }
+
         //プレイヤーのアニメーション
         var player = this.player;
         if (player.y > 410) {  //地面に着地時
@@ -122,6 +144,18 @@ phina.define("MainScene", {
             player.scaleX *= -1;
             player.physical.velocity.y = 0;
             player.physical.gravity.y = 0;
+        }
+
+        // 判定用の円
+        var c1 = Circle(player.x, player.y, player.srcRect.width / 2 * player.scaleX);
+        var c2 = Circle(this.block.x, this.block.y, this.block.srcRect.width / 2 * this.block.scaleX);
+        // 円判定
+        if (Collision.testCircleCircle(c1, c2)) {
+            EGG_DIE = true;
+            //egg.frameIndex = 1;
+            //egg.scaleY = egg.scaleX = 1.1;
+            player.x = this.block.x - 30;
+            player.anim.gotoAndPlay('damage');
         }
 
     }
