@@ -19,7 +19,7 @@ var ASSETS = {
 //var SPEED = 8;
 // 定数
 var SCREEN_WIDTH = 465;  // スクリーン幅
-var SCREEN_HEIGHT = 665;  // スクリーン高さ
+var SCREEN_HEIGHT = 565;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
 var GRAVITY = 0.3; // 重力
 var JUMP_FLG = false; // ジャンプ中かどうか
@@ -68,14 +68,38 @@ phina.define("MainScene", {
 
         // 画面タッチ時処理
         this.onpointend = function () {
-            if (!JUMP_FLG) {
-                JUMP_FLG = true;
-                player.anim.gotoAndPlay('fly');
-                player.scaleX *= -1;
-            }
-            player.physical.velocity.y = -JUMP_POWOR;
-            player.physical.gravity.y = GRAVITY;
+            //if (!JUMP_FLG) {
+            //    JUMP_FLG = true;
+            //    player.anim.gotoAndPlay('fly');
+            //    player.scaleX *= -1;
+            //}
+            //player.physical.velocity.y = -JUMP_POWOR;
+            //player.physical.gravity.y = GRAVITY;
+            player.physical.velocity.x = 0;
         }
+
+        var flickable = Flickable().attachTo(this);
+        // 動かさない
+        flickable.horizontal = false;
+        flickable.vertical = false;
+
+        flickable.onflickstart = function (e) {
+            var angle = e.direction.toAngle().toDegree() | 0;
+            player.physical.velocity.x = e.direction.x;
+            if (45 < angle && angle < 135) {
+                //label.text = 'angle: {0} -> しゃがむ'.format(angle);
+            }
+            if (225 < angle && angle < 315) {
+                //label.text = 'angle: {0} -> ジャンプ'.format(angle);
+                if (!JUMP_FLG) {
+                    JUMP_FLG = true;
+                    player.anim.gotoAndPlay('fly');
+                    player.scaleX *= -1;
+                }
+                player.physical.velocity.y = -JUMP_POWOR;
+                player.physical.gravity.y = GRAVITY;
+            }
+        };
     },
 
     // 更新
