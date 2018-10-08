@@ -9,6 +9,8 @@ var ASSETS = {
         bg2: 'assets/image/bg.png',
         tomapiko: 'https://rawgit.com/phi-jp/phina.js/develop/assets/images/tomapiko_ss.png',
         tomato: 'assets/image/tomato.png',
+        tomato_green: 'assets/image/tomato_green.png',
+        tomato_yellow: 'assets/image/tomato_yellow.png',
         block: 'assets/image/block.png',
     },
     sound: {
@@ -77,14 +79,43 @@ phina.define("MainScene", {
         this.player = player;
 
         // トマト
-        this.tomato = Sprite("tomato").addChildTo(this);
-        this.tomato.origin.set(0, 0); // 左上基準に変更
-        this.tomato.setPosition(200, 400);
+        this.tomatoGroup = DisplayElement().addChildTo(this);
+        var self = this;
+        this.addTomato = function () {
+            var tname = "tomato";
+            var r = Random.random();
+            if (r <= 0.3) {
+                tname = "tomato_green";
+            } else if (r <= 0.6) {
+                tname = "tomato_yellow";
+            } else {
+                tname = "tomato";
+            }
+            var tomato = Sprite(tname).addChildTo(self.tomatoGroup);
+            tomato.origin.set(0, 0); // 左上基準に変更
+            tomato.setPosition(SCREEN_WIDTH + 50, 400);
+        }
+        this.addTomato();
+        var addTomatoLoop = function () {
+            self.addTomato();
+            var x = 2000 + (Random.random() * 3000);
+            setTimeout(addTomatoLoop, x);
+        }
+        addTomatoLoop();
 
         // ブロック
-        this.block = Sprite("block").addChildTo(this);
-        this.block.origin.set(0, 0); // 左上基準に変更
-        this.block.setPosition(340, 400);
+        this.blockGroup = DisplayElement().addChildTo(this);
+        this.addBlock = function () {
+            var block = Sprite("block").addChildTo(self.blockGroup);
+            block.origin.set(0, 0); // 左上基準に変更
+            block.setPosition(340, 400);
+        }
+        this.addBlock();
+        var addBlockLoop = function () {
+            self.addBlock();
+            setTimeout(addBlockLoop, 4000);
+        }
+        addBlockLoop();
 
         // 画面タッチ時処理
         this.onpointend = function () {
@@ -96,6 +127,9 @@ phina.define("MainScene", {
             //player.physical.velocity.y = -JUMP_POWOR;
             //player.physical.gravity.y = GRAVITY;
             player.physical.velocity.x = 0;
+            if (!JUMP_FLG) {
+                player.anim.gotoAndPlay('right');
+            }
         }
 
         var flickable = Flickable().attachTo(this);
@@ -121,6 +155,9 @@ phina.define("MainScene", {
                 player.physical.gravity.y = GRAVITY;
             }
         };
+
+        // コンボ数をリセット
+        this.combo = 0;
     },
 
     // 更新
@@ -134,15 +171,21 @@ phina.define("MainScene", {
             this.bg2.x = SCREEN_WIDTH;
         }
 
-        this.block.x -= 1;
-        if (this.block.x < -100) {
-            this.block.x = SCREEN_WIDTH;
-        }
+        this.blockGroup.children.each(function (block) {
+            block.x -= 1;
+            if (block.x < -100) {
+                //block.x = SCREEN_WIDTH;
+                block.remove();
+            }
+        })
 
-        this.tomato.x -= 1;
-        if (this.tomato.x < -100) {
-            this.tomato.x = SCREEN_WIDTH;
-        }
+        this.tomatoGroup.children.each(function (tomato) {
+            tomato.x -= 1;
+            if (tomato.x < -100) {
+                //tomato.x = SCREEN_WIDTH;
+                tomato.remove();
+            }
+        })
 
         //プレイヤーのアニメーション
         var player = this.player;
@@ -155,17 +198,28 @@ phina.define("MainScene", {
             player.physical.velocity.y = 0;
             player.physical.gravity.y = 0;
         }
+        if (player.y < 0) {
+            player.y = 0;
+        }
+        if (player.x < 0) {
+            player.x = 0;
+        }
+        if (player.x > SCREEN_WIDTH) {
+            player.x = SCREEN_WIDTH;
+        }
+
 
         // 判定用の円
-        var c1 = Circle(player.x, player.y, player.srcRect.width / 2 * player.scaleX);
-        var c2 = Circle(this.block.x, this.block.y, this.block.srcRect.width / 2 * this.block.scaleX);
-        // 円判定
-        if (Collision.testCircleCircle(c1, c2)) {
-            //if (player.damaging == null) player.damaging = 0;
-            //player.damaging -= app.deltaTime;
-            //if (player.damaging <= 0) {
-            //    player.damaging = 3000;
-            //    SoundManager.play('se_damage');
+        var collisionByPlayerAndBlock = function collisionByPlayerAndBlock(a, b) {
+            var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
+            var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
+            // 円判定
+            if (Collision.testCircleCircle(c1, c2)) {
+                //if (player.damaging == null) player.damaging = 0;
+                //player.damaging -= app.deltaTime;
+                //if (player.damaging <= 0) {
+                //    player.damaging = 3000;
+                //    SoundManager.play('se_damage');
                 //EGG_DIE = true;
                 //egg.frameIndex = 1;
                 //egg.scaleY = egg.scaleX = 1.1;
@@ -175,10 +229,74 @@ phina.define("MainScene", {
                 //    player.anim.gotoAndPlay('right');
                 //    player.damaging = false;
                 //});
-            //}
+                //}
+            }
+        };
+        this.blockGroup.children.each(function (block) {
+            collisionByPlayerAndBlock(player, block);
+        });
+
+        var hitTestTomato = function collisionByPlayerAndTomato(a, b, self) {
+            var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
+            var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
+            // 円判定
+            if (Collision.testCircleCircle(c1, c2)) {
+                console.log("hit.");
+                self.combo += 1;
+                self.score += self.combo * 100;
+                var c = ComboLabel(self.combo).addChildTo(self);
+                c.x = self.gridX.span(12) + Math.randint(-50, 50);
+                c.y = self.gridY.span(12) + Math.randint(-50, 50);
+                //b.hide();
+                //b.x = SCREEN_WIDTH;
+                b.remove();
+                //self.addTomato();
+            }
         }
+        var self = this;
+        this.tomatoGroup.children.each(function (tomato) {
+            hitTestTomato(player, tomato, self);
+        });
 
     }
+});
+
+/*
+ * コンボラベル
+ */
+phina.define('ComboLabel', {
+    superClass: 'Label',
+    init: function (num) {
+        this.superInit(num + ' combo!');
+
+        this.stroke = 'white';
+        this.strokeWidth = 8;
+
+        // 数によって色とサイズを分岐
+        if (num < 5) {
+            this.fill = 'hsl(40, 60%, 60%)';
+            this.fontSize = 16;
+        }
+        else if (num < 10) {
+            this.fill = 'hsl(120, 60%, 60%)';
+            this.fontSize = 32;
+        }
+        else {
+            this.fill = 'hsl(220, 60%, 60%)';
+            this.fontSize = 48;
+        }
+
+        // フェードアウトして削除
+        this.tweener
+            .by({
+                alpha: -1,
+                y: -50,
+            })
+            .call(function () {
+                this.remove();
+            }, this)
+            ;
+    },
 });
 
 /*
@@ -187,7 +305,7 @@ phina.define("MainScene", {
 phina.main(function () {
     // アプリケーションを生成
     var app = GameApp({
-        startLabel: 'main',   // MainScene から開始
+        startLabel: 'title',   // MainScene から開始
         fps: 60,
         width: SCREEN_WIDTH,  // 画面幅
         height: SCREEN_HEIGHT,// 画面高さ
