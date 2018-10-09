@@ -239,7 +239,11 @@ phina.define("MainScene", {
                     a.bottom = b.top;
                 } else {
                     a.physical.velocity.x = 0;
-                    a.right = b.left;
+                    if (a.x <= b.x) {
+                         a.right = b.left;
+                    } else {
+                         a.left = b.right;
+                    }
                 }
                 self.combo = 0;
                 //a.anim.gotoAndPlay('damage');
