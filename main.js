@@ -53,6 +53,16 @@ phina.define('Player', {
     },
 });
 
+function intersect(a, b) {
+    var x = Math.max(a.left, b.left);
+    var num1 = Math.min(a.right, b.right);
+    var y = Math.max(a.top, b.top);
+    var num2 = Math.min(a.bottom, b.bottom);
+    if (num1 >= x && num2 >= y)
+        return { x: x, y:y, width:num1 - x, height:num2 - y };
+    else
+        return { x: 0, y: 0, width: 0, height: 0 };
+}
 /*
  * メインシーン
  */
@@ -192,9 +202,11 @@ phina.define("MainScene", {
         if (player.y > 410) {  //地面に着地時
             SoundManager.play('se_chakuchi');
             player.y = 400;
-            JUMP_FLG = false;
-            player.anim.gotoAndPlay('right');
-            player.scaleX *= -1;
+            if (JUMP_FLG) {
+                JUMP_FLG = false;
+                player.anim.gotoAndPlay('right');
+                player.scaleX *= -1;
+            }
             player.physical.velocity.y = 0;
             player.physical.gravity.y = 0;
         }
@@ -208,32 +220,54 @@ phina.define("MainScene", {
             player.x = SCREEN_WIDTH;
         }
 
+        var self = this;
 
         // 判定用の円
-        var collisionByPlayerAndBlock = function collisionByPlayerAndBlock(a, b) {
-            var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
-            var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
-            // 円判定
-            if (Collision.testCircleCircle(c1, c2)) {
-                //if (player.damaging == null) player.damaging = 0;
-                //player.damaging -= app.deltaTime;
-                //if (player.damaging <= 0) {
-                //    player.damaging = 3000;
-                //    SoundManager.play('se_damage');
-                //EGG_DIE = true;
-                //egg.frameIndex = 1;
-                //egg.scaleY = egg.scaleX = 1.1;
-                //player.x = this.block.x + 100;
-                player.anim.gotoAndPlay('damage');
-                //player.tweener.wait(2500).call(function () {
-                //    player.anim.gotoAndPlay('right');
-                //    player.damaging = false;
-                //});
-                //}
+        var collisionByPlayerAndBlock = function collisionByPlayerAndBlock(a, b, self) {
+            if (a.hitTestElement(b)) {
+                //var w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+                //var h = Math.min(a.top, b.top) - Math.max(a.bottom, b.bottom);
+                var rect = intersect(a, b);
+                if (rect.width > rect.height) {
+                    SoundManager.play('se_chakuchi');
+                    if (JUMP_FLG) {
+                        JUMP_FLG = false;
+                        player.anim.gotoAndPlay('right');
+                        player.scaleX *= -1;
+                    }
+                    player.physical.velocity.y = 0;
+                    a.bottom = b.top;
+                } else {
+                    a.physical.velocity.x = 0;
+                    a.right = b.left;
+                }
+                self.combo = 0;
+                //a.anim.gotoAndPlay('damage');
             }
+            //var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
+            //var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
+            //// 円判定
+            //if (Collision.testCircleCircle(c1, c2)) {
+            //    //if (player.damaging == null) player.damaging = 0;
+            //    //player.damaging -= app.deltaTime;
+            //    //if (player.damaging <= 0) {
+            //    //    player.damaging = 3000;
+            //    //    SoundManager.play('se_damage');
+            //    //EGG_DIE = true;
+            //    //egg.frameIndex = 1;
+            //    //egg.scaleY = egg.scaleX = 1.1;
+            //    //player.x = this.block.x + 100;
+            //    self.combo = 0;
+            //    a.anim.gotoAndPlay('damage');
+            //    //player.tweener.wait(2500).call(function () {
+            //    //    player.anim.gotoAndPlay('right');
+            //    //    player.damaging = false;
+            //    //});
+            //    //}
+            //}
         };
         this.blockGroup.children.each(function (block) {
-            collisionByPlayerAndBlock(player, block);
+            collisionByPlayerAndBlock(player, block, self);
         });
 
         var hitTestTomato = function collisionByPlayerAndTomato(a, b, self) {
@@ -253,7 +287,6 @@ phina.define("MainScene", {
                 //self.addTomato();
             }
         }
-        var self = this;
         this.tomatoGroup.children.each(function (tomato) {
             hitTestTomato(player, tomato, self);
         });
