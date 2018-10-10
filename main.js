@@ -118,12 +118,16 @@ phina.define("MainScene", {
         this.addBlock = function () {
             var block = Sprite("block").addChildTo(self.blockGroup);
             block.origin.set(0, 0); // 左上基準に変更
-            block.setPosition(340, 400);
-        }
+            block.setPosition(SCREEN_WIDTH + 50, 400);
+            var block2 = Sprite("block").addChildTo(self.blockGroup);
+            block2.origin.set(0, 0); // 左上基準に変更
+            block2.setPosition(SCREEN_WIDTH + 50, 400 - block2.height);
+}
         this.addBlock();
         var addBlockLoop = function () {
             self.addBlock();
-            setTimeout(addBlockLoop, 4000);
+            var x = 2000 + (Random.random() * 4000);
+            setTimeout(addBlockLoop, x);
         }
         addBlockLoop();
 
