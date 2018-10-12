@@ -86,6 +86,9 @@ phina.define("MainScene", {
         // プレイヤー
         var player = Player('tomapiko').addChildTo(this);
         player.setPosition(100, 400);
+        player.collider
+            .setSize(player.width - 15, player.height)
+            .show();
         this.player = player;
 
         // トマト
@@ -104,6 +107,7 @@ phina.define("MainScene", {
             var tomato = Sprite(tname).addChildTo(self.tomatoGroup);
             tomato.origin.set(0, 0); // 左上基準に変更
             tomato.setPosition(SCREEN_WIDTH + 50, 400);
+            tomato.collider.show();
         }
         this.addTomato();
         var addTomatoLoop = function () {
@@ -119,10 +123,12 @@ phina.define("MainScene", {
             var block = Sprite("block").addChildTo(self.blockGroup);
             block.origin.set(0, 0); // 左上基準に変更
             block.setPosition(SCREEN_WIDTH + 50, 400);
+            block.collider.show();
             var block2 = Sprite("block").addChildTo(self.blockGroup);
             block2.origin.set(0, 0); // 左上基準に変更
             block2.setPosition(SCREEN_WIDTH + 50, 400 - block2.height);
-}
+            block2.collider.show();
+        }
         this.addBlock();
         var addBlockLoop = function () {
             self.addBlock();
@@ -228,10 +234,15 @@ phina.define("MainScene", {
 
         // 判定用の円
         var collisionByPlayerAndBlock = function collisionByPlayerAndBlock(a, b, self) {
-            if (a.hitTestElement(b)) {
+            if (a.collider.hitTest(b.collider)) {
                 //var w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
                 //var h = Math.min(a.top, b.top) - Math.max(a.bottom, b.bottom);
-                var rect = intersect(a, b);
+                // ベクトルの大きさ
+                var quantity = Math.sqrt(Math.pow(player.physical.velocity.x, 2), Math.pow(player.physical.velocity.y, 2));
+                var angle = Math.sqrt(Math.pow(player.physical.velocity.x, 2), Math.pow(player.physical.velocity.y, 2));
+                a.latestPos = { x: a.x, y: a.y };
+
+                var rect = intersect(a.collider.getAbsoluteRect(), b.collider.getAbsoluteRect());
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
@@ -244,7 +255,7 @@ phina.define("MainScene", {
                 } else {
                     a.physical.velocity.x = 0;
                     if (a.x <= b.x) {
-                         a.right = b.left;
+                        a.right = b.left + (a.width - a.collider.getAbsoluteRect().width) / 2;
                     } else {
                          a.left = b.right;
                     }
