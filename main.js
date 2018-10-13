@@ -18,6 +18,7 @@ var ASSETS = {
         se_jump: 'assets/sound/se_jump.wav',
         se_chakuchi: 'assets/sound/se_chakuchi.wav',
         se_damage: 'assets/sound/se_damage.wav',
+        se_gettomato: 'assets/sound/se_gettomato.wav',
     },
     //フレームアニメーション情報
     spritesheet: {
@@ -25,8 +26,10 @@ var ASSETS = {
     },
 };
 // 定数
-var SCREEN_WIDTH = 465;  // スクリーン幅
-var SCREEN_HEIGHT = 565;  // スクリーン高さ
+//var SCREEN_WIDTH = 750;  // スクリーン幅
+//var SCREEN_HEIGHT = 1297;  // スクリーン高さ
+var SCREEN_WIDTH = 566;  // スクリーン幅
+var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
 var GRAVITY = 0.3; // 重力
 var JUMP_FLG = false; // ジャンプ中かどうか
@@ -78,7 +81,25 @@ phina.define("MainScene", {
         this.bg2.origin.set(0, 0); // 左上基準に変更
         this.bg2.setPosition(SCREEN_WIDTH, 0); // 左上基準に変更
 
-        SoundManager.playMusic('bgm1');
+        // サウンドラベル
+        this.soundLabel = Label({ text: 'sound off' }).addChildTo(this);
+        this.soundLabel.setPosition(100, 100);
+        this.soundLabel.collider.show();
+        // タッチ可能にする
+        this.soundLabel.setInteractive(true);
+        // タッチイベント登録
+        this.soundLabel.onpointstart = function (e) {
+            //alert('タッチされました');
+            if (SoundManager.playingBGM) {
+                SoundManager.playingBGM = false;
+                SoundManager.stopMusic('bgm1');
+                e.target.text = "sound off";
+            } else {
+                SoundManager.playingBGM = true;
+                SoundManager.playMusic('bgm1');
+                e.target.text = "sound on";
+            }
+        };
 
         // プレイヤー
         var player = Player('tomapiko').addChildTo(this);
@@ -138,22 +159,10 @@ phina.define("MainScene", {
         this.onpointmove = function (e) {
             console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
-            player.physical.velocity.x = (power > 0 ? 2 : -2);
-            // タッチ位置に移動
-            //paddle.setPosition(e.pointer.x | 0, paddleY);
-            //// 画面はみ出し防止
-            //if (paddle.left < screenRect.left) { paddle.left = screenRect.left; }
-            //if (paddle.right > screenRect.right) { paddle.right = screenRect.right; }
+            player.physical.velocity.x = (power > 0 ? -3 : 3);
         };
         // 画面タッチ時処理
         this.onpointend = function () {
-            //if (!JUMP_FLG) {
-            //    JUMP_FLG = true;
-            //    player.anim.gotoAndPlay('fly');
-            //    player.scaleX *= -1;
-            //}
-            //player.physical.velocity.y = -JUMP_POWOR;
-            //player.physical.gravity.y = GRAVITY;
             player.physical.velocity.x = 0;
             if (!JUMP_FLG) {
                 player.anim.gotoAndPlay('right');
@@ -167,7 +176,11 @@ phina.define("MainScene", {
 
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
-            player.physical.velocity.x = (e.direction.x > 0 ? 4 : -4); //e.direction.x * 3;
+            let cl = ComboLabel(
+                (Math.round(e.direction.x * 100, 2) / 100) + " " + (Math.round(e.direction.y * 100, 2) / 100)
+            ).addChildTo(self).setPosition(100, 100);
+            cl.fontSize = 16;
+            player.physical.velocity.x = e.direction.x * 7;
             if (45 < angle && angle < 135) {
                 //label.text = 'angle: {0} -> しゃがむ'.format(angle);
             }
@@ -268,30 +281,7 @@ phina.define("MainScene", {
                         a.left = b.right;
                     }
                 }
-                //self.combo = 0;
-                //a.anim.gotoAndPlay('damage');
             }
-            //var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
-            //var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
-            //// 円判定
-            //if (Collision.testCircleCircle(c1, c2)) {
-            //    //if (player.damaging == null) player.damaging = 0;
-            //    //player.damaging -= app.deltaTime;
-            //    //if (player.damaging <= 0) {
-            //    //    player.damaging = 3000;
-            //    //    SoundManager.play('se_damage');
-            //    //EGG_DIE = true;
-            //    //egg.frameIndex = 1;
-            //    //egg.scaleY = egg.scaleX = 1.1;
-            //    //player.x = this.block.x + 100;
-            //    self.combo = 0;
-            //    a.anim.gotoAndPlay('damage');
-            //    //player.tweener.wait(2500).call(function () {
-            //    //    player.anim.gotoAndPlay('right');
-            //    //    player.damaging = false;
-            //    //});
-            //    //}
-            //}
         };
         this.blockGroup.children.each(function (block) {
             collisionByPlayerAndBlock(player, block, self);
@@ -306,9 +296,12 @@ phina.define("MainScene", {
                 self.combo += 1;
                 self.score += self.combo * 100;
                 var c = ComboLabel(self.combo).addChildTo(self);
-                c.x = self.gridX.span(12) + Math.randint(-50, 50);
-                c.y = self.gridY.span(12) + Math.randint(-50, 50);
+                //c.x = self.gridX.span(12) + Math.randint(-50, 50);
+                //c.y = self.gridY.span(12) + Math.randint(-50, 50);
+                c.x = b.x + 30;
+                c.y = b.y - 10;
                 b.remove();
+                SoundManager.play('se_gettomato');
             }
         }
         this.tomatoGroup.children.each(function (tomato) {
