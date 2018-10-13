@@ -24,9 +24,6 @@ var ASSETS = {
         'tomapiko_ss': 'https://rawgit.com/phi-jp/phina.js/develop/assets/tmss/tomapiko.tmss',
     },
 };
-//var SCREEN_WIDTH = 465;              // スクリーン幅
-//var SCREEN_HEIGHT = 465;              // スクリーン高さ
-//var SPEED = 8;
 // 定数
 var SCREEN_WIDTH = 465;  // スクリーン幅
 var SCREEN_HEIGHT = 565;  // スクリーン高さ
@@ -35,8 +32,8 @@ var GRAVITY = 0.3; // 重力
 var JUMP_FLG = false; // ジャンプ中かどうか
 
 /*
-    * プレイヤークラス
-    */
+ * プレイヤークラス
+ */
 phina.define('Player', {
     superClass: 'Sprite',
     // コンストラクタ
@@ -59,7 +56,7 @@ function intersect(a, b) {
     var y = Math.max(a.top, b.top);
     var num2 = Math.min(a.bottom, b.bottom);
     if (num1 >= x && num2 >= y)
-        return { x: x, y:y, width:num1 - x, height:num2 - y };
+        return { x: x, y: y, width: num1 - x, height: num2 - y };
     else
         return { x: 0, y: 0, width: 0, height: 0 };
 }
@@ -137,6 +134,17 @@ phina.define("MainScene", {
         }
         addBlockLoop();
 
+        // 画面上でのタッチ移動時
+        this.onpointmove = function (e) {
+            console.log(e);
+            let power = e.pointer.startPosition.x - e.pointer.position.x;
+            player.physical.velocity.x = (power > 0 ? 2 : -2);
+            // タッチ位置に移動
+            //paddle.setPosition(e.pointer.x | 0, paddleY);
+            //// 画面はみ出し防止
+            //if (paddle.left < screenRect.left) { paddle.left = screenRect.left; }
+            //if (paddle.right > screenRect.right) { paddle.right = screenRect.right; }
+        };
         // 画面タッチ時処理
         this.onpointend = function () {
             //if (!JUMP_FLG) {
@@ -159,7 +167,7 @@ phina.define("MainScene", {
 
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
-            player.physical.velocity.x = e.direction.x;
+            player.physical.velocity.x = (e.direction.x > 0 ? 4 : -4); //e.direction.x * 3;
             if (45 < angle && angle < 135) {
                 //label.text = 'angle: {0} -> しゃがむ'.format(angle);
             }
@@ -184,20 +192,20 @@ phina.define("MainScene", {
     update: function (app) {
 
         //背景画像の移動
-        this.bg.x -= 2;
-        this.bg2.x -= 2;
+        //this.bg.x -= 2;
+        //this.bg2.x -= 2;
         if (this.bg.x <= -SCREEN_WIDTH) {
             this.bg.x = 0;
             this.bg2.x = SCREEN_WIDTH;
         }
 
-        this.blockGroup.children.each(function (block) {
-            block.x -= 1;
-            if (block.x < -100) {
-                //block.x = SCREEN_WIDTH;
-                block.remove();
-            }
-        })
+        //this.blockGroup.children.each(function (block) {
+        //    block.x -= 1;
+        //    if (block.x < -100) {
+        //        //block.x = SCREEN_WIDTH;
+        //        block.remove();
+        //    }
+        //})
 
         this.tomatoGroup.children.each(function (tomato) {
             tomato.x -= 1;
@@ -257,10 +265,10 @@ phina.define("MainScene", {
                     if (a.x <= b.x) {
                         a.right = b.left + (a.width - a.collider.getAbsoluteRect().width) / 2;
                     } else {
-                         a.left = b.right;
+                        a.left = b.right;
                     }
                 }
-                self.combo = 0;
+                //self.combo = 0;
                 //a.anim.gotoAndPlay('damage');
             }
             //var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
@@ -300,10 +308,7 @@ phina.define("MainScene", {
                 var c = ComboLabel(self.combo).addChildTo(self);
                 c.x = self.gridX.span(12) + Math.randint(-50, 50);
                 c.y = self.gridY.span(12) + Math.randint(-50, 50);
-                //b.hide();
-                //b.x = SCREEN_WIDTH;
                 b.remove();
-                //self.addTomato();
             }
         }
         this.tomatoGroup.children.each(function (tomato) {
@@ -312,6 +317,27 @@ phina.define("MainScene", {
 
     }
 });
+
+// ブロック作成
+phina.define('Block', {
+    superClass: 'RectangleShape',
+    init: function (x, y) {
+        this.superInit(x, y);
+        this.width = 31;
+        this.height = 31;
+        this.x = x + this.width / 2;
+        this.y = y + this.height / 2;
+        this.fill = 'transparent';
+        this.stroke = 'gray';
+    },
+    hitPlayerShot: function (playerShot) {
+
+    },
+    hitEnemyShot: function (enemyShot) {
+
+    }
+});
+
 
 /*
  * コンボラベル
