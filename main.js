@@ -26,32 +26,11 @@ var ASSETS = {
     },
 };
 // 定数
-//var SCREEN_WIDTH = 750;  // スクリーン幅
-//var SCREEN_HEIGHT = 1297;  // スクリーン高さ
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
 var GRAVITY = 0.3; // 重力
 var JUMP_FLG = false; // ジャンプ中かどうか
-
-/*
- * プレイヤークラス
- */
-phina.define('Player', {
-    superClass: 'Sprite',
-    // コンストラクタ
-    init: function (image) {
-        // 親クラス初期化
-        this.superInit(image);
-        // フレームアニメーションをアタッチ
-        this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
-        // 初期アニメーション指定
-        this.anim.gotoAndPlay('right');
-    },
-    // 毎フレーム処理
-    update: function () {
-    },
-});
 
 function intersect(a, b) {
     var x = Math.max(a.left, b.left);
@@ -137,33 +116,39 @@ phina.define("MainScene", {
 
         // ブロック
         this.blockGroup = DisplayElement().addChildTo(this);
-        this.addBlock = function () {
+        this.addBlock = function (x, y) {
             var block = Sprite("block").addChildTo(self.blockGroup);
             block.origin.set(0, 0); // 左上基準に変更
-            block.setPosition(SCREEN_WIDTH + 50, 400);
+            block.setPosition(x, y);
             block.collider.show();
-            var block2 = Sprite("block").addChildTo(self.blockGroup);
-            block2.origin.set(0, 0); // 左上基準に変更
-            block2.setPosition(SCREEN_WIDTH + 50, 400 - block2.height);
-            block2.collider.show();
-        }
-        this.addBlock();
-        var addBlockLoop = function () {
-            self.addBlock();
-            var x = 2000 + (Random.random() * 4000);
-            setTimeout(addBlockLoop, x);
-        }
-        addBlockLoop();
+            //var block2 = Sprite("block").addChildTo(self.blockGroup);
+            //block2.origin.set(0, 0); // 左上基準に変更
+            //block2.setPosition(SCREEN_WIDTH + 50, 400 - block2.height);
+            //block2.collider.show();
+        };
+
+        (100).times(function (i) {
+            self.addBlock(i * 30, 600);
+        })
+        //this.addBlock();
+        //var addBlockLoop = function () {
+        //    self.addBlock();
+        //    var x = 2000 + (Random.random() * 4000);
+        //    setTimeout(addBlockLoop, x);
+        //}
+        //addBlockLoop();
 
         // 画面上でのタッチ移動時
         this.onpointmove = function (e) {
             console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
             player.physical.velocity.x = (power > 0 ? -3 : 3);
+            //player.vx = (power > 0 ? -3 : 3);
         };
         // 画面タッチ時処理
         this.onpointend = function () {
             player.physical.velocity.x = 0;
+            //player.vx = 0;
             if (!JUMP_FLG) {
                 player.anim.gotoAndPlay('right');
             }
@@ -230,9 +215,9 @@ phina.define("MainScene", {
 
         //プレイヤーのアニメーション
         var player = this.player;
-        if (player.y > 410) {  //地面に着地時
+        if (player.y > 710) {  //地面に着地時
             SoundManager.play('se_chakuchi');
-            player.y = 400;
+            player.y = 610;
             if (JUMP_FLG) {
                 JUMP_FLG = false;
                 player.anim.gotoAndPlay('right');
@@ -272,7 +257,7 @@ phina.define("MainScene", {
                         player.scaleX *= -1;
                     }
                     player.physical.velocity.y = 0;
-                    a.bottom = b.top;
+                    a.bottom = b.top - 1;
                 } else {
                     a.physical.velocity.x = 0;
                     if (a.x <= b.x) {
@@ -311,7 +296,36 @@ phina.define("MainScene", {
     }
 });
 
-// ブロック作成
+/*
+ * プレイヤークラス
+ */
+phina.define('Player', {
+    superClass: 'Sprite',
+    // コンストラクタ
+    init: function (image) {
+        // 親クラス初期化
+        this.superInit(image);
+        // フレームアニメーションをアタッチ
+        this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
+        // 初期アニメーション指定
+        this.anim.gotoAndPlay('right');
+    },
+    // 毎フレーム処理
+    update: function (app) {
+        //this.move();
+    },
+    move: function () {
+        if (this.vx != null) {
+            this.x += this.vx;
+        }
+        if (this.vy != null) {
+            this.y += this.vy;
+        }
+    }
+});
+
+
+// ブロック
 phina.define('Block', {
     superClass: 'RectangleShape',
     init: function (x, y) {
