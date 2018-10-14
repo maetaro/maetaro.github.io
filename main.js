@@ -29,7 +29,6 @@ var ASSETS = {
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
-var GRAVITY = 0.3; // 重力
 var JUMP_FLG = false; // ジャンプ中かどうか
 
 function intersect(a, b) {
@@ -53,10 +52,14 @@ phina.define("MainScene", {
     init: function (options) {
         // super init
         this.superInit(options);
+
+        // 描画オブジェクトすべて
+        this.mapGroup = DisplayElement().addChildTo(this);
+
         // 背景
-        this.bg = Sprite("bg").addChildTo(this);
+        this.bg = Sprite("bg").addChildTo(this.mapGroup);
         this.bg.origin.set(0, 0); // 左上基準に変更
-        this.bg2 = Sprite("bg2").addChildTo(this);
+        this.bg2 = Sprite("bg2").addChildTo(this.mapGroup);
         this.bg2.origin.set(0, 0); // 左上基準に変更
         this.bg2.setPosition(SCREEN_WIDTH, 0); // 左上基準に変更
 
@@ -81,7 +84,7 @@ phina.define("MainScene", {
         };
 
         // プレイヤー
-        var player = Player('tomapiko').addChildTo(this);
+        var player = Player('tomapiko').addChildTo(this.mapGroup);
         player.setPosition(100, 400);
         player.collider
             .setSize(player.width - 15, player.height)
@@ -89,7 +92,7 @@ phina.define("MainScene", {
         this.player = player;
 
         // トマト
-        this.tomatoGroup = DisplayElement().addChildTo(this);
+        this.tomatoGroup = DisplayElement().addChildTo(this.mapGroup);
         var self = this;
         this.addTomato = function () {
             var tname = "tomato";
@@ -115,7 +118,7 @@ phina.define("MainScene", {
         addTomatoLoop();
 
         // ブロック
-        this.blockGroup = DisplayElement().addChildTo(this);
+        this.blockGroup = DisplayElement().addChildTo(this.mapGroup);
         this.addBlock = function (x, y) {
             var block = Sprite("block").addChildTo(self.blockGroup);
             block.origin.set(0, 0); // 左上基準に変更
@@ -142,13 +145,11 @@ phina.define("MainScene", {
         this.onpointmove = function (e) {
             console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
-            player.physical.velocity.x = (power > 0 ? -3 : 3);
-            //player.vx = (power > 0 ? -3 : 3);
+            player.vx = (power > 0 ? -3 : 3);
         };
         // 画面タッチ時処理
         this.onpointend = function () {
-            player.physical.velocity.x = 0;
-            //player.vx = 0;
+            player.vx = 0;
             if (!JUMP_FLG) {
                 player.anim.gotoAndPlay('right');
             }
@@ -165,7 +166,7 @@ phina.define("MainScene", {
                 (Math.round(e.direction.x * 100, 2) / 100) + " " + (Math.round(e.direction.y * 100, 2) / 100)
             ).addChildTo(self).setPosition(100, 100);
             cl.fontSize = 16;
-            player.physical.velocity.x = e.direction.x * 7;
+            player.vx = e.direction.x * 7;
             if (45 < angle && angle < 135) {
                 //label.text = 'angle: {0} -> しゃがむ'.format(angle);
             }
@@ -177,8 +178,7 @@ phina.define("MainScene", {
                     player.anim.gotoAndPlay('fly');
                     player.scaleX *= -1;
                 }
-                player.physical.velocity.y = -JUMP_POWOR;
-                player.physical.gravity.y = GRAVITY;
+                player.vy = -JUMP_POWOR;
             }
         };
 
@@ -190,28 +190,32 @@ phina.define("MainScene", {
     update: function (app) {
 
         //背景画像の移動
-        //this.bg.x -= 2;
-        //this.bg2.x -= 2;
-        if (this.bg.x <= -SCREEN_WIDTH) {
-            this.bg.x = 0;
-            this.bg2.x = SCREEN_WIDTH;
-        }
-
-        //this.blockGroup.children.each(function (block) {
-        //    block.x -= 1;
-        //    if (block.x < -100) {
-        //        //block.x = SCREEN_WIDTH;
-        //        block.remove();
-        //    }
-        //})
-
-        this.tomatoGroup.children.each(function (tomato) {
-            tomato.x -= 1;
-            if (tomato.x < -100) {
-                //tomato.x = SCREEN_WIDTH;
-                tomato.remove();
+        if (this.player.x > SCREEN_WIDTH / 2) {
+            let vx = this.player.vx;
+            if (this.player.vx > 0) {
+                this.player.vx = 0;
             }
-        })
+            this.bg.x -= vx;
+            this.bg2.x -= vx;
+            if (this.bg.x <= -SCREEN_WIDTH) {
+                this.bg.x = 0;
+                this.bg2.x = SCREEN_WIDTH;
+            }
+            this.blockGroup.children.each(function (block) {
+                block.x -= vx;
+                if (block.x < -100) {
+                    //block.x = SCREEN_WIDTH;
+                    block.remove();
+                }
+            })
+            this.tomatoGroup.children.each(function (tomato) {
+                tomato.x -= vx;
+                if (tomato.x < -100) {
+                    //tomato.x = SCREEN_WIDTH;
+                    tomato.remove();
+                }
+            })
+        }
 
         //プレイヤーのアニメーション
         var player = this.player;
@@ -223,8 +227,7 @@ phina.define("MainScene", {
                 player.anim.gotoAndPlay('right');
                 player.scaleX *= -1;
             }
-            player.physical.velocity.y = 0;
-            player.physical.gravity.y = 0;
+            player.vy = 0;
         }
         if (player.y < 0) {
             player.y = 0;
@@ -244,8 +247,8 @@ phina.define("MainScene", {
                 //var w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
                 //var h = Math.min(a.top, b.top) - Math.max(a.bottom, b.bottom);
                 // ベクトルの大きさ
-                var quantity = Math.sqrt(Math.pow(player.physical.velocity.x, 2), Math.pow(player.physical.velocity.y, 2));
-                var angle = Math.sqrt(Math.pow(player.physical.velocity.x, 2), Math.pow(player.physical.velocity.y, 2));
+                var quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
+                var angle = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
                 a.latestPos = { x: a.x, y: a.y };
 
                 var rect = intersect(a.collider.getAbsoluteRect(), b.collider.getAbsoluteRect());
@@ -256,10 +259,10 @@ phina.define("MainScene", {
                         player.anim.gotoAndPlay('right');
                         player.scaleX *= -1;
                     }
-                    player.physical.velocity.y = 0;
-                    a.bottom = b.top - 1;
+                    player.vy = 0;
+                    a.bottom = b.top;
                 } else {
-                    a.physical.velocity.x = 0;
+                    a.vx = 0;
                     if (a.x <= b.x) {
                         a.right = b.left + (a.width - a.collider.getAbsoluteRect().width) / 2;
                     } else {
@@ -300,29 +303,32 @@ phina.define("MainScene", {
  * プレイヤークラス
  */
 phina.define('Player', {
-    superClass: 'Sprite',
-    // コンストラクタ
-    init: function (image) {
-        // 親クラス初期化
-        this.superInit(image);
-        // フレームアニメーションをアタッチ
-        this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
-        // 初期アニメーション指定
-        this.anim.gotoAndPlay('right');
-    },
-    // 毎フレーム処理
-    update: function (app) {
-        //this.move();
-    },
-    move: function () {
-        if (this.vx != null) {
-            this.x += this.vx;
+        superClass: 'Sprite',
+        // コンストラクタ
+        init: function (image) {
+            // 親クラス初期化
+            this.superInit(image);
+            // フレームアニメーションをアタッチ
+            this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
+            // 初期アニメーション指定
+            this.anim.gotoAndPlay('right');
+        },
+        // 毎フレーム処理
+        update: function (app) {
+            this.move();
+        },
+        move: function () {
+            if (this.vx != null) {
+                this.x += this.vx;
+            }
+            if (JUMP_FLG) {
+                this.vy += 0.3;
+            }
+            if (this.vy != null) {
+                this.y += this.vy;
+            }
         }
-        if (this.vy != null) {
-            this.y += this.vy;
-        }
-    }
-});
+    });
 
 
 // ブロック
