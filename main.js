@@ -84,7 +84,7 @@ phina.define("MainScene", {
         };
 
         // プレイヤー
-        var player = Player('tomapiko').addChildTo(this.mapGroup);
+        var player = Player('tomapiko').addChildTo(this);
         player.setPosition(100, 400);
         player.collider
             .setSize(player.width - 15, player.height)
@@ -192,29 +192,30 @@ phina.define("MainScene", {
         //背景画像の移動
         if (this.player.x > SCREEN_WIDTH / 2) {
             let vx = this.player.vx;
-            if (this.player.vx > 0) {
-                this.player.vx = 0;
-            }
-            this.bg.x -= vx;
-            this.bg2.x -= vx;
-            if (this.bg.x <= -SCREEN_WIDTH) {
-                this.bg.x = 0;
-                this.bg2.x = SCREEN_WIDTH;
-            }
-            this.blockGroup.children.each(function (block) {
-                block.x -= vx;
-                if (block.x < -100) {
-                    //block.x = SCREEN_WIDTH;
-                    block.remove();
-                }
-            })
-            this.tomatoGroup.children.each(function (tomato) {
-                tomato.x -= vx;
-                if (tomato.x < -100) {
-                    //tomato.x = SCREEN_WIDTH;
-                    tomato.remove();
-                }
-            })
+            //if (this.player.vx > 0) {
+            //    this.player.vx = 0;
+            //}
+            //this.mapGroup.x -= vx;
+            //this.bg.x -= vx;
+            //this.bg2.x -= vx;
+            //if (this.bg.x <= -SCREEN_WIDTH) {
+            //    this.bg.x = 0;
+            //    this.bg2.x = SCREEN_WIDTH;
+            //}
+            //this.blockGroup.children.each(function (block) {
+            //    block.x -= vx;
+            //    if (block.x < -100) {
+            //        //block.x = SCREEN_WIDTH;
+            //        block.remove();
+            //    }
+            //})
+            //this.tomatoGroup.children.each(function (tomato) {
+            //    tomato.x -= vx;
+            //    if (tomato.x < -100) {
+            //        //tomato.x = SCREEN_WIDTH;
+            //        tomato.remove();
+            //    }
+            //})
         }
 
         //プレイヤーのアニメーション
@@ -315,6 +316,12 @@ phina.define('Player', {
         },
         // 毎フレーム処理
         update: function (app) {
+            var key = app.keyboard;
+            // 上下左右移動
+            if (key.getKey('left')) { this.vx -= 2; }
+            if (key.getKey('right')) { this.vx += 2; }
+            if (key.getKey('up')) { this.vy -= 2; }
+            if (key.getKey('down')) { this.vy += 2; }
             this.move();
         },
         move: function () {
