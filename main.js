@@ -105,6 +105,10 @@ phina.define("MainScene", {
         player.collider
             .setSize(player.width - 15, player.height)
             .show();
+        JUMP_FLG = true;
+        player.anim.gotoAndPlay('fly');
+        player.scaleX *= -1;
+        player.vy = -JUMP_POWOR;
         this.player = player;
 
         // トマト
@@ -206,41 +210,54 @@ phina.define("MainScene", {
     update: function (app) {
 
         //背景画像の移動
-        if (this.player.x > SCREEN_WIDTH / 2) {
-            let vx = this.player.vx;
-            //if (this.player.vx > 0) {
-            //    this.player.vx = 0;
-            //}
+        this.player.x = SCREEN_WIDTH / 2;
+        let vx = this.player.vx;
+        if (vx != null) {
             this.mapGroup.x -= vx;
             this.mapBase.x -= vx;
-            //this.bg.x -= vx;
-            //this.bg2.x -= vx;
-            //if (this.bg.x <= -SCREEN_WIDTH) {
-            //    this.bg.x = 0;
-            //    this.bg2.x = SCREEN_WIDTH;
-            //}
-            //this.blockGroup.children.each(function (block) {
-            //    block.x -= vx;
-            //    if (block.x < -100) {
-            //        //block.x = SCREEN_WIDTH;
-            //        block.remove();
-            //    }
-            //})
-            //this.tomatoGroup.children.each(function (tomato) {
-            //    tomato.x -= vx;
-            //    if (tomato.x < -100) {
-            //        //tomato.x = SCREEN_WIDTH;
-            //        tomato.remove();
-            //    }
-            //})
         }
-        if (this.player.x < SCREEN_WIDTH / 2) {
-            let vx = this.player.vx;
-            if (vx != null) {
-                this.mapGroup.x += vx;
-                this.mapBase.x += vx;
-            }
+        if (this.mapBase.x > 0) {
+            this.mapBase.x = 0;
         }
+        if (this.mapBase.x < -2600) {
+            this.mapBase.x = -2600;
+        }
+        //if (this.player.x > SCREEN_WIDTH / 2) {
+        //    let vx = this.player.vx;
+        //    //if (this.player.vx > 0) {
+        //    //    this.player.vx = 0;
+        //    //}
+        //    this.mapGroup.x -= vx;
+        //    this.mapBase.x -= vx;
+        //    //this.bg.x -= vx;
+        //    //this.bg2.x -= vx;
+        //    //if (this.bg.x <= -SCREEN_WIDTH) {
+        //    //    this.bg.x = 0;
+        //    //    this.bg2.x = SCREEN_WIDTH;
+        //    //}
+        //    //this.blockGroup.children.each(function (block) {
+        //    //    block.x -= vx;
+        //    //    if (block.x < -100) {
+        //    //        //block.x = SCREEN_WIDTH;
+        //    //        block.remove();
+        //    //    }
+        //    //})
+        //    //this.tomatoGroup.children.each(function (tomato) {
+        //    //    tomato.x -= vx;
+        //    //    if (tomato.x < -100) {
+        //    //        //tomato.x = SCREEN_WIDTH;
+        //    //        tomato.remove();
+        //    //    }
+        //    //})
+        //}
+        //if (this.player.x < SCREEN_WIDTH / 2) {
+        //    let vx = this.player.vx;
+        //    if (vx != null) {
+        //        this.mapGroup.x += vx;
+        //        this.mapBase.x += vx;
+        //    }
+        //}
+
 
         //プレイヤーのアニメーション
         var player = this.player;
