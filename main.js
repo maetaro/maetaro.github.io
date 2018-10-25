@@ -150,9 +150,9 @@ phina.define("MainScene", {
             //block2.collider.show();
         };
 
-        (100).times(function (i) {
-            self.addBlock(i * 30, 600);
-        })
+        //(100).times(function (i) {
+        //    self.addBlock(i * 30, 600);
+        //})
         //this.addBlock();
         //var addBlockLoop = function () {
         //    self.addBlock();
@@ -261,9 +261,9 @@ phina.define("MainScene", {
 
         //プレイヤーのアニメーション
         var player = this.player;
-        if (player.y > 710) {  //地面に着地時
+        if (player.y > SCREEN_HEIGHT + 100) {  //地面に着地時
             SoundManager.play('se_chakuchi');
-            player.y = 610;
+            player.y = SCREEN_HEIGHT + 100;
             if (JUMP_FLG) {
                 JUMP_FLG = false;
                 player.anim.gotoAndPlay('right');
@@ -338,6 +338,41 @@ phina.define("MainScene", {
             hitTestTomato(player, tomato, self);
         });
 
+        let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
+        const unitSize = 16 * this.map.scaleX;
+        for (var r = 0; r < collisionLayer.height; r++) {
+            for (var c = 0; c < collisionLayer.width; c++) {
+                let top = r * unitSize;
+                let left = c * unitSize;
+                let collisionRect = {
+                    left: left,
+                    right: left + unitSize,
+                    top: top,
+                    botom: top + unitSize,
+                };
+                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
+                if (rect.height == 0 && rect.width == 0) {
+                    continue;
+                }
+                if (rect.width > rect.height) {
+                    SoundManager.play('se_chakuchi');
+                    if (JUMP_FLG) {
+                        JUMP_FLG = false;
+                        player.anim.gotoAndPlay('right');
+                        player.scaleX *= -1;
+                    }
+                    player.vy = 0;
+                    player.bottom = collisionRect.top;
+                } else {
+                    player.vx = 0;
+                    if (player.x <= collisionRect.x) {
+                        player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
+                    } else {
+                        player.left = collisionRect.right;
+                    }
+                }
+            }
+        }
     }
 });
 
