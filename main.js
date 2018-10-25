@@ -355,9 +355,9 @@ phina.define("MainScene", {
                 collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
                 //if (!player.collider.hitTest(collisionRect)) continue;
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
-                //if (rect.height == 0 && rect.width == 0) {
-                //    continue;
-                //}
+                if (rect.height <= 0 || rect.width <= 0) {
+                    continue;
+                }
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
