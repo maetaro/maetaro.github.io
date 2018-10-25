@@ -338,7 +338,7 @@ phina.define("MainScene", {
             hitTestTomato(player, tomato, self);
         });
 
-        let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
+        /*let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         const unitSize = 16 * this.map.scaleX;
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
@@ -377,7 +377,7 @@ phina.define("MainScene", {
                     }
                 }
             }
-        }
+        }*/
     }
 });
 
