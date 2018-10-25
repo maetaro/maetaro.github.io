@@ -347,7 +347,8 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize;
                 let collisionRect = {
-                    x: left,y:top,width:unitSize,height:unitSize,left: left,
+                    //x: left,y:top,width:unitSize,height:unitSize,
+                    left: left,
                     right: left + unitSize,
                     top: top,
                     botom: top + unitSize,
