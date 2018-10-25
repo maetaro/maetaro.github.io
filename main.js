@@ -347,15 +347,16 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize;
                 let collisionRect = {
-                    left: left,
+                    x: left,y:top,width:unitSize,height:unitSize,left: left,
                     right: left + unitSize,
                     top: top,
                     botom: top + unitSize,
                 };
+                if (!player.collider.hitTest(collisionRect)) continue;
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
-                if (rect.height == 0 && rect.width == 0) {
-                    continue;
-                }
+                //if (rect.height == 0 && rect.width == 0) {
+                //    continue;
+                //}
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
