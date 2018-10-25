@@ -24,6 +24,9 @@ var ASSETS = {
     spritesheet: {
         'tomapiko_ss': 'https://rawgit.com/phi-jp/phina.js/develop/assets/tmss/tomapiko.tmss',
     },
+    tmx: {
+        "map": "assets/tilemap/BRGFCMAP.tmx",
+    },
 };
 // 定数
 var SCREEN_WIDTH = 566;  // スクリーン幅
@@ -55,6 +58,19 @@ phina.define("MainScene", {
 
         // 描画オブジェクトすべて
         this.mapGroup = DisplayElement().addChildTo(this);
+
+        this.mapBase = phina.display.DisplayElement()
+            .setPosition(0, 0)
+            .addChildTo(this);
+
+        //.tmxファイルからマップをイメージとして取得し、スプライトで表示
+        this.tmx = phina.asset.AssetManager.get("tmx", "map");
+        this.map = phina.display.Sprite(this.tmx.getImage())
+            .setOrigin(0, 0)
+            .setPosition(0, 0)
+            .addChildTo(this.mapBase);
+        this.map.tweener.clear().setUpdateType('fps');
+        this.map.setScale(2, 2);
 
         // 背景
         this.bg = Sprite("bg").addChildTo(this.mapGroup);
@@ -195,7 +211,8 @@ phina.define("MainScene", {
             //if (this.player.vx > 0) {
             //    this.player.vx = 0;
             //}
-            //this.mapGroup.x -= vx;
+            this.mapGroup.x -= vx;
+            this.mapBase.x -= vx;
             //this.bg.x -= vx;
             //this.bg2.x -= vx;
             //if (this.bg.x <= -SCREEN_WIDTH) {
@@ -216,6 +233,13 @@ phina.define("MainScene", {
             //        tomato.remove();
             //    }
             //})
+        }
+        if (this.player.x < SCREEN_WIDTH / 2) {
+            let vx = this.player.vx;
+            if (vx != null) {
+                this.mapGroup.x += vx;
+                this.mapBase.x += vx;
+            }
         }
 
         //プレイヤーのアニメーション
@@ -318,10 +342,18 @@ phina.define('Player', {
         update: function (app) {
             var key = app.keyboard;
             // 上下左右移動
-            if (key.getKey('left')) { this.vx -= 2; }
-            if (key.getKey('right')) { this.vx += 2; }
-            if (key.getKey('up')) { this.vy -= 2; }
-            if (key.getKey('down')) { this.vy += 2; }
+            if (key.getKey('left')) { this.vx = -3;  }
+            if (key.getKey('right')) { this.vx = 3; }
+            if (key.getKey('up')) {
+                SoundManager.play('se_jump');
+                if (!JUMP_FLG) {
+                    JUMP_FLG = true;
+                    this.anim.gotoAndPlay('fly');
+                    this.scaleX *= -1;
+                }
+                this.vy = -JUMP_POWOR;
+            }
+            //if (key.getKey('down')) { this.vy = 3; }
             this.move();
         },
         move: function () {
