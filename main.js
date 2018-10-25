@@ -342,6 +342,8 @@ phina.define("MainScene", {
         const unitSize = 16 * this.map.scaleX;
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
+                let index = r * collisionLayer.width + c;
+                if (this.tmx.data[index] == -1) continue;
                 let top = r * unitSize;
                 let left = c * unitSize;
                 let collisionRect = {
