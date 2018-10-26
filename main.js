@@ -368,15 +368,15 @@ phina.define("MainScene", {
                         player.anim.gotoAndPlay('right');
                         player.scaleX *= -1;
                     }
-                    //player.vy = 0;
-                    //player.bottom = collisionRect.top;
-                //} else {
-                    //player.vx = 0;
-                    //if (player.x <= collisionRect.x) {
-                        //player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
-                    //} else {
-                        //player.left = collisionRect.right;
-                    //}
+                    player.vy = 0;
+                    player.bottom = collisionRect.top;
+                } else {
+                    player.vx = 0;
+                    if (player.x <= collisionRect.x) {
+                        player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
+                    } else {
+                        player.left = collisionRect.right;
+                    }
                 }
             }
         }
