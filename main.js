@@ -356,7 +356,7 @@ phina.define("MainScene", {
                 let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
                 if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) continue;
                 //if (!player.collider.hitTest(collisionRect)) continue;
-                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
+                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect.getAbsoluteRect());
                 if (rect.height <= 0 || rect.width <= 0) {
                     continue;
                 }
