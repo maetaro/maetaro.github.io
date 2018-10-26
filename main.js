@@ -354,14 +354,14 @@ phina.define("MainScene", {
                     //botom: top + unitSize,
                 //};
                 let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
-               if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) continue;
+                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) continue;
                 //if (!player.collider.hitTest(collisionRect)) continue;
-                //var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
+                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
                 //if (rect.height <= 0 || rect.width <= 0) {
                 //    continue;
                 //}
 //continue;
-                //if (rect.width > rect.height) {
+                if (rect.width > rect.height) {
                     //SoundManager.play('se_chakuchi');
                     //if (JUMP_FLG) {
                     //    JUMP_FLG = false;
@@ -377,7 +377,7 @@ phina.define("MainScene", {
                     //} else {
                         //player.left = collisionRect.right;
                     //}
-                //}
+                }
             }
         }
     }
