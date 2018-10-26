@@ -368,7 +368,7 @@ phina.define("MainScene", {
                         player.scaleX *= -1;
                     }
                     player.vy = 0;
-                    player.bottom = collisionRect.top;
+                    //player.bottom = collisionRect.top;
                 } else {
                     player.vx = 0;
                     if (player.x <= collisionRect.x) {
