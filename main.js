@@ -186,7 +186,7 @@ phina.define("MainScene", {
                 (Math.round(e.direction.x * 100, 2) / 100) + " " + (Math.round(e.direction.y * 100, 2) / 100)
             ).addChildTo(self).setPosition(100, 100);
             cl.fontSize = 16;
-            player.vx = e.direction.x * 7;
+            player.vx = e.direction.x * 3.5;
             if (45 < angle && angle < 135) {
                 //label.text = 'angle: {0} -> しゃがむ'.format(angle);
             }
@@ -199,6 +199,7 @@ phina.define("MainScene", {
                     player.scaleX *= -1;
                 }
                 player.vy = -JUMP_POWOR;
+                player.y -= 10;
             }
         };
 
@@ -342,18 +343,28 @@ phina.define("MainScene", {
         const unitSize = 16 * this.map.scaleX;
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
+                let index = (r * collisionLayer.width) + c;
+if (collisionLayer.data[index] != -1) {
+  this.soundLabel.text = collisionLayer.data[index] + ' ' + index;
+}
+                if (collisionLayer.data[index] == -1) {continue;}
                 let top = r * unitSize;
-                let left = c * unitSize;
-                let collisionRect = {
-                    left: left,
-                    right: left + unitSize,
-                    top: top,
-                    botom: top + unitSize,
-                };
+                let left = c * unitSize + this.mapBase.x;
+                //let collisionRect = {
+                    //x: left,y:top,width:unitSize,height:unitSize,
+                    //left: left,
+                    //right: left + unitSize,
+                    //top: top,
+                    //botom: top + unitSize,
+                //};
+                let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
+                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) continue;
+                //if (!player.collider.hitTest(collisionRect)) continue;
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
-                if (rect.height == 0 && rect.width == 0) {
+                if (rect.height <= 0 || rect.width <= 0) {
                     continue;
                 }
+//continue;
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
@@ -362,13 +373,13 @@ phina.define("MainScene", {
                         player.scaleX *= -1;
                     }
                     player.vy = 0;
-                    player.bottom = collisionRect.top;
+                    player.bottom = collisionRect.y;
                 } else {
                     player.vx = 0;
                     if (player.x <= collisionRect.x) {
-                        player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
+                        //player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
                     } else {
-                        player.left = collisionRect.right;
+                        //player.left = collisionRect.right;
                     }
                 }
             }
@@ -412,9 +423,9 @@ phina.define('Player', {
             if (this.vx != null) {
                 this.x += this.vx;
             }
-            if (JUMP_FLG) {
+            //if (JUMP_FLG) {
                 this.vy += 0.3;
-            }
+            //}
             if (this.vy != null) {
                 this.y += this.vy;
             }
