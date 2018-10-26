@@ -199,7 +199,7 @@ phina.define("MainScene", {
                     player.scaleX *= -1;
                 }
                 player.vy = -JUMP_POWOR;
-                player.y = 10;
+                player.y -= 10;
             }
         };
 
