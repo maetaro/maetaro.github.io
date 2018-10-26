@@ -371,11 +371,11 @@ phina.define("MainScene", {
                     //player.bottom = collisionRect.top;
                 } else {
                     player.vx = 0;
-                    if (player.x <= collisionRect.x) {
+                    //if (player.x <= collisionRect.x) {
                         //player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
-                    } else {
+                    //} else {
                         //player.left = collisionRect.right;
-                    }
+                    //}
                 }
             }
         }
