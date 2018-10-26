@@ -346,14 +346,14 @@ phina.define("MainScene", {
                 //if (this.tmx.data[index] == -1) continue;
                 let top = r * unitSize;
                 let left = c * unitSize;
-                let collisionRect = {
+                //let collisionRect = {
                     //x: left,y:top,width:unitSize,height:unitSize,
-                    left: left,
-                    right: left + unitSize,
-                    top: top,
-                    botom: top + unitSize,
-                };
-                //collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
+                    //left: left,
+                    //right: left + unitSize,
+                    //top: top,
+                    //botom: top + unitSize,
+                //};
+                let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
                 //if (!player.collider.hitTest(collisionRect)) continue;
                 //var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
                 //if (rect.height <= 0 || rect.width <= 0) {
