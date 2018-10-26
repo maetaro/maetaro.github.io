@@ -362,12 +362,12 @@ phina.define("MainScene", {
                 //}
 //continue;
                 if (rect.width > rect.height) {
-                    //SoundManager.play('se_chakuchi');
-                    //if (JUMP_FLG) {
-                    //    JUMP_FLG = false;
-                    //    player.anim.gotoAndPlay('right');
-                    //    player.scaleX *= -1;
-                    //}
+                    SoundManager.play('se_chakuchi');
+                    if (JUMP_FLG) {
+                        JUMP_FLG = false;
+                        player.anim.gotoAndPlay('right');
+                        player.scaleX *= -1;
+                    }
                     //player.vy = 0;
                     //player.bottom = collisionRect.top;
                 //} else {
