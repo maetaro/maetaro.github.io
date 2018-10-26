@@ -348,7 +348,7 @@ if (collisionLayer.data[index] != -1) {
 }
                 if (collisionLayer.data[index] == -1) {continue;}
                 let top = r * unitSize;
-                let left = c * unitSize;
+                let left = c * unitSize + this.mapBase.x;
                 //let collisionRect = {
                     //x: left,y:top,width:unitSize,height:unitSize,
                     //left: left,
