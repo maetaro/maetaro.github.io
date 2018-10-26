@@ -372,7 +372,7 @@ if (collisionLayer.data[index] != -1) {
                         player.scaleX *= -1;
                     }
                     player.vy = 0;
-                    //player.bottom = collisionRect.top;
+                    player.bottom = collisionRect.y;
                 } else {
                     player.vx = 0;
                     if (player.x <= collisionRect.x) {
