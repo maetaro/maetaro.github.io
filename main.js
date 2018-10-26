@@ -362,15 +362,15 @@ phina.define("MainScene", {
 //continue;
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
-                    if (JUMP_FLG) {
-                        JUMP_FLG = false;
-                        player.anim.gotoAndPlay('right');
-                        player.scaleX *= -1;
-                    }
-                    player.vy = 0;
+                    //if (JUMP_FLG) {
+                    //    JUMP_FLG = false;
+                    //    player.anim.gotoAndPlay('right');
+                    //    player.scaleX *= -1;
+                    //}
+                    //player.vy = 0;
                     //player.bottom = collisionRect.top;
                 } else {
-                    player.vx = 0;
+                    //player.vx = 0;
                     //if (player.x <= collisionRect.x) {
                         //player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
                     //} else {
