@@ -343,7 +343,7 @@ phina.define("MainScene", {
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
                 let index = (r * collisionLayer.width) + c;
-                if (collisionLayer.data[0] == 0) continue;
+                if (collisionLayer.data[0] == 1) continue;
                 let top = r * unitSize;
                 let left = c * unitSize;
                 //let collisionRect = {
