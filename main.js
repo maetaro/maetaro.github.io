@@ -359,7 +359,7 @@ phina.define("MainScene", {
                 if (rect.height <= 0 || rect.width <= 0) {
                     continue;
                 }
-//continue;
+continue;
                 //if (rect.width > rect.height) {
                     //SoundManager.play('se_chakuchi');
                     //if (JUMP_FLG) {
