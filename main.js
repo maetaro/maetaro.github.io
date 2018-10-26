@@ -347,7 +347,7 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize;
                 let collisionRect = {
-                    x: left,y:top,width:unitSize,height:unitSize,
+                    //x: left,y:top,width:unitSize,height:unitSize,
                     left: left,
                     right: left + unitSize,
                     top: top,
@@ -359,7 +359,7 @@ phina.define("MainScene", {
                 //if (rect.height <= 0 || rect.width <= 0) {
                 //    continue;
                 //}
-continue;
+//continue;
                 //if (rect.width > rect.height) {
                     //SoundManager.play('se_chakuchi');
                     //if (JUMP_FLG) {
