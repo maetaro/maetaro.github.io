@@ -186,7 +186,7 @@ phina.define("MainScene", {
                 (Math.round(e.direction.x * 100, 2) / 100) + " " + (Math.round(e.direction.y * 100, 2) / 100)
             ).addChildTo(self).setPosition(100, 100);
             cl.fontSize = 16;
-            player.vx = e.direction.x * 7;
+            player.vx = e.direction.x * 3.5;
             if (45 < angle && angle < 135) {
                 //label.text = 'angle: {0} -> しゃがむ'.format(angle);
             }
