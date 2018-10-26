@@ -422,9 +422,9 @@ phina.define('Player', {
             if (this.vx != null) {
                 this.x += this.vx;
             }
-            if (JUMP_FLG) {
+            //if (JUMP_FLG) {
                 this.vy += 0.3;
-            }
+            //}
             if (this.vy != null) {
                 this.y += this.vy;
             }
