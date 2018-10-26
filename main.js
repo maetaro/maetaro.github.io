@@ -343,7 +343,7 @@ phina.define("MainScene", {
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
                 let index = (r * collisionLayer.width) + c;
-this.soundLabel.text = collisionLayer.data[0];
+this.soundLabel.text = collisionLayer.data[index];
                 if (collisionLayer.data[0] == 1) continue;
                 let top = r * unitSize;
                 let left = c * unitSize;
