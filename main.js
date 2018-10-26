@@ -342,7 +342,7 @@ phina.define("MainScene", {
         const unitSize = 16 * this.map.scaleX;
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
-                /* //let index = r * collisionLayer.width + c;
+                //let index = r * collisionLayer.width + c;
                 //if (this.tmx.data[index] == -1) continue;
                 let top = r * unitSize;
                 let left = c * unitSize;
@@ -359,6 +359,7 @@ phina.define("MainScene", {
                 if (rect.height <= 0 || rect.width <= 0) {
                     continue;
                 }
+continue;
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
@@ -375,7 +376,7 @@ phina.define("MainScene", {
                     } else {
                         player.left = collisionRect.right;
                     }
-                }*/
+                }
             }
         }
     }
