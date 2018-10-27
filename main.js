@@ -4,7 +4,7 @@ phina.globalize();
 // 定数
 var ASSETS = {
     //画像
-    image:
+    image: {
         tomapiko: 'https://rawgit.com/phi-jp/phina.js/develop/assets/images/tomapiko_ss.png',
         tomato: 'assets/image/tomato.png',
         tomato_green: 'assets/image/tomato_green.png',
