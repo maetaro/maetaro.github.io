@@ -212,7 +212,7 @@ phina.define("MainScene", {
             this.mapBase.x = 0;
         }
         if (this.mapBase.x < -2600) {
-            this.mapBase.x = -2600;
+            //this.mapBase.x = -2600;
         }
         //if (this.player.x > SCREEN_WIDTH / 2) {
         //    let vx = this.player.vx;
@@ -220,7 +220,8 @@ phina.define("MainScene", {
         //    //    this.player.vx = 0;
         //    //}
         //    this.mapGroup.x -= vx;
-        //    this.mapBase.x -= vx;
+        //    this.mapBase.x -= vx;
+
         //    //this.blockGroup.children.each(function (block) {
         //    //    block.x -= vx;
         //    //    if (block.x < -100) {
