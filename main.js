@@ -9,7 +9,6 @@ var ASSETS = {
         tomato: 'assets/image/tomato.png',
         tomato_green: 'assets/image/tomato_green.png',
         tomato_yellow: 'assets/image/tomato_yellow.png',
-        block: 'assets/image/block.png',
     },
     sound: {
         bgm1: 'assets/sound/BGM114-110921-minnnadeyamanobori-wav.wav',
@@ -26,11 +25,13 @@ var ASSETS = {
         "map": "assets/tilemap/BRGFCMAP.tmx",
     },
 };
-// 定数
+// グローバル変数
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
 var JUMP_FLG = false; // ジャンプ中かどうか
+
+var time = 0;
 
 function intersect(a, b) {
     var x = Math.max(a.left, b.left);
@@ -102,6 +103,17 @@ phina.define("MainScene", {
         player.vy = -JUMP_POWOR;
         this.player = player;
 
+        var shape1 = RectangleShape().addChildTo(player);
+        var shape2 = RectangleShape().addChildTo(shape1);
+        shape2.fill = 'yellow';
+        shape2.width = 15;
+        shape2.height = 15;
+        this.shape1 = shape1;
+        this.shape1.height = 5;
+        this.shape1.width = 150;
+        shape2.setPosition(shape1.width/2,0);
+        this.shape1.fill = 'red';
+
         // トマト
         this.tomatoGroup = DisplayElement().addChildTo(this.mapGroup);
         var self = this;
@@ -127,30 +139,6 @@ phina.define("MainScene", {
             setTimeout(addTomatoLoop, x);
         }
         addTomatoLoop();
-
-        // ブロック
-        this.blockGroup = DisplayElement().addChildTo(this.mapGroup);
-        this.addBlock = function (x, y) {
-            var block = Sprite("block").addChildTo(self.blockGroup);
-            block.origin.set(0, 0); // 左上基準に変更
-            block.setPosition(x, y);
-            block.collider.show();
-            //var block2 = Sprite("block").addChildTo(self.blockGroup);
-            //block2.origin.set(0, 0); // 左上基準に変更
-            //block2.setPosition(SCREEN_WIDTH + 50, 400 - block2.height);
-            //block2.collider.show();
-        };
-
-        //(100).times(function (i) {
-        //    self.addBlock(i * 30, 600);
-        //})
-        //this.addBlock();
-        //var addBlockLoop = function () {
-        //    self.addBlock();
-        //    var x = 2000 + (Random.random() * 4000);
-        //    setTimeout(addBlockLoop, x);
-        //}
-        //addBlockLoop();
 
         // 画面上でのタッチ移動時
         this.onpointmove = function (e) {
@@ -201,6 +189,9 @@ phina.define("MainScene", {
     // 更新
     update: function (app) {
 
+        // 経過時間更新
+        time += app.deltaTime;
+
         //背景画像の移動
         this.player.x = SCREEN_WIDTH / 2;
         let vx = this.player.vx;
@@ -222,13 +213,6 @@ phina.define("MainScene", {
         //    this.mapGroup.x -= vx;
         //    this.mapBase.x -= vx;
 
-        //    //this.blockGroup.children.each(function (block) {
-        //    //    block.x -= vx;
-        //    //    if (block.x < -100) {
-        //    //        //block.x = SCREEN_WIDTH;
-        //    //        block.remove();
-        //    //    }
-        //    //})
         //    //this.tomatoGroup.children.each(function (tomato) {
         //    //    tomato.x -= vx;
         //    //    if (tomato.x < -100) {
@@ -270,40 +254,6 @@ phina.define("MainScene", {
 
         var self = this;
 
-        // 判定用の円
-        var collisionByPlayerAndBlock = function collisionByPlayerAndBlock(a, b, self) {
-            if (a.collider.hitTest(b.collider)) {
-                //var w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
-                //var h = Math.min(a.top, b.top) - Math.max(a.bottom, b.bottom);
-                // ベクトルの大きさ
-                var quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
-                var angle = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
-                a.latestPos = { x: a.x, y: a.y };
-
-                var rect = intersect(a.collider.getAbsoluteRect(), b.collider.getAbsoluteRect());
-                if (rect.width > rect.height) {
-                    SoundManager.play('se_chakuchi');
-                    if (JUMP_FLG) {
-                        JUMP_FLG = false;
-                        player.anim.gotoAndPlay('right');
-                        player.scaleX *= -1;
-                    }
-                    player.vy = 0;
-                    a.bottom = b.top;
-                } else {
-                    a.vx = 0;
-                    if (a.x <= b.x) {
-                        a.right = b.left + (a.width - a.collider.getAbsoluteRect().width) / 2;
-                    } else {
-                        a.left = b.right;
-                    }
-                }
-            }
-        };
-        this.blockGroup.children.each(function (block) {
-            collisionByPlayerAndBlock(player, block, self);
-        });
-
         var hitTestTomato = function collisionByPlayerAndTomato(a, b, self) {
             var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
             var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
@@ -313,8 +263,6 @@ phina.define("MainScene", {
                 self.combo += 1;
                 self.score += self.combo * 100;
                 var c = ComboLabel(self.combo).addChildTo(self);
-                //c.x = self.gridX.span(12) + Math.randint(-50, 50);
-                //c.y = self.gridY.span(12) + Math.randint(-50, 50);
                 c.x = b.x + 30;
                 c.y = b.y - 10;
                 b.remove();
@@ -330,27 +278,60 @@ phina.define("MainScene", {
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
                 let index = (r * collisionLayer.width) + c;
-if (collisionLayer.data[index] != -1) {
-  this.soundLabel.text = collisionLayer.data[index] + ' ' + index;
-}
-                if (collisionLayer.data[index] == -1) {continue;}
+                if (collisionLayer.data[index] == -1) {
+                    continue;
+                }
                 let top = r * unitSize;
                 let left = c * unitSize + this.mapBase.x;
-                //let collisionRect = {
-                    //x: left,y:top,width:unitSize,height:unitSize,
-                    //left: left,
-                    //right: left + unitSize,
-                    //top: top,
-                    //botom: top + unitSize,
-                //};
+
+                // 2点間の距離
+                let distance = Math.sqrt((player.x - left) * (player.x - left) + (player.y - top) * (player.y - top));
+                // 2点間の角度
+                let radian = Math.atan2(player.y - top, player.x - left);
+                let degree = radian * 180 / Math.PI;
+                // ベクトル量
+                let quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
+                // ベクトル角度
+                let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
+                let degree2 = radian2 * 180 / Math.PI * player.scaleX;
+                degree2 -= 180;
+                if (degree2 < 0) {
+                    degree2 += 360;
+                }
+                if (degree2 > 360) {
+                    degree2 -= 360;
+                }
+                
+                // if ((time % 100) == 0) {
+                //     console.log({
+                //         // top: top,
+                //         // left: left,
+                //         // distance: distance,
+                //         // radian: radian,
+                //         // degree: degree,
+                //         distance2: quantity,
+                //         radian2: radian2,
+                //         degree2: degree2
+                //     });
+                // }
+                this.shape1.rotation = -45;     //右斜め上 degree2;
+                this.shape1.rotation = -90;     //上       degree2;
+                this.shape1.rotation = -135;    //左斜め上       degree2;
+                this.shape1.rotation = -180;    //左       degree2;
+                this.shape1.rotation = 45;      //右斜め下       degree2;
+                this.shape1.rotation = 90;      //下       degree2;
+                this.shape1.rotation = degree2;
+                this.soundLabel.text = Math.round(degree2, 3);
+
                 let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
-                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) continue;
-                //if (!player.collider.hitTest(collisionRect)) continue;
+                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
+                    continue;
+                }
+
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
                 if (rect.height <= 0 || rect.width <= 0) {
                     continue;
                 }
-//continue;
                 if (rect.width > rect.height) {
                     SoundManager.play('se_chakuchi');
                     if (JUMP_FLG) {
@@ -417,28 +398,6 @@ phina.define('Player', {
             }
         }
     });
-
-
-// ブロック
-phina.define('Block', {
-    superClass: 'RectangleShape',
-    init: function (x, y) {
-        this.superInit(x, y);
-        this.width = 31;
-        this.height = 31;
-        this.x = x + this.width / 2;
-        this.y = y + this.height / 2;
-        this.fill = 'transparent';
-        this.stroke = 'gray';
-    },
-    hitPlayerShot: function (playerShot) {
-
-    },
-    hitEnemyShot: function (enemyShot) {
-
-    }
-});
-
 
 /*
  * コンボラベル
