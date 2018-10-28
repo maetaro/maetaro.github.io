@@ -109,7 +109,7 @@ phina.define("MainScene", {
         shape2.width = 15;
         shape2.height = 15;
         this.shape1 = shape1;
-        this.shape1.height = 5;
+        this.shape1.height = 2;
         this.shape1.width = 150;
         shape2.setPosition(shape1.width/2,0);
         this.shape1.fill = 'red';
@@ -202,8 +202,8 @@ phina.define("MainScene", {
         if (this.mapBase.x > 0) {
             this.mapBase.x = 0;
         }
-        if (this.mapBase.x < -2600) {
-            //this.mapBase.x = -2600;
+        if (this.mapBase.x < (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH) {
+            this.mapBase.x = (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH;
         }
         //if (this.player.x > SCREEN_WIDTH / 2) {
         //    let vx = this.player.vx;
@@ -294,7 +294,9 @@ phina.define("MainScene", {
                 // ベクトル角度
                 let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
                 let degree2 = radian2 * 180 / Math.PI * player.scaleX;
-                degree2 -= 180;
+                if (degree2 != 0) {
+                    degree2 -= 180;
+                }
                 if (degree2 < 0) {
                     degree2 += 360;
                 }
@@ -302,24 +304,6 @@ phina.define("MainScene", {
                     degree2 -= 360;
                 }
                 
-                // if ((time % 100) == 0) {
-                //     console.log({
-                //         // top: top,
-                //         // left: left,
-                //         // distance: distance,
-                //         // radian: radian,
-                //         // degree: degree,
-                //         distance2: quantity,
-                //         radian2: radian2,
-                //         degree2: degree2
-                //     });
-                // }
-                this.shape1.rotation = -45;     //右斜め上 degree2;
-                this.shape1.rotation = -90;     //上       degree2;
-                this.shape1.rotation = -135;    //左斜め上       degree2;
-                this.shape1.rotation = -180;    //左       degree2;
-                this.shape1.rotation = 45;      //右斜め下       degree2;
-                this.shape1.rotation = 90;      //下       degree2;
                 this.shape1.rotation = degree2;
                 this.soundLabel.text = Math.round(degree2, 3);
 
@@ -333,20 +317,28 @@ phina.define("MainScene", {
                     continue;
                 }
                 if (rect.width > rect.height) {
-                    SoundManager.play('se_chakuchi');
-                    if (JUMP_FLG) {
-                        JUMP_FLG = false;
-                        player.anim.gotoAndPlay('right');
-                        player.scaleX *= -1;
-                    }
                     player.vy = 0;
-                    player.bottom = collisionRect.y;
+                    if (player.y >= collisionRect.y) {
+                        // 自分の上側で接触
+                        player.top = collisionRect.y + collisionRect.height;
+                    } else {
+                        // 自分の下側で接触
+                        if (JUMP_FLG) {
+                            JUMP_FLG = false;
+                            SoundManager.play('se_chakuchi');
+                            player.anim.gotoAndPlay('right');
+                            player.scaleX *= -1;
+                        }
+                        player.bottom = collisionRect.y;
+                    }
                 } else {
                     player.vx = 0;
                     if (player.x <= collisionRect.x) {
-                        //player.right = collisionRect.left + (player.width - player.collider.getAbsoluteRect().width) / 2;
+                        // 自分の右側で接触
+                        player.x = collisionRect.x - (player.collider.getAbsoluteRect().width / 2);
                     } else {
-                        //player.left = collisionRect.right;
+                        // 自分の左側で接触
+                        player.x = collisionRect.x + (player.collider.getAbsoluteRect().width / 2);
                     }
                 }
             }
@@ -372,8 +364,8 @@ phina.define('Player', {
         update: function (app) {
             var key = app.keyboard;
             // 上下左右移動
-            if (key.getKey('left')) { this.vx = -3;  }
-            if (key.getKey('right')) { this.vx = 3; }
+            if (key.getKey('left')) { this.vx = -6;  }
+            if (key.getKey('right')) { this.vx = 6; }
             if (key.getKey('up')) {
                 SoundManager.play('se_jump');
                 if (!JUMP_FLG) {
