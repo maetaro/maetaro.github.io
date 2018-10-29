@@ -304,7 +304,12 @@ phina.define("MainScene", {
                     degree2 -= 360;
                 }
                 
-                this.shape1.rotation = degree2;
+                // todo:プレイヤーの進行方向と衝突時の2点間の角度で衝突した面を判定
+
+
+
+
+this.shape1.rotation = degree2;
                 this.soundLabel.text = Math.round(degree2, 3);
 
                 let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
