@@ -29,7 +29,6 @@ var SCALE = 2.5;
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
-var JUMP_FLG = false; // ジャンプ中かどうか
 
 var time = 0;
 
@@ -100,7 +99,7 @@ phina.define("MainScene", {
         player.collider
             //.setSize(player.width - 15, player.height)
             .show();
-        JUMP_FLG = true;
+        player.JUMP_FLG = true;
         player.anim.gotoAndPlay('fly');
         player.scaleX *= -1;
         player.vy = -JUMP_POWOR;
@@ -155,7 +154,7 @@ phina.define("MainScene", {
         // 画面タッチ時処理
         this.onpointend = function () {
             player.vx = 0;
-            if (!JUMP_FLG) {
+            if (!player.JUMP_FLG) {
                 player.anim.gotoAndPlay('right');
             }
             // プレイヤーの攻撃
@@ -180,8 +179,8 @@ phina.define("MainScene", {
             if (225 < angle && angle < 315) {
                 //label.text = 'angle: {0} -> ジャンプ'.format(angle);
                 SoundManager.play('se_jump');
-                if (!JUMP_FLG) {
-                    JUMP_FLG = true;
+                if (!player.JUMP_FLG) {
+                    player.JUMP_FLG = true;
                     player.anim.gotoAndPlay('fly');
                     player.scaleX *= -1;
                 }
@@ -196,6 +195,8 @@ phina.define("MainScene", {
 
     // 更新
     update: function (app) {
+
+        var self = this;
 
         // 経過時間更新
         time += app.deltaTime;
@@ -213,73 +214,37 @@ phina.define("MainScene", {
         if (this.mapBase.x < (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH) {
             this.mapBase.x = (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH;
         }
-        //if (this.player.x > SCREEN_WIDTH / 2) {
-        //    let vx = this.player.vx;
-        //    //if (this.player.vx > 0) {
-        //    //    this.player.vx = 0;
-        //    //}
-        //    this.mapGroup.x -= vx;
-        //    this.mapBase.x -= vx;
 
-        //    //this.tomatoGroup.children.each(function (tomato) {
-        //    //    tomato.x -= vx;
-        //    //    if (tomato.x < -100) {
-        //    //        //tomato.x = SCREEN_WIDTH;
-        //    //        tomato.remove();
-        //    //    }
-        //    //})
-        //}
-        //if (this.player.x < SCREEN_WIDTH / 2) {
-        //    let vx = this.player.vx;
-        //    if (vx != null) {
-        //        this.mapGroup.x += vx;
-        //        this.mapBase.x += vx;
-        //    }
-        //}
-
-
-        //プレイヤーのアニメーション
+        //プレイヤーの移動
         var player = this.player;
-        if (player.y > SCREEN_HEIGHT + 100) {  //地面に着地時
+        if (player.JUMP_FLG) {
+            player.vy += 0.3;
+        }
+        let nextPos = {
+            x:player.x + player.vx,
+            y: player.y + player.vy
+        }
+        let nextRect = phina.geom.Rect(nextPos.x, nextPos.y, player.collider.getAbsoluteRect().width, player.collider.getAbsoluteRect().height);
+
+        if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
             SoundManager.play('se_chakuchi');
-            player.y = SCREEN_HEIGHT + 100;
-            if (JUMP_FLG) {
-                JUMP_FLG = false;
+            nextPos.y = SCREEN_HEIGHT + 100;
+            if (player.JUMP_FLG) {
+                player.JUMP_FLG = false;
                 player.anim.gotoAndPlay('right');
                 player.scaleX *= -1;
             }
             player.vy = 0;
         }
-        if (player.y < 0) {
-            player.y = 0;
+        if (nextPos.y < 0) {
+            nextPos.y = 0;
         }
-        if (player.x < 0) {
-            player.x = 0;
+        if (nextPos.x < 0) {
+            nextPos.x = 0;
         }
-        if (player.x > SCREEN_WIDTH) {
-            player.x = SCREEN_WIDTH;
+        if (nextPos.x > SCREEN_WIDTH) {
+            nextPos.x = SCREEN_WIDTH;
         }
-
-        var self = this;
-
-        //var hitTestTomato = function collisionByPlayerAndTomato(a, b, self) {
-        //    var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
-        //    var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
-        //    // 円判定
-        //    if (Collision.testCircleCircle(c1, c2)) {
-        //        console.log("hit.");
-        //        self.combo += 1;
-        //        self.score += self.combo * 100;
-        //        var c = ComboLabel(self.combo).addChildTo(self);
-        //        c.x = b.x + 30;
-        //        c.y = b.y - 10;
-        //        b.remove();
-        //        SoundManager.play('se_gettomato');
-        //    }
-        //}
-        //this.tomatoGroup.children.each(function (tomato) {
-        //    hitTestTomato(player, tomato, self);
-        //});
 
         let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         const unitSize = 16 * this.map.scaleX;
@@ -292,65 +257,39 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize + this.mapBase.x;
 
-                // 2点間の距離
-                let distance = Math.sqrt((player.x - left) * (player.x - left) + (player.y - top) * (player.y - top));
-                // 2点間の角度
-                let radian = Math.atan2(player.y - top, player.x - left);
-                let degree = radian * 180 / Math.PI;
-                // ベクトル量
-                let quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
-                // ベクトル角度
-                let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
-                let degree2 = radian2 * 180 / Math.PI * player.scaleX;
-                if (degree2 != 0) {
-                    degree2 -= 180;
+                let blockRect = phina.geom.Rect(left, top, unitSize, unitSize);
+                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), blockRect)) {
+                    continue;
                 }
-                if (degree2 < 0) {
-                    degree2 += 360;
-                }
-                if (degree2 > 360) {
-                    degree2 -= 360;
-                }
+
+                let checkResult = player.collisionBlock(blockRect);
 
                 this.shape1.rotation = degree2;
-                this.soundLabel.text = Math.round(degree2, 3);
 
-                let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
-                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
-                    continue;
+                // プレイヤーの上で接触
+                if (checkResult.contactAt == "top") {
+                    // プレイヤーより上のブロックの底に位置を合わせる
+                    nextPos.top = blockRect.bottom;
                 }
-
-                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
-                if (rect.height <= 0 || rect.width <= 0) {
-                    continue;
+                // プレイヤーの下で接触
+                if (checkResult.contactAt == "bottom") {
+                    // チェック対象ブロックの上に乗る
+                    nextPos.bottom = blockRect.top;
                 }
-                if (rect.width > rect.height) {
-                    player.vy = 0;
-                    if (player.y >= collisionRect.y) {
-                        // 自分の上側で接触
-                        player.top = collisionRect.y + collisionRect.height;
-                    } else {
-                        // 自分の下側で接触
-                        if (JUMP_FLG) {
-                            JUMP_FLG = false;
-                            SoundManager.play('se_chakuchi');
-                            player.anim.gotoAndPlay('right');
-                            player.scaleX *= -1;
-                        }
-                        player.bottom = collisionRect.y - 30;
-                    }
-                } else {
-                    player.vx = 0;
-                    if (player.x <= collisionRect.x) {
-                        // 自分の右側で接触
-                        player.x = collisionRect.x - (player.collider.getAbsoluteRect().width / 2);
-                    } else {
-                        // 自分の左側で接触
-                        player.x = collisionRect.x + (player.collider.getAbsoluteRect().width / 2);
-                    }
+                // プレイヤーの左で接触
+                if (checkResult.contactAt == "left") {
+                    // プレイヤーの左をブロックの右に合わせる
+                    nextPos.left = blockRect.right;
+                }
+                // プレイヤーの右で接触
+                if (checkResult.contactAt == "left") {
+                    // プレイヤーの右をブロックの左に合わせる
+                    nextPos.right = blockRect.left;
                 }
             }
         }
+        player.x = nextPos.x;
+        player.y = nextPos.y;
     }
 });
 
@@ -367,6 +306,40 @@ phina.define('Player', {
         this.anim = FrameAnimation('player_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
+        this.topShape = RectangleShape().addChildTo(this);
+        this.topShape.fill = 'yellow';
+        this.topShape.width = 16;
+        this.topShape.height = 1;
+        this.topShape.setPosition(0, -8);
+        this.bottomShape = RectangleShape().addChildTo(this);
+        this.bottomShape.fill = 'yellow';
+        this.bottomShape.width = 16;
+        this.bottomShape.height = 1;
+        this.bottomShape.setPosition(0, 16);
+        this.leftShape = RectangleShape().addChildTo(this);
+        this.leftShape.fill = 'yellow';
+        this.leftShape.width = 1;
+        this.leftShape.height = 20;
+        this.leftShape.setPosition(-8, 4);
+        this.rightShape = RectangleShape().addChildTo(this);
+        this.rightShape.fill = 'yellow';
+        this.rightShape.width = 1;
+        this.rightShape.height = 20;
+        this.rightShape.setPosition(8, 4);
+
+        this.JUMP_FLG = false; // ジャンプ中かどうか
+        this.vx = 0;
+        this.vy = 0;
+        //var shape1 = RectangleShape().addChildTo(this);
+        //var shape2 = RectangleShape().addChildTo(shape1);
+        //shape2.fill = 'yellow';
+        //shape2.width = 15;
+        //shape2.height = 15;
+        //this.shape1 = shape1;
+        //this.shape1.height = 2;
+        //this.shape1.width = 150;
+        //shape2.setPosition(shape1.width / 2, 0);
+        //this.shape1.fill = 'red';
     },
     // 毎フレーム処理
     update: function (app) {
@@ -376,8 +349,8 @@ phina.define('Player', {
         if (key.getKey('right')) { this.vx = 6; }
         if (key.getKey('up')) {
             SoundManager.play('se_jump');
-            if (!JUMP_FLG) {
-                JUMP_FLG = true;
+            if (!this.JUMP_FLG) {
+                this.JUMP_FLG = true;
                 this.anim.gotoAndPlay('fly');
                 this.scaleX *= -1;
             }
@@ -387,14 +360,39 @@ phina.define('Player', {
         this.move();
     },
     move: function () {
-        if (this.vx != null) {
-            this.x += this.vx;
+        //if (this.vx != null) {
+        //    this.x += this.vx;
+        //}
+        ////if (JUMP_FLG) {
+        //    this.vy += 0.3;
+        ////}
+        //if (this.vy != null) {
+        //    this.y += this.vy;
+        //}
+    },
+    collisionBlock: function (rect) {
+        // 2点間の距離
+        let distance = Math.sqrt((nextPos.x - left) * (nextPos.x - left) + (nextPos.y - top) * (nextPos.y - top));
+        // 2点間の角度
+        let radian = Math.atan2(nextPos.y - top, nextPos.x - left);
+        let degree = radian * 180 / Math.PI;
+        // ベクトル量
+        let quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
+        // ベクトル角度
+        let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
+        let degree2 = radian2 * 180 / Math.PI * player.scaleX;
+        if (degree2 != 0) {
+            degree2 -= 180;
         }
-        if (JUMP_FLG) {
-            this.vy += 0.3;
+        if (degree2 < 0) {
+            degree2 += 360;
         }
-        if (this.vy != null) {
-            this.y += this.vy;
+        if (degree2 > 360) {
+            degree2 -= 360;
+        }
+        return {
+            collision: true,
+            contactAt: 'left',
         }
     },
     shot: function () {
