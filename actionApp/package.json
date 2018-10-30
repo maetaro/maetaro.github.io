@@ -1,0 +1,9 @@
+{
+  "name": "action-app",
+  "version": "0.0.0",
+  "description": "actionApp",
+  "main": "app.js",
+  "author": {
+    "name": "taro"
+  }
+}
