@@ -220,31 +220,8 @@ phina.define("MainScene", {
         if (player.JUMP_FLG) {
             player.vy += 0.3;
         }
-        let nextPos = {
-            x:player.x + player.vx,
-            y: player.y + player.vy
-        }
+        let nextPos = player.getNextPos();
         let nextRect = phina.geom.Rect(nextPos.x, nextPos.y, player.collider.getAbsoluteRect().width, player.collider.getAbsoluteRect().height);
-
-        if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
-            SoundManager.play('se_chakuchi');
-            nextPos.y = SCREEN_HEIGHT + 100;
-            if (player.JUMP_FLG) {
-                player.JUMP_FLG = false;
-                player.anim.gotoAndPlay('right');
-                player.scaleX *= -1;
-            }
-            player.vy = 0;
-        }
-        if (nextPos.y < 0) {
-            nextPos.y = 0;
-        }
-        if (nextPos.x < 0) {
-            nextPos.x = 0;
-        }
-        if (nextPos.x > SCREEN_WIDTH) {
-            nextPos.x = SCREEN_WIDTH;
-        }
 
         let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         const unitSize = 16 * this.map.scaleX;
@@ -264,17 +241,18 @@ phina.define("MainScene", {
 
                 let checkResult = player.collisionBlock(blockRect);
 
-                this.shape1.rotation = degree2;
+                //this.shape1.rotation = degree2;
 
                 // プレイヤーの上で接触
                 if (checkResult.contactAt == "top") {
                     // プレイヤーより上のブロックの底に位置を合わせる
-                    nextPos.top = blockRect.bottom;
+                    nextPos.y = blockRect.bottom;
                 }
                 // プレイヤーの下で接触
                 if (checkResult.contactAt == "bottom") {
                     // チェック対象ブロックの上に乗る
-                    nextPos.bottom = blockRect.top;
+                    nextPos.y = blockRect.top - player.height;
+                    nextPos.vy = 0;
                 }
                 // プレイヤーの左で接触
                 if (checkResult.contactAt == "left") {
@@ -282,7 +260,7 @@ phina.define("MainScene", {
                     nextPos.left = blockRect.right;
                 }
                 // プレイヤーの右で接触
-                if (checkResult.contactAt == "left") {
+                if (checkResult.contactAt == "right") {
                     // プレイヤーの右をブロックの左に合わせる
                     nextPos.right = blockRect.left;
                 }
@@ -370,17 +348,45 @@ phina.define('Player', {
         //    this.y += this.vy;
         //}
     },
+    getNextPos: function () {
+        let nextPos = {
+            x: this.x + this.vx,
+            y: this.y + this.vy
+        }
+
+        if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
+            SoundManager.play('se_chakuchi');
+            nextPos.y = SCREEN_HEIGHT + 100;
+            if (this.JUMP_FLG) {
+                this.JUMP_FLG = false;
+                this.anim.gotoAndPlay('right');
+                this.scaleX *= -1;
+            }
+            this.vy = 0;
+        }
+        if (nextPos.y < 0) {
+            nextPos.y = 0;
+        }
+        if (nextPos.x < 0) {
+            nextPos.x = 0;
+        }
+        if (nextPos.x > SCREEN_WIDTH) {
+            nextPos.x = SCREEN_WIDTH;
+        }
+        return nextPos;
+    },
     collisionBlock: function (rect) {
+        let nextPos = this.getNextPos();
         // 2点間の距離
-        let distance = Math.sqrt((nextPos.x - left) * (nextPos.x - left) + (nextPos.y - top) * (nextPos.y - top));
+        let distance = Math.sqrt((nextPos.x - rect.x) * (nextPos.x - rect.x) + (nextPos.y - rect.y) * (nextPos.y - rect.y));
         // 2点間の角度
-        let radian = Math.atan2(nextPos.y - top, nextPos.x - left);
+        let radian = Math.atan2(nextPos.y - rect.y, nextPos.x - rect.x);
         let degree = radian * 180 / Math.PI;
         // ベクトル量
-        let quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
+        let quantity = Math.sqrt(Math.pow(this.vx, 2), Math.pow(this.vy, 2));
         // ベクトル角度
-        let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
-        let degree2 = radian2 * 180 / Math.PI * player.scaleX;
+        let radian2 = Math.atan2(this.vy - 0, this.vx - 0);
+        let degree2 = radian2 * 180 / Math.PI * this.scaleX;
         if (degree2 != 0) {
             degree2 -= 180;
         }
@@ -390,9 +396,10 @@ phina.define('Player', {
         if (degree2 > 360) {
             degree2 -= 360;
         }
+        console.log(degree);
         return {
             collision: true,
-            contactAt: 'left',
+            contactAt: 'bottom',
         }
     },
     shot: function () {

@@ -33,12 +33,7 @@
     <Compile Include="main.js" />
     <Compile Include="phina.js\v0.2.0\build\phina.js" />
     <Compile Include="phina.tiledmap.js" />
-    <Content Include="assets\image\bg.png" />
-    <Content Include="assets\image\block.png" />
     <Content Include="assets\image\player.png" />
-    <Content Include="assets\image\tomato.png" />
-    <Content Include="assets\image\tomato_green.png" />
-    <Content Include="assets\image\tomato_yellow.png" />
     <Content Include="assets\sound\BGM114-110921-minnnadeyamanobori-wav.wav" />
     <Content Include="assets\sound\se_chakuchi.wav" />
     <Content Include="assets\sound\se_damage.wav" />
