@@ -406,7 +406,13 @@ let p4 = {x: rect.x, y:rect.y + rect.height };
 let dev = (p2.y-p1.y)*(p4.x-p3.x)-(p2.x-p1.x)*(p4.y-p3.y);
 
 let d1, d2;
-d1 = (p3.y*p4.x
+d1 = (p3.y*p4.x-p3.x*p4.y)
+	d2 = (p1.y*p2.x-p1.x*p2.y)
+
+	ap1.x = d1*(p2.x-p1.x) - d2*(p4.x-p3.x)
+	ap1.x /= dev;
+	ap1.y = d1*(p2.y-p1.y) - d2*(p4.y-p3.y)
+	ap1.y /= dev;
 
 
 return {
