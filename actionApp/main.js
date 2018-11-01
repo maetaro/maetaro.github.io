@@ -252,7 +252,7 @@ phina.define("MainScene", {
                 if (checkResult.contactAt == "bottom") {
                     // チェック対象ブロックの上に乗る
                     player.JUMP_FLG = false;
-                    nextPos.y = blockRect.top + (player.height/2);
+                    nextPos.y = blockRect.top - 10 - player.collider.getAbsoluteRect().height;
                     player.vy = 0;
                 }
                 // プレイヤーの左で接触
@@ -285,26 +285,26 @@ phina.define('Player', {
         this.anim = FrameAnimation('player_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
-        this.topShape = RectangleShape().addChildTo(this);
-        this.topShape.fill = 'yellow';
-        this.topShape.width = 16;
-        this.topShape.height = 1;
-        this.topShape.setPosition(0, -8);
-        this.bottomShape = RectangleShape().addChildTo(this);
-        this.bottomShape.fill = 'yellow';
-        this.bottomShape.width = 16;
-        this.bottomShape.height = 1;
-        this.bottomShape.setPosition(0, 16);
-        this.leftShape = RectangleShape().addChildTo(this);
-        this.leftShape.fill = 'yellow';
-        this.leftShape.width = 1;
-        this.leftShape.height = 20;
-        this.leftShape.setPosition(-8, 4);
-        this.rightShape = RectangleShape().addChildTo(this);
-        this.rightShape.fill = 'yellow';
-        this.rightShape.width = 1;
-        this.rightShape.height = 20;
-        this.rightShape.setPosition(8, 4);
+        //this.topShape = RectangleShape().addChildTo(this);
+        //this.topShape.fill = 'yellow';
+        //this.topShape.width = 16;
+        //this.topShape.height = 1;
+        //this.topShape.setPosition(0, -8);
+        //this.bottomShape = RectangleShape().addChildTo(this);
+        //this.bottomShape.fill = 'yellow';
+        //this.bottomShape.width = 16;
+        //this.bottomShape.height = 1;
+        //this.bottomShape.setPosition(0, 16);
+        //this.leftShape = RectangleShape().addChildTo(this);
+        //this.leftShape.fill = 'yellow';
+        //this.leftShape.width = 1;
+        //this.leftShape.height = 20;
+        //this.leftShape.setPosition(-8, 4);
+        //this.rightShape = RectangleShape().addChildTo(this);
+        //this.rightShape.fill = 'yellow';
+        //this.rightShape.width = 1;
+        //this.rightShape.height = 20;
+        //this.rightShape.setPosition(8, 4);
 
         this.JUMP_FLG = false; // ジャンプ中かどうか
         this.vx = 0;
