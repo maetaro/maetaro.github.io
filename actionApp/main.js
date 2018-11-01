@@ -252,7 +252,7 @@ phina.define("MainScene", {
                 if (checkResult.contactAt == "bottom") {
                     // チェック対象ブロックの上に乗る
                     player.JUMP_FLG = false;
-                    nextPos.y = blockRect.top - (player.height/2);
+                    nextPos.y = blockRect.top + (player.height/2);
                     player.vy = 0;
                 }
                 // プレイヤーの左で接触
