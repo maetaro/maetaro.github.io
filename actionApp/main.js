@@ -251,6 +251,7 @@ phina.define("MainScene", {
                 // プレイヤーの下で接触
                 if (checkResult.contactAt == "bottom") {
                     // チェック対象ブロックの上に乗る
+                    player.JUMP_FLG = false;
                     nextPos.y = blockRect.top - player.height - 110;
                     player.vy = 0;
                 }
