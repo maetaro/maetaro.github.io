@@ -425,7 +425,7 @@ return {
     },
     shot: function () {
         this.anim.gotoAndPlay('shot');
-        let x = (this.scaleX > 0 ? this.right : this.left);
+        let x = (this.scaleX > 0 ? this.right + 20 : this.left);
         RockBuster({ x: x, y: this.y }).addChildTo(this.parent);
     }
 });
