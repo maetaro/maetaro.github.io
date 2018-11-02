@@ -149,6 +149,7 @@ phina.define("MainScene", {
             console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
             player.vx = (power > 0 ? -3 : 3);
+            player.scaleX = (power > 0 ? -1 : 1) * SCALE;
             player.anim.gotoAndPlay('run');
         };
         // 画面タッチ時処理
