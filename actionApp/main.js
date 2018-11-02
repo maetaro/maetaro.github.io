@@ -243,6 +243,10 @@ phina.define("MainScene", {
                     continue;
                 }
 
+                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
+logger(rect);
+
+
                 let checkResult = player.collisionBlock(blockRect);
 
                 //this.shape1.rotation = degree2;
