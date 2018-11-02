@@ -42,6 +42,7 @@ function intersect(a, b) {
     else
         return { x: 0, y: 0, width: 0, height: 0 };
 }
+
 /*
  * メインシーン
  */
@@ -91,6 +92,20 @@ phina.define("MainScene", {
                 e.target.text = "sound on";
             }
         };
+
+        // logテキスト
+        this.logText1 = Label().addChildTo(this).setPosition(100, 150);
+        this.logText2 = Label().addChildTo(this).setPosition(100, 200);
+        this.logText3 = Label().addChildTo(this).setPosition(100, 250);
+        this.logText4 = Label().addChildTo(this).setPosition(100, 300);
+        this.logText5 = Label().addChildTo(this).setPosition(100, 350);
+        this.logger = function (v) {
+            this.logText1.text = this.logText2.text;
+            this.logText2.text = this.logText3.text;
+            this.logText3.text = this.logText4.text;
+            this.logText4.text = this.logText5.text;
+            this.logText5.text = v;
+        }
 
         // プレイヤー
         var player = Player('player').addChildTo(this);
@@ -148,8 +163,17 @@ phina.define("MainScene", {
         this.onpointmove = function (e) {
             console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
-            player.vx = (power > 0 ? -3 : 3);
-            player.scaleX = (power > 0 ? -1 : 1) * SCALE;
+            if (power > 0) {
+                player.vx = -3;
+                if (player.scaleX > 0) {
+                    player.scaleX *= -1;
+                }
+            } else {
+                player.vx = 3;
+                if (player.scaleX < 0) {
+                    player.scaleX *= -1;
+                }
+            }
             player.anim.gotoAndPlay('run');
         };
         // 画面タッチ時処理
@@ -325,8 +349,13 @@ phina.define('Player', {
     update: function (app) {
         var key = app.keyboard;
         // 上下左右移動
-        if (key.getKey('left')) { this.vx = -6; }
-        if (key.getKey('right')) { this.vx = 6; }
+        //console.log(key);
+        if (key.getKey('left')) {
+            this.vx -= 3;
+        }
+        if (key.getKey('right')) {
+            this.vx += 3;
+        }
         if (key.getKey('up')) {
             SoundManager.play('se_jump');
             if (!this.JUMP_FLG) {
@@ -357,14 +386,14 @@ phina.define('Player', {
         }
 
         if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
-            SoundManager.play('se_chakuchi');
+            //SoundManager.play('se_chakuchi');
             nextPos.y = SCREEN_HEIGHT + 100;
-            if (this.JUMP_FLG) {
-                this.JUMP_FLG = false;
-                this.anim.gotoAndPlay('right');
-                this.scaleX *= -1;
-            }
-            this.vy = 0;
+            //if (this.JUMP_FLG) {
+            //    this.JUMP_FLG = false;
+            //    this.anim.gotoAndPlay('right');
+            //    this.scaleX *= -1;
+            //}
+            //this.vy = 0;
         }
         if (nextPos.y < 0) {
             nextPos.y = 0;
@@ -399,34 +428,69 @@ phina.define('Player', {
             degree2 -= 360;
         }
         console.log(degree);
-        
-//left
-let p1 = {x: this.x, y:this.y };
-let p2 = {x: nextPos.x, y:nextPos.y };
-let p3 = {x: rect.x - (rect.width/2), y:rect.y };
-let p4 = {x: rect.x - (rect.width/2), y:rect.y + rect.height };
 
-let dev = (p2.y-p1.y)*(p4.x-p3.x)-(p2.x-p1.x)*(p4.y-p3.y);
+        let calc = function (p1, p2, p3, p4) {
+            let dev = (p2.y - p1.y) * (p4.x - p3.x) - (p2.x - p1.x) * (p4.y - p3.y);
+            if (dev == 0) {
+                return { dev: dev, ap1: {x:null,y:null} };
+            }
+            let d1, d2;
+            d1 = (p3.y * p4.x - p3.x * p4.y);
+            d2 = (p1.y * p2.x - p1.x * p2.y);
+            let ap1 = {};
+            ap1.x = d1 * (p2.x - p1.x) - d2 * (p4.x - p3.x)
+            ap1.x /= dev;
+            ap1.y = d1 * (p2.y - p1.y) - d2 * (p4.y - p3.y)
+            ap1.y /= dev;
+            return { dev: dev, ap1: ap1 };
+        }
 
-let d1, d2;
-d1 = (p3.y*p4.x-p3.x*p4.y);
-	d2 = (p1.y*p2.x-p1.x*p2.y);
-let ap1 = {};
-	ap1.x = d1*(p2.x-p1.x) - d2*(p4.x-p3.x)
-	ap1.x /= dev;
-	ap1.y = d1*(p2.y-p1.y) - d2*(p4.y-p3.y)
-	ap1.y /= dev;
+        //top
+        let p1 = { x: this.x, y: this.y };
+        let p2 = { x: nextPos.x, y: nextPos.y };
+        let p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
+        let p4 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
+        let top = calc(p1, p2, p3, p4);
+        console.log(["top", top.dev, top.ap1.x, top.ap1.y]);
 
+        //bottom
+        p1 = { x: this.x, y: this.y };
+        p2 = { x: nextPos.x, y: nextPos.y };
+        p3 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
+        p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
+        let bottom = calc(p1, p2, p3, p4);
+        console.log(["bottom", bottom.dev, bottom.ap1.x, bottom.ap1.y]);
 
-return {
+        //left
+        p1 = { x: this.x, y: this.y };
+        p2 = { x: nextPos.x, y: nextPos.y };
+        p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
+        p4 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
+        let left = calc(p1, p2, p3, p4);
+        console.log(["left", left.dev, left.ap1.x, left.ap1.y]);
+
+        //right
+        p1 = { x: this.x, y: this.y };
+        p2 = { x: nextPos.x, y: nextPos.y };
+        p3 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
+        p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
+        let right = calc(p1, p2, p3, p4);
+        console.log(["right", right.dev, right.ap1.x, right.ap1.y]);
+
+        if (top.dev > 0) {
+
+        } else if (bottom.dev > 0) {
+
+        }
+
+        return {
             collision: true,
             contactAt: 'bottom',
         }
     },
     shot: function () {
         this.anim.gotoAndPlay('shot');
-        let x = (this.scaleX > 0 ? this.right + 20 : this.left);
-        RockBuster({ x: x, y: this.y }).addChildTo(this.parent);
+        RockBuster({ x: this.x, y: this.y }).addChildTo(this.parent);
     }
 });
 
