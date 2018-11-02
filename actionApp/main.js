@@ -253,7 +253,7 @@ phina.define("MainScene", {
                 }
 
                 var rect2 = intersect(player.collider.getAbsoluteRect(), blockRect);
-logger(rect2);
+                //logger(rect2);
 
 
                 let checkResult = player.collisionBlock(blockRect);
