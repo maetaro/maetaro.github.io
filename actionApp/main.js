@@ -94,11 +94,16 @@ phina.define("MainScene", {
         };
 
         // logテキスト
-        this.logText1 = Label().addChildTo(this).setPosition(100, 150);
-        this.logText2 = Label().addChildTo(this).setPosition(100, 200);
-        this.logText3 = Label().addChildTo(this).setPosition(100, 250);
-        this.logText4 = Label().addChildTo(this).setPosition(100, 300);
-        this.logText5 = Label().addChildTo(this).setPosition(100, 350);
+        this.logText1 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 0));
+        this.logText2 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 1));
+        this.logText3 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 2));
+        this.logText4 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 3));
+        this.logText5 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 4));
+        this.logText1.fontSize = 18;
+        this.logText2.fontSize = 18;
+        this.logText3.fontSize = 18;
+        this.logText4.fontSize = 18;
+        this.logText5.fontSize = 18;
         this.logger = function (v) {
             this.logText1.text = this.logText2.text;
             this.logText2.text = this.logText3.text;
@@ -133,43 +138,17 @@ phina.define("MainScene", {
         shape1.hide();
         shape2.hide();
 
-        //// トマト
-        //this.tomatoGroup = DisplayElement().addChildTo(this.mapGroup);
-        //var self = this;
-        //this.addTomato = function () {
-        //    var tname = "tomato";
-        //    var r = Random.random();
-        //    if (r <= 0.3) {
-        //        tname = "tomato_green";
-        //    } else if (r <= 0.6) {
-        //        tname = "tomato_yellow";
-        //    } else {
-        //        tname = "tomato";
-        //    }
-        //    var tomato = Sprite(tname).addChildTo(self.tomatoGroup);
-        //    tomato.origin.set(0, 0); // 左上基準に変更
-        //    tomato.setPosition(SCREEN_WIDTH + 50, 400);
-        //    tomato.collider.show();
-        //}
-        //this.addTomato();
-        //var addTomatoLoop = function () {
-        //    self.addTomato();
-        //    var x = 2000 + (Random.random() * 3000);
-        //    setTimeout(addTomatoLoop, x);
-        //}
-        //addTomatoLoop();
-
         // 画面上でのタッチ移動時
         this.onpointmove = function (e) {
-            console.log(e);
+            //console.log(e);
             let power = e.pointer.startPosition.x - e.pointer.position.x;
             if (power > 0) {
-                player.vx = -3;
+                player.vx = -1;
                 if (player.scaleX > 0) {
                     player.scaleX *= -1;
                 }
             } else {
-                player.vx = 3;
+                player.vx = 1;
                 if (player.scaleX < 0) {
                     player.scaleX *= -1;
                 }
@@ -427,7 +406,7 @@ phina.define('Player', {
         if (degree2 > 360) {
             degree2 -= 360;
         }
-        console.log(degree);
+        this.parent.logger(degree);
 
         let calc = function (p1, p2, p3, p4) {
             let dev = (p2.y - p1.y) * (p4.x - p3.x) - (p2.x - p1.x) * (p4.y - p3.y);
@@ -451,7 +430,7 @@ phina.define('Player', {
         let p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
         let p4 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
         let top = calc(p1, p2, p3, p4);
-        console.log(["top", top.dev, top.ap1.x, top.ap1.y]);
+        this.parent.logger(["top", top.dev, top.ap1.x, top.ap1.y]);
 
         //bottom
         p1 = { x: this.x, y: this.y };
