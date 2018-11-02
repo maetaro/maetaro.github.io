@@ -99,18 +99,27 @@ phina.define("MainScene", {
         this.logText3 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 2));
         this.logText4 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 3));
         this.logText5 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 4));
+        this.logText6 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 5));
+        this.logText7 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 6));
+        this.logText8 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 7));
         this.logText1.fontSize = 18;
         this.logText2.fontSize = 18;
         this.logText3.fontSize = 18;
         this.logText4.fontSize = 18;
         this.logText5.fontSize = 18;
+        this.logText6.fontSize = 18;
+        this.logText7.fontSize = 18;
+        this.logText8.fontSize = 18;
         this.logger = function (v) {
             this.logText1.text = this.logText2.text;
             this.logText2.text = this.logText3.text;
             this.logText3.text = this.logText4.text;
             this.logText4.text = this.logText5.text;
-            this.logText5.text = v;
-        }
+            this.logText5.text = this.logText6.text;
+            this.logText6.text = this.logText7.text;
+            this.logText7.text = this.logText8.text;
+            this.logText8.text = v;
+       }
 
         // プレイヤー
         var player = Player('player').addChildTo(this);
