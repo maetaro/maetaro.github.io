@@ -252,7 +252,7 @@ phina.define("MainScene", {
                     continue;
                 }
 
-                var rect2 = intersect(player.collider.getAbsoluteRect(), blockRect);
+                //var rect2 = intersect(player.collider.getAbsoluteRect(), blockRect);
                 //logger(rect2);
 
 
