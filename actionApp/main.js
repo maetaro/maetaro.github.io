@@ -403,7 +403,10 @@ phina.define('Player', {
     collisionBlock: function (rect) {
         let nextPos = this.getNextPos();
         // 2点間の距離
-        let distance = Math.sqrt((nextPos.x - rect.x) * (nextPos.x - rect.x) + (nextPos.y - rect.y) * (nextPos.y - rect.y));
+        let getDistance = function(a, b) {
+            return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+        }
+        let distance = getDitance(rect, nextPos);
         // 2点間の角度
         let radian = Math.atan2(nextPos.y - rect.y, nextPos.x - rect.x);
         let degree = radian * 180 / Math.PI;
@@ -472,9 +475,29 @@ phina.define('Player', {
         console.log(["right", right.dev, right.ap1.x, right.ap1.y]);
 
         if (top.dev > 0) {
-
-        } else if (bottom.dev > 0) {
-
+            if (getDistance(nextPos, top.ap1) > getDistance(nextPos, bottom.ap1) {
+                return {
+                    collision: true,
+                    contactAt: 'bottom',
+                }       
+            } else {
+                return {
+                    collision: true,
+                    contactAt: 'top',
+                }       
+            }
+        } else if (left.dev > 0) {
+            if (getDistance(nextPos, left.ap1) > getDistance(nextPos, right.ap1) {
+                return {
+                    collision: true,
+                    contactAt: 'right',
+                }       
+            } else {
+                return {
+                    collision: true,
+                    contactAt: 'left',
+                }       
+            }
         }
 
         return {
