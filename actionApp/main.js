@@ -1,3 +1,5 @@
+try {
+
 // グローバルに展開
 phina.globalize();
 
@@ -583,3 +585,7 @@ phina.main(function () {
     // 実行
     app.run();
 });
+
+} catch (ex) {
+alert(ex);
+}
