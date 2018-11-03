@@ -456,7 +456,7 @@ phina.define('Player', {
         p3 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
         p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
         let bottom = calc(p1, p2, p3, p4);
-        console.log(["bottom", bottom.dev, bottom.ap1.x, bottom.ap1.y]);
+        this.parent.logger(["bottom", bottom.dev, bottom.ap1.x, bottom.ap1.y]);
 
         //left
         p1 = { x: this.x, y: this.y };
@@ -464,7 +464,7 @@ phina.define('Player', {
         p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
         p4 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
         let left = calc(p1, p2, p3, p4);
-        console.log(["left", left.dev, left.ap1.x, left.ap1.y]);
+        this.parent.logger(["left", left.dev, left.ap1.x, left.ap1.y]);
 
         //right
         p1 = { x: this.x, y: this.y };
@@ -472,7 +472,7 @@ phina.define('Player', {
         p3 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
         p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
         let right = calc(p1, p2, p3, p4);
-        console.log(["right", right.dev, right.ap1.x, right.ap1.y]);
+        this.parent.logger(["right", right.dev, right.ap1.x, right.ap1.y]);
 
         if (top.dev > 0) {
             if (getDistance(nextPos, top.ap1) > getDistance(nextPos, bottom.ap1) {
