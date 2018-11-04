@@ -27,7 +27,7 @@ var ASSETS = {
     },
 };
 // グローバル変数
-var SCALE = 2.5;
+    var SCALE = 1; //2.5;
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
@@ -112,6 +112,14 @@ phina.define("MainScene", {
         this.logText6.fontSize = 18;
         this.logText7.fontSize = 18;
         this.logText8.fontSize = 18;
+        this.logText1.hide();
+        this.logText2.hide();
+        this.logText3.hide();
+        this.logText4.hide();
+        this.logText5.hide();
+        this.logText6.hide();
+        this.logText7.hide();
+        this.logText8.hide();
         this.logger = function (v) {
             this.logText1.text = this.logText2.text;
             this.logText2.text = this.logText3.text;
@@ -236,7 +244,8 @@ phina.define("MainScene", {
             player.vy += 0.3;
         }
         let nextPos = player.getNextPos();
-        let nextRect = phina.geom.Rect(nextPos.x, nextPos.y, player.collider.getAbsoluteRect().width, player.collider.getAbsoluteRect().height);
+        let currRect = phina.geom.Rect(player.x, player.y, player.collider.getAbsoluteRect().width * Math.abs(player.scaleX), player.collider.getAbsoluteRect().height * player.scaleY);
+        let nextRect = phina.geom.Rect(nextPos.x, nextPos.y, player.collider.getAbsoluteRect().width * Math.abs(player.scaleX), player.collider.getAbsoluteRect().height * player.scaleY);
 
         let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         const unitSize = 16 * this.map.scaleX;
@@ -250,10 +259,14 @@ phina.define("MainScene", {
                 let left = c * unitSize + this.mapBase.x;
 
                 let blockRect = phina.geom.Rect(left, top, unitSize, unitSize);
-                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), blockRect)) {
-                    continue;
+                //if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), blockRect)) {
+                if (!phina.geom.Collision.testRectRect(nextRect, blockRect)) {
+                   continue;
                 }
 
+                if (collisionLayer.data[index] == 11) {
+                    let x = "";
+                }
                 //var rect2 = intersect(player.collider.getAbsoluteRect(), blockRect);
                 //logger(rect2);
 
@@ -261,6 +274,7 @@ phina.define("MainScene", {
                 let checkResult = player.collisionBlock(blockRect);
 
                 //this.shape1.rotation = degree2;
+                this.logger(checkResult.contactAt);
 
                 // プレイヤーの上で接触
                 if (checkResult.contactAt == "top") {
@@ -288,6 +302,9 @@ phina.define("MainScene", {
         }
         player.x = nextPos.x;
         player.y = nextPos.y;
+        if (player.y > 718) {
+            player.y = 718;
+        }
     }
 });
 
@@ -304,6 +321,9 @@ phina.define('Player', {
         this.anim = FrameAnimation('player_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
+        this.label1 = Label().addChildTo(this);
+        this.label1.fontSize = 10;
+        this.label1.setPosition(this.label1.x, this.label1.y - this.height);
         //this.topShape = RectangleShape().addChildTo(this);
         //this.topShape.fill = 'yellow';
         //this.topShape.width = 16;
@@ -361,6 +381,7 @@ phina.define('Player', {
         }
         //if (key.getKey('down')) { this.vy = 3; }
         this.move();
+        this.label1.text = this.x + " " + this.y;
     },
     move: function () {
         //if (this.vx != null) {
@@ -406,7 +427,7 @@ phina.define('Player', {
         let getDistance = function(a, b) {
             return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
         }
-        let distance = getDitance(rect, nextPos);
+        let distance = getDistance(rect, nextPos);
         // 2点間の角度
         let radian = Math.atan2(nextPos.y - rect.y, nextPos.x - rect.x);
         let degree = radian * 180 / Math.PI;
@@ -448,7 +469,7 @@ phina.define('Player', {
         let p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
         let p4 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
         let top = calc(p1, p2, p3, p4);
-        this.parent.logger(["top", top.dev, top.ap1.x, top.ap1.y]);
+        //this.parent.logger(["top", top.dev, top.ap1.x, top.ap1.y]);
 
         //bottom
         p1 = { x: this.x, y: this.y };
@@ -456,7 +477,7 @@ phina.define('Player', {
         p3 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
         p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
         let bottom = calc(p1, p2, p3, p4);
-        this.parent.logger(["bottom", bottom.dev, bottom.ap1.x, bottom.ap1.y]);
+        //this.parent.logger(["bottom", bottom.dev, bottom.ap1.x, bottom.ap1.y]);
 
         //left
         p1 = { x: this.x, y: this.y };
@@ -464,7 +485,7 @@ phina.define('Player', {
         p3 = { x: rect.x - (rect.width / 2), y: rect.y - (rect.height / 2) };
         p4 = { x: rect.x - (rect.width / 2), y: rect.y + (rect.height / 2) };
         let left = calc(p1, p2, p3, p4);
-        this.parent.logger(["left", left.dev, left.ap1.x, left.ap1.y]);
+        //this.parent.logger(["left", left.dev, left.ap1.x, left.ap1.y]);
 
         //right
         p1 = { x: this.x, y: this.y };
@@ -472,10 +493,10 @@ phina.define('Player', {
         p3 = { x: rect.x + (rect.width / 2), y: rect.y - (rect.height / 2) };
         p4 = { x: rect.x + (rect.width / 2), y: rect.y + (rect.height / 2) };
         let right = calc(p1, p2, p3, p4);
-        this.parent.logger(["right", right.dev, right.ap1.x, right.ap1.y]);
+        //this.parent.logger(["right", right.dev, right.ap1.x, right.ap1.y]);
 
         if (top.dev > 0) {
-            if (getDistance(nextPos, top.ap1) > getDistance(nextPos, bottom.ap1) {
+            if (getDistance(nextPos, top.ap1) > getDistance(nextPos, bottom.ap1)) {
                 return {
                     collision: true,
                     contactAt: 'bottom',
@@ -487,7 +508,7 @@ phina.define('Player', {
                 }       
             }
         } else if (left.dev > 0) {
-            if (getDistance(nextPos, left.ap1) > getDistance(nextPos, right.ap1) {
+            if (getDistance(nextPos, left.ap1) > getDistance(nextPos, right.ap1)) {
                 return {
                     collision: true,
                     contactAt: 'right',
