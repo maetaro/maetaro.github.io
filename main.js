@@ -29,7 +29,6 @@ var ASSETS = {
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
-var JUMP_FLG = false; // ジャンプ中かどうか
 
 var time = 0;
 
@@ -43,6 +42,7 @@ function intersect(a, b) {
     else
         return { x: 0, y: 0, width: 0, height: 0 };
 }
+
 /*
  * メインシーン
  */
@@ -97,7 +97,7 @@ phina.define("MainScene", {
         player.collider
             .setSize(player.width - 15, player.height)
             .show();
-        JUMP_FLG = true;
+        player.JUMP_FLG = true;
         player.anim.gotoAndPlay('fly');
         player.scaleX *= -1;
         player.vy = -JUMP_POWOR;
@@ -149,7 +149,7 @@ phina.define("MainScene", {
         // 画面タッチ時処理
         this.onpointend = function () {
             player.vx = 0;
-            if (!JUMP_FLG) {
+            if (!player.JUMP_FLG) {
                 player.anim.gotoAndPlay('right');
             }
         }
@@ -172,8 +172,8 @@ phina.define("MainScene", {
             if (225 < angle && angle < 315) {
                 //label.text = 'angle: {0} -> ジャンプ'.format(angle);
                 SoundManager.play('se_jump');
-                if (!JUMP_FLG) {
-                    JUMP_FLG = true;
+                if (!player.JUMP_FLG) {
+                    player.JUMP_FLG = true;
                     player.anim.gotoAndPlay('fly');
                     player.scaleX *= -1;
                 }
@@ -235,8 +235,8 @@ phina.define("MainScene", {
         if (player.y > SCREEN_HEIGHT + 100) {  //地面に着地時
             SoundManager.play('se_chakuchi');
             player.y = SCREEN_HEIGHT + 100;
-            if (JUMP_FLG) {
-                JUMP_FLG = false;
+            if (player.JUMP_FLG) {
+                player.JUMP_FLG = false;
                 player.anim.gotoAndPlay('right');
                 player.scaleX *= -1;
             }
@@ -323,8 +323,8 @@ phina.define("MainScene", {
                         player.top = collisionRect.y + collisionRect.height;
                     } else {
                         // 自分の下側で接触
-                        if (JUMP_FLG) {
-                            JUMP_FLG = false;
+                        if (player.JUMP_FLG) {
+                            player.JUMP_FLG = false;
                             SoundManager.play('se_chakuchi');
                             player.anim.gotoAndPlay('right');
                             player.scaleX *= -1;
@@ -359,6 +359,7 @@ phina.define('Player', {
             this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
             // 初期アニメーション指定
             this.anim.gotoAndPlay('right');
+            this.JUMP_FLG = false; // ジャンプ中かどうか
         },
         // 毎フレーム処理
         update: function (app) {
@@ -368,8 +369,8 @@ phina.define('Player', {
             if (key.getKey('right')) { this.vx = 6; }
             if (key.getKey('up')) {
                 SoundManager.play('se_jump');
-                if (!JUMP_FLG) {
-                    JUMP_FLG = true;
+                if (!this.JUMP_FLG) {
+                    this.JUMP_FLG = true;
                     this.anim.gotoAndPlay('fly');
                     this.scaleX *= -1;
                 }
