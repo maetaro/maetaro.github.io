@@ -58,11 +58,12 @@ phina.define("MainScene", {
         this.map.setScale(2, 2);
 
         // サウンドラベル
-        this.soundLabel = Label({ text: 'sound off' }).addChildTo(this);
-        this.soundLabel.setPosition(100, 100);
+        this.soundLabel = Label({ text: 'sound off' })
+            .setSize(140, 50)
+            .setPosition(100, 100)
+            .setInteractive(true)// タッチ可能にする
+            .addChildTo(this);
         this.soundLabel.collider.show();
-        // タッチ可能にする
-        this.soundLabel.setInteractive(true);
         // タッチイベント登録
         this.soundLabel.onpointstart = function (e) {
             //alert('タッチされました');
@@ -189,16 +190,10 @@ phina.define("MainScene", {
             this.mapBase.x = (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH;
         }
 
-        //プレイヤーのアニメーション
+        //プレイヤーが画面をはみ出さないように位置を調整
         var player = this.player;
-        if (player.y > SCREEN_HEIGHT + 100) {  //地面に着地時
-            SoundManager.play('se_chakuchi');
+        if (player.y > SCREEN_HEIGHT + 100) {  //画面最下部に着地時
             player.y = SCREEN_HEIGHT + 100;
-            if (player.JUMP_FLG) {
-                player.JUMP_FLG = false;
-                player.anim.gotoAndPlay('right');
-                player.scaleX *= -1;
-            }
             player.vy = 0;
         }
         if (player.y < 0) {
@@ -264,7 +259,6 @@ phina.define("MainScene", {
                 }
                 
                 this.shape1.rotation = degree2;
-                this.soundLabel.text = Math.round(degree2, 3);
 
                 let collisionRect = Rect(left, top, unitSize, unitSize);
                 if (!Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
