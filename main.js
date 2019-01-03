@@ -28,7 +28,6 @@ var ASSETS = {
 // グローバル変数
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
-var JUMP_POWOR = 10; // ジャンプ力
 
 var time = 0;
 
@@ -100,7 +99,7 @@ phina.define("MainScene", {
         player.JUMP_FLG = true;
         player.anim.gotoAndPlay('fly');
         player.scaleX *= -1;
-        player.vy = -JUMP_POWOR;
+        player.vy = player.JUMP_POWOR * -1;
         this.player = player;
 
         var shape1 = RectangleShape().addChildTo(player);
@@ -177,7 +176,7 @@ phina.define("MainScene", {
                     player.anim.gotoAndPlay('fly');
                     player.scaleX *= -1;
                 }
-                player.vy = -JUMP_POWOR;
+                player.vy = player.JUMP_POWOR * -1;
                 player.y -= 10;
             }
         };
@@ -360,6 +359,7 @@ phina.define('Player', {
             // 初期アニメーション指定
             this.anim.gotoAndPlay('right');
             this.JUMP_FLG = false; // ジャンプ中かどうか
+            this.JUMP_POWOR = 10; // ジャンプ力
         },
         // 毎フレーム処理
         update: function (app) {
@@ -374,7 +374,7 @@ phina.define('Player', {
                     this.anim.gotoAndPlay('fly');
                     this.scaleX *= -1;
                 }
-                this.vy = -JUMP_POWOR;
+                this.vy = this.JUMP_POWOR * -1;
             }
             //if (key.getKey('down')) { this.vy = 3; }
             this.move();
