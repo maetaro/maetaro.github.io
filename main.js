@@ -29,8 +29,6 @@ var ASSETS = {
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 
-var time = 0;
-
 function intersect(a, b) {
     var x = Math.max(a.left, b.left);
     var num1 = Math.min(a.right, b.right);
@@ -153,11 +151,11 @@ phina.define("MainScene", {
             }
         }
 
+        // フリック
         var flickable = Flickable().attachTo(this);
         // 動かさない
         flickable.horizontal = false;
         flickable.vertical = false;
-
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
             let cl = ComboLabel(
@@ -188,9 +186,6 @@ phina.define("MainScene", {
     // 更新
     update: function (app) {
 
-        // 経過時間更新
-        time += app.deltaTime;
-
         //背景画像の移動
         this.player.x = SCREEN_WIDTH / 2;
         let vx = this.player.vx;
@@ -204,30 +199,6 @@ phina.define("MainScene", {
         if (this.mapBase.x < (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH) {
             this.mapBase.x = (this.tmx.width * 16 * this.map.scaleX * -1) + SCREEN_WIDTH;
         }
-        //if (this.player.x > SCREEN_WIDTH / 2) {
-        //    let vx = this.player.vx;
-        //    //if (this.player.vx > 0) {
-        //    //    this.player.vx = 0;
-        //    //}
-        //    this.mapGroup.x -= vx;
-        //    this.mapBase.x -= vx;
-
-        //    //this.tomatoGroup.children.each(function (tomato) {
-        //    //    tomato.x -= vx;
-        //    //    if (tomato.x < -100) {
-        //    //        //tomato.x = SCREEN_WIDTH;
-        //    //        tomato.remove();
-        //    //    }
-        //    //})
-        //}
-        //if (this.player.x < SCREEN_WIDTH / 2) {
-        //    let vx = this.player.vx;
-        //    if (vx != null) {
-        //        this.mapGroup.x += vx;
-        //        this.mapBase.x += vx;
-        //    }
-        //}
-
 
         //プレイヤーのアニメーション
         var player = this.player;
@@ -376,16 +347,13 @@ phina.define('Player', {
                 }
                 this.vy = this.JUMP_POWOR * -1;
             }
-            //if (key.getKey('down')) { this.vy = 3; }
             this.move();
         },
         move: function () {
             if (this.vx != null) {
                 this.x += this.vx;
             }
-            //if (JUMP_FLG) {
-                this.vy += 0.3;
-            //}
+            this.vy += 0.3;
             if (this.vy != null) {
                 this.y += this.vy;
             }
