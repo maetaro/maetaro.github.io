@@ -55,13 +55,13 @@ phina.define("MainScene", {
         // 描画オブジェクトすべて
         this.mapGroup = DisplayElement().addChildTo(this);
 
-        this.mapBase = phina.display.DisplayElement()
+        this.mapBase = DisplayElement()
             .setPosition(0, 0)
             .addChildTo(this);
 
         //.tmxファイルからマップをイメージとして取得し、スプライトで表示
-        this.tmx = phina.asset.AssetManager.get("tmx", "map");
-        this.map = phina.display.Sprite(this.tmx.getImage())
+        this.tmx = AssetManager.get("tmx", "map");
+        this.map = Sprite(this.tmx.getImage())
             .setOrigin(0, 0)
             .setPosition(0, 0)
             .addChildTo(this.mapBase);
@@ -277,8 +277,8 @@ phina.define("MainScene", {
                 this.shape1.rotation = degree2;
                 this.soundLabel.text = Math.round(degree2, 3);
 
-                let collisionRect = phina.geom.Rect(left, top, unitSize, unitSize);
-                if (!phina.geom.Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
+                let collisionRect = Rect(left, top, unitSize, unitSize);
+                if (!Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
                     continue;
                 }
 
@@ -414,7 +414,7 @@ phina.main(function () {
     app.enableStats();
 
     app.domElement.addEventListener('touchend', function dummy() {
-        var s = phina.asset.Sound();
+        var s = Sound();
         s.loadFromBuffer();
         s.play().stop();
         app.domElement.removeEventListener('touchend', dummy);
