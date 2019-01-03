@@ -29,17 +29,6 @@ var ASSETS = {
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 
-function intersect(a, b) {
-    var x = Math.max(a.left, b.left);
-    var num1 = Math.min(a.right, b.right);
-    var y = Math.max(a.top, b.top);
-    var num2 = Math.min(a.bottom, b.bottom);
-    if (num1 >= x && num2 >= y)
-        return { x: x, y: y, width: num1 - x, height: num2 - y };
-    else
-        return { x: 0, y: 0, width: 0, height: 0 };
-}
-
 /*
  * メインシーン
  */
@@ -282,6 +271,17 @@ phina.define("MainScene", {
                     continue;
                 }
 
+                var intersect = function (a, b) {
+                    var x = Math.max(a.left, b.left);
+                    var num1 = Math.min(a.right, b.right);
+                    var y = Math.max(a.top, b.top);
+                    var num2 = Math.min(a.bottom, b.bottom);
+                    if (num1 >= x && num2 >= y)
+                        return { x: x, y: y, width: num1 - x, height: num2 - y };
+                    else
+                        return { x: 0, y: 0, width: 0, height: 0 };
+                }
+                
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
                 if (rect.height <= 0 || rect.width <= 0) {
                     continue;
