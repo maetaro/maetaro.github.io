@@ -199,12 +199,6 @@ phina.define("MainScene", {
         if (player.y < 0) {
             player.y = 0;
         }
-        if (player.x < 0) {
-            player.x = 0;
-        }
-        if (player.x > SCREEN_WIDTH) {
-            player.x = SCREEN_WIDTH;
-        }
 
         var self = this;
 
