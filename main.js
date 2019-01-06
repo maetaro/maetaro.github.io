@@ -6,16 +6,12 @@ var ASSETS = {
     //画像
     image: {
         tomapiko: 'https://rawgit.com/phi-jp/phina.js/develop/assets/images/tomapiko_ss.png',
-        tomato: 'assets/image/tomato.png',
-        tomato_green: 'assets/image/tomato_green.png',
-        tomato_yellow: 'assets/image/tomato_yellow.png',
     },
     sound: {
         bgm1: 'assets/sound/BGM114-110921-minnnadeyamanobori-wav.wav',
         se_jump: 'assets/sound/se_jump.wav',
         se_chakuchi: 'assets/sound/se_chakuchi.wav',
         se_damage: 'assets/sound/se_damage.wav',
-        se_gettomato: 'assets/sound/se_gettomato.wav',
     },
     //フレームアニメーション情報
     spritesheet: {
@@ -50,6 +46,7 @@ phina.define("MainScene", {
 
         //.tmxファイルからマップをイメージとして取得し、スプライトで表示
         this.tmx = AssetManager.get("tmx", "map");
+        this.collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         this.map = Sprite(this.tmx.getImage())
             .setOrigin(0, 0)
             .setPosition(0, 0)
@@ -101,32 +98,6 @@ phina.define("MainScene", {
         shape2.setPosition(shape1.width/2,0);
         this.shape1.fill = 'red';
 
-        // トマト
-        this.tomatoGroup = DisplayElement().addChildTo(this.mapGroup);
-        var self = this;
-        this.addTomato = function () {
-            var tname = "tomato";
-            var r = Random.random();
-            if (r <= 0.3) {
-                tname = "tomato_green";
-            } else if (r <= 0.6) {
-                tname = "tomato_yellow";
-            } else {
-                tname = "tomato";
-            }
-            var tomato = Sprite(tname).addChildTo(self.tomatoGroup);
-            tomato.origin.set(0, 0); // 左上基準に変更
-            tomato.setPosition(SCREEN_WIDTH + 50, 400);
-            tomato.collider.show();
-        }
-        this.addTomato();
-        var addTomatoLoop = function () {
-            self.addTomato();
-            var x = 2000 + (Random.random() * 3000);
-            setTimeout(addTomatoLoop, x);
-        }
-        addTomatoLoop();
-
         // 画面上でのタッチ移動時
         this.onpointmove = function (e) {
             console.log(e);
@@ -148,16 +119,8 @@ phina.define("MainScene", {
         flickable.vertical = false;
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
-            let cl = ComboLabel(
-                (Math.round(e.direction.x * 100, 2) / 100) + " " + (Math.round(e.direction.y * 100, 2) / 100)
-            ).addChildTo(self).setPosition(100, 100);
-            cl.fontSize = 16;
             player.vx = e.direction.x * 3.5;
-            if (45 < angle && angle < 135) {
-                //label.text = 'angle: {0} -> しゃがむ'.format(angle);
-            }
             if (225 < angle && angle < 315) {
-                //label.text = 'angle: {0} -> ジャンプ'.format(angle);
                 SoundManager.play('se_jump');
                 if (!player.JUMP_FLG) {
                     player.JUMP_FLG = true;
@@ -193,35 +156,18 @@ phina.define("MainScene", {
         //プレイヤーが画面をはみ出さないように位置を調整
         var player = this.player;
         if (player.y > SCREEN_HEIGHT + 100) {  //画面最下部に着地時
-            player.y = SCREEN_HEIGHT + 100;
+            // player.y = SCREEN_HEIGHT + 100;
             player.vy = 0;
         }
-        if (player.y < 0) {
-            player.y = 0;
-        }
+        // if (player.y < 0) {
+        //     player.y = 0;
+        // }
+        player.y = Math.clamp(player.y, 0, SCREEN_HEIGHT + 100);
 
         var self = this;
 
-        var hitTestTomato = function collisionByPlayerAndTomato(a, b, self) {
-            var c1 = Circle(a.x, a.y, a.srcRect.width / 2 * a.scaleX * 0.5);
-            var c2 = Circle(b.x, b.y, b.srcRect.width / 2 * b.scaleX * 0.5);
-            // 円判定
-            if (Collision.testCircleCircle(c1, c2)) {
-                console.log("hit.");
-                self.combo += 1;
-                self.score += self.combo * 100;
-                var c = ComboLabel(self.combo).addChildTo(self);
-                c.x = b.x + 30;
-                c.y = b.y - 10;
-                b.remove();
-                SoundManager.play('se_gettomato');
-            }
-        }
-        this.tomatoGroup.children.each(function (tomato) {
-            hitTestTomato(player, tomato, self);
-        });
-
-        let collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
+        // 衝突時の位置調整
+        let collisionLayer = this.collisionLayer;
         const unitSize = 16 * this.map.scaleX;
         for (var r = 0; r < collisionLayer.height; r++) {
             for (var c = 0; c < collisionLayer.width; c++) {
@@ -232,13 +178,6 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize + this.mapBase.x;
 
-                // 2点間の距離
-                let distance = Math.sqrt((player.x - left) * (player.x - left) + (player.y - top) * (player.y - top));
-                // 2点間の角度
-                let radian = Math.atan2(player.y - top, player.x - left);
-                let degree = radian * 180 / Math.PI;
-                // ベクトル量
-                let quantity = Math.sqrt(Math.pow(player.vx, 2), Math.pow(player.vy, 2));
                 // ベクトル角度
                 let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
                 let degree2 = radian2 * 180 / Math.PI * player.scaleX;
@@ -254,6 +193,7 @@ phina.define("MainScene", {
                 
                 this.shape1.rotation = degree2;
 
+                // 衝突判定
                 let collisionRect = Rect(left, top, unitSize, unitSize);
                 if (!Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
                     continue;
@@ -271,7 +211,7 @@ phina.define("MainScene", {
                 }
                 
                 var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
-                if (rect.height <= 0 || rect.width <= 0) {
+                if (rect.height < 0 || rect.width < 0) {
                     continue;
                 }
                 if (rect.width > rect.height) {
