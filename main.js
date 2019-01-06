@@ -199,27 +199,44 @@ phina.define("MainScene", {
 
                 // 衝突方向に応じた位置調整
                 var intersect = function (a, b) {
-                    var x = Math.max(a.left, b.left);
-                    var num1 = Math.min(a.right, b.right);
+                    var left = Math.max(a.left, b.left);
+                    var right = Math.min(a.right, b.right);
                     var y = Math.max(a.top, b.top);
                     var num2 = Math.min(a.bottom, b.bottom);
-                    if (num1 >= x && num2 >= y)
-                        return { x: x, y: y, width: num1 - x, height: num2 - y };
-                    else
-                        return { x: 0, y: 0, width: 0, height: 0 };
+                    // if (right >= left && num2 >= y)
+                    return { x: left, y: y, width: right - left, height: num2 - y };
                 }
-                
                 var rect = intersect(playerRect, targetRect);
                 if (rect.height < 0 || rect.width < 0) {
                     continue;
                 }
+                let collisionAt = "default";
                 if (rect.width > rect.height) {
+                    // 縦方向で接触
                     player.vy = 0;
                     if (player.y >= targetRect.y) {
                         // 自分の上側で接触
-                        player.top = targetRect.y + targetRect.height;
+                        collisionAt = "top";
                     } else {
                         // 自分の下側で接触
+                        collisionAt = "bottom";
+                    }
+                } else {
+                    // 横方向で接触
+                    player.vx = 0;
+                    if (player.x <= targetRect.x) {
+                        // 自分の右側で接触
+                        collisionAt = "right";
+                    } else {
+                        // 自分の左側で接触
+                        collisionAt = "left";
+                    }
+                }
+                switch (collisionAt) {
+                    case "top":
+                        player.top = targetRect.y + targetRect.height;
+                        break;
+                    case "bottom":
                         if (player.JUMP_FLG) {
                             player.JUMP_FLG = false;
                             SoundManager.play('se_chakuchi');
@@ -227,16 +244,13 @@ phina.define("MainScene", {
                             player.scaleX *= -1;
                         }
                         player.bottom = targetRect.y;
-                    }
-                } else {
-                    player.vx = 0;
-                    if (player.x <= targetRect.x) {
-                        // 自分の右側で接触
-                        player.x = targetRect.x - (playerRect.width / 2);
-                    } else {
-                        // 自分の左側で接触
+                        break;
+                    case "left":
                         player.x = targetRect.x + (playerRect.width / 2);
-                    }
+                        break;
+                    case "right":
+                        player.x = targetRect.x - (playerRect.width / 2);
+                        break;
                 }
             }
         }
