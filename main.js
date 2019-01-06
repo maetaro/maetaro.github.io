@@ -179,26 +179,25 @@ phina.define("MainScene", {
                 let left = c * unitSize + this.mapBase.x;
 
                 // ベクトル角度
-                let radian2 = Math.atan2(player.vy - 0, player.vx - 0);
-                let degree2 = radian2 * 180 / Math.PI * player.scaleX;
-                if (degree2 != 0) {
-                    degree2 -= 180;
+                let getDegree = function(vx, vy) {
+                    let radian = Math.atan2(vy - 0, vx - 0);
+                    let degree = radian * 180 / Math.PI * player.scaleX;
+                    if (degree != 0)  degree -= 180;
+                    if (degree < 0)   degree += 360;
+                    if (degree > 360) degree -= 360;
+                    return degree;
                 }
-                if (degree2 < 0) {
-                    degree2 += 360;
-                }
-                if (degree2 > 360) {
-                    degree2 -= 360;
-                }
-                
-                this.shape1.rotation = degree2;
+                let degree = getDegree(player.vx, player.vy);
+                this.shape1.rotation = degree;
 
                 // 衝突判定
-                let collisionRect = Rect(left, top, unitSize, unitSize);
-                if (!Collision.testRectRect(player.collider.getAbsoluteRect(), collisionRect)) {
+                let playerRect = player.collider.getAbsoluteRect();
+                let targetRect = Rect(left, top, unitSize, unitSize);
+                if (!Collision.testRectRect(playerRect, targetRect)) {
                     continue;
                 }
 
+                // 衝突方向に応じた位置調整
                 var intersect = function (a, b) {
                     var x = Math.max(a.left, b.left);
                     var num1 = Math.min(a.right, b.right);
@@ -210,15 +209,15 @@ phina.define("MainScene", {
                         return { x: 0, y: 0, width: 0, height: 0 };
                 }
                 
-                var rect = intersect(player.collider.getAbsoluteRect(), collisionRect);
+                var rect = intersect(playerRect, targetRect);
                 if (rect.height < 0 || rect.width < 0) {
                     continue;
                 }
                 if (rect.width > rect.height) {
                     player.vy = 0;
-                    if (player.y >= collisionRect.y) {
+                    if (player.y >= targetRect.y) {
                         // 自分の上側で接触
-                        player.top = collisionRect.y + collisionRect.height;
+                        player.top = targetRect.y + targetRect.height;
                     } else {
                         // 自分の下側で接触
                         if (player.JUMP_FLG) {
@@ -227,16 +226,16 @@ phina.define("MainScene", {
                             player.anim.gotoAndPlay('right');
                             player.scaleX *= -1;
                         }
-                        player.bottom = collisionRect.y;
+                        player.bottom = targetRect.y;
                     }
                 } else {
                     player.vx = 0;
-                    if (player.x <= collisionRect.x) {
+                    if (player.x <= targetRect.x) {
                         // 自分の右側で接触
-                        player.x = collisionRect.x - (player.collider.getAbsoluteRect().width / 2);
+                        player.x = targetRect.x - (playerRect.width / 2);
                     } else {
                         // 自分の左側で接触
-                        player.x = collisionRect.x + (player.collider.getAbsoluteRect().width / 2);
+                        player.x = targetRect.x + (playerRect.width / 2);
                     }
                 }
             }
