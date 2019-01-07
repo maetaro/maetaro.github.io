@@ -56,11 +56,68 @@ phina.define("MainScene", {
     this.onpointstart = function(e) {
         sprite.vx = 0;
         sprite.vy = 0;
-    }
+        sprite.x = e.pointer.x;
+        sprite.y = e.pointer.y;
+      }
     this.onpointmove = function(e) {
         // スプライトをタッチ位置に
-      sprite.x = e.pointer.x;
-      sprite.y = e.pointer.y;
+    //   sprite.x = e.pointer.x;
+    //   sprite.y = e.pointer.y;
+      nextRect.x = e.pointer.x;
+      nextRect.y = e.pointer.y;
+
+      let setConnector = function(a, b, connector) {
+        let left = Math.min(a.x, b.x);
+        let right = Math.max(a.x, b.x);
+        let top = Math.min(a.y, b.y);
+        let bottom = Math.max(a.y, b.y);
+        // 2点間の距離
+        let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+        connector.hide();
+        if (distance > 1) {
+            // connector.width = distance; // right - left;
+            connector.width = 1000;
+            connector.show();
+        }
+        // 2点間の角度
+        let radian = Math.atan2(a.y - b.y, a.x - b.x);
+        //radianをdegreeに変換
+        let degree = radian * 180 / Math.PI;
+        lblDegree.text = "角度:" + parseInt(degree, 10);
+        connector.rotation = degree;
+        // 2点間の中心位置
+        connector.setPosition(
+            (a.x + b.x) / 2,
+            (a.y + b.y) / 2
+        );
+      }
+      setConnector(sprite, nextRect, connectorNext);
+
+      let pointIntersection = CalcIntersectionPoint(
+        sprite,
+        nextRect,
+        {x:shape.left, y:shape.top},
+        {x:shape.right, y:shape.top}
+      );
+
+      intersectionShape.x = pointIntersection.x;
+      intersectionShape.y = pointIntersection.y;
+
+      if (nextRect.hitTestElement(shape)) {
+        // 2点間の角度にそって後ろに戻す
+        let distance = 1; //Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+        let radian = Math.atan2(sprite.y - nextRect.y, sprite.x - nextRect.x);
+        let degree = radian * 180 / Math.PI;
+        if (degree != 0)  degree -= 180;
+        if (degree < 0)   degree += 360;
+        if (degree > 360) degree -= 360;
+      //   nextRect.x = Math.abs(Math.cos(degree) * nextRect.x);
+      //   nextRect.y = Math.abs(Math.sin(degree) * nextRect.y);
+        nextRect.x = pointIntersection.x;
+        nextRect.y = pointIntersection.y;
+    }
+
+
     };
 
     var shape1 = RectangleShape().setSize(150, 2).addChildTo(this).hide();
@@ -88,7 +145,7 @@ phina.define("MainScene", {
         if( 0 == dBunbo )
         {
             // 平行
-            return false;
+            return null;
         }
 
         let vectorAC = {x: pointC.x - pointA.x, y: pointC.y - pointA.y};
@@ -101,10 +158,7 @@ phina.define("MainScene", {
             y: pointA.y + (dR * ( pointB.y - pointA.y )),
         };
 
-        intersectionShape.x = pointIntersection.x;
-        intersectionShape.y = pointIntersection.y;
-
-        return true;
+        return pointIntersection;
     }
 
     // 更新処理
@@ -118,52 +172,52 @@ phina.define("MainScene", {
         if (key.getKey('up')) { sprite.vy -= 2; }
         if (key.getKey('down')) { sprite.vy += 2; }
 
-        let setConnector = function(a, b, connector) {
-            let left = Math.min(a.x, b.x);
-            let right = Math.max(a.x, b.x);
-            let top = Math.min(a.y, b.y);
-            let bottom = Math.max(a.y, b.y);
-            // 2点間の距離
-            let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-            connector.hide();
-            if (distance > 1) {
-                // connector.width = distance; // right - left;
-                connector.width = 1000;
-                connector.show();
-            }
-            // 2点間の角度
-            let radian = Math.atan2(a.y - b.y, a.x - b.x);
-            //radianをdegreeに変換
-            let degree = radian * 180 / Math.PI;
-            lblDegree.text = "角度:" + parseInt(degree, 10);
-            connector.rotation = degree;
-            // 2点間の中心位置
-            connector.setPosition(
-                (a.x + b.x) / 2,
-                (a.y + b.y) / 2
-            );
-        }
+        // let setConnector = function(a, b, connector) {
+        //     let left = Math.min(a.x, b.x);
+        //     let right = Math.max(a.x, b.x);
+        //     let top = Math.min(a.y, b.y);
+        //     let bottom = Math.max(a.y, b.y);
+        //     // 2点間の距離
+        //     let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+        //     connector.hide();
+        //     if (distance > 1) {
+        //         // connector.width = distance; // right - left;
+        //         connector.width = 1000;
+        //         connector.show();
+        //     }
+        //     // 2点間の角度
+        //     let radian = Math.atan2(a.y - b.y, a.x - b.x);
+        //     //radianをdegreeに変換
+        //     let degree = radian * 180 / Math.PI;
+        //     lblDegree.text = "角度:" + parseInt(degree, 10);
+        //     connector.rotation = degree;
+        //     // 2点間の中心位置
+        //     connector.setPosition(
+        //         (a.x + b.x) / 2,
+        //         (a.y + b.y) / 2
+        //     );
+        // }
 
-        setConnector(sprite, shape, shape1);
-        shape1.hide();
+        // setConnector(sprite, shape, shape1);
+        // shape1.hide();
 
-        if (elapsedSecond > 1500) {
-            elapsedSecond = 0;
-            sprite.x += sprite.vx;
-            sprite.y += sprite.vy;
-            nextRect.x = sprite.x + sprite.vx;
-            nextRect.y = sprite.y + sprite.vy;
-            if (sprite.vx > 0) {
-                setConnector(sprite, nextRect, connectorNext);
-            }
-            // プレイヤーの移動ベクトルとブロックの上辺交点座標の計算
-            CalcIntersectionPoint(
-                sprite,
-                nextRect,
-                {x:shape.left, y:shape.top},
-                {x:shape.right, y:shape.top}
-            );
-        }
+        // if (elapsedSecond > 1500) {
+        //     elapsedSecond = 0;
+        //     sprite.x += sprite.vx;
+        //     sprite.y += sprite.vy;
+        //     nextRect.x = sprite.x + sprite.vx;
+        //     nextRect.y = sprite.y + sprite.vy;
+        //     if (sprite.vx > 0) {
+        //         setConnector(sprite, nextRect, connectorNext);
+        //     }
+        //     // プレイヤーの移動ベクトルとブロックの上辺交点座標の計算
+        //     CalcIntersectionPoint(
+        //         sprite,
+        //         nextRect,
+        //         {x:shape.left, y:shape.top},
+        //         {x:shape.right, y:shape.top}
+        //     );
+        // }
 
         // 矩形判定
         if (sprite.hitTestElement(shape)) {
