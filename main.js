@@ -37,6 +37,8 @@ phina.define("MainScene", {
         // super init
         this.superInit(options);
 
+        
+
         this.mapBase = DisplayElement()
             .setPosition(0, 0)
             .addChildTo(this);
@@ -56,7 +58,7 @@ phina.define("MainScene", {
 
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
-        let player = this.player;
+        // let player = this.player;
 
         // var shape1 = RectangleShape().addChildTo(player);
         // var shape2 = RectangleShape().addChildTo(shape1);
@@ -76,16 +78,16 @@ phina.define("MainScene", {
         flickable.vertical = false;
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
-            player.vx = e.direction.x * 3.5;
+            this.player.vx = e.direction.x * 3.5;
             if (225 < angle && angle < 315) {
                 SoundManager.play('se_jump');
-                if (!player.JUMP_FLG) {
-                    player.JUMP_FLG = true;
-                    player.anim.gotoAndPlay('fly');
-                    player.scaleX *= -1;
+                if (!this.player.JUMP_FLG) {
+                    this.player.JUMP_FLG = true;
+                    this.player.anim.gotoAndPlay('fly');
+                    this.player.scaleX *= -1;
                 }
-                player.vy = player.JUMP_POWOR * -1;
-                player.y -= 10;
+                this.player.vy = player.JUMP_POWOR * -1;
+                this.player.y -= 10;
             }
         };
 
@@ -95,7 +97,7 @@ phina.define("MainScene", {
 
     // 画面上でのタッチ移動時
     onpointmove: function (e) {
-        console.log(e);
+        // console.log(e);
         let power = e.pointer.startPosition.x - e.pointer.position.x;
         this.player.vx = (power > 0 ? -3 : 3);
     },
