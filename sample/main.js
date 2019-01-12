@@ -27,8 +27,7 @@ phina.define("MainScene", {
         // スプライト画像作成
         this.player = Player().addChildTo(this);
 
-        // var shape1 = RectangleShape().setSize(150, 2).addChildTo(this).hide();
-        this.connectorNext = RectangleShape({ color: 'red' }).setSize(150, 2).addChildTo(this).hide();
+        this.connectorNext = Connector(this.block, this.player).addChildTo(this);
         this.intersectionShape = RectangleShape({ fill: 'red' }).setSize(2, 2).addChildTo(this);
 
         this.lblDegree = Label({ text: '角度:' })
@@ -59,7 +58,8 @@ phina.define("MainScene", {
         this.player.nextRect.x = e.pointer.x - this.player.x;
         this.player.nextRect.y = e.pointer.y - this.player.y;
 
-        this.setConnector(this.player, this.player.nextRect, this.connectorNext);
+        // this.setConnector(this.player, this.player.nextRect, this.connectorNext);
+        this.connectorNext.setConnector(this.player, this.player.nextRect);
 
         let pointIntersection = this.CalcIntersectionPoint(
             this.player,
@@ -115,31 +115,31 @@ phina.define("MainScene", {
 
         return pointIntersection;
     },
-    setConnector: function (a, b, connector) {
-        let left = Math.min(a.x, b.x);
-        let right = Math.max(a.x, b.x);
-        let top = Math.min(a.y, b.y);
-        let bottom = Math.max(a.y, b.y);
-        // 2点間の距離
-        let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-        connector.hide();
-        if (distance > 1) {
-            // connector.width = distance; // right - left;
-            connector.width = 1000;
-            connector.show();
-        }
-        // 2点間の角度
-        let radian = Math.atan2(a.y - b.y, a.x - b.x);
-        //radianをdegreeに変換
-        let degree = radian * 180 / Math.PI;
-        this.lblDegree.text = "角度:" + parseInt(degree, 10);
-        connector.rotation = degree;
-        // 2点間の中心位置
-        connector.setPosition(
-            (a.x + b.x) / 2,
-            (a.y + b.y) / 2
-        );
-    }
+    // setConnector: function (a, b, connector) {
+    //     let left = Math.min(a.x, b.x);
+    //     let right = Math.max(a.x, b.x);
+    //     let top = Math.min(a.y, b.y);
+    //     let bottom = Math.max(a.y, b.y);
+    //     // 2点間の距離
+    //     let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+    //     connector.hide();
+    //     if (distance > 1) {
+    //         // connector.width = distance; // right - left;
+    //         connector.width = 1000;
+    //         connector.show();
+    //     }
+    //     // 2点間の角度
+    //     let radian = Math.atan2(a.y - b.y, a.x - b.x);
+    //     //radianをdegreeに変換
+    //     let degree = radian * 180 / Math.PI;
+    //     this.lblDegree.text = "角度:" + parseInt(degree, 10);
+    //     connector.rotation = degree;
+    //     // 2点間の中心位置
+    //     connector.setPosition(
+    //         (a.x + b.x) / 2,
+    //         (a.y + b.y) / 2
+    //     );
+    // }
 
 });
 
@@ -199,6 +199,55 @@ phina.define("Block", {
     // hit: function(other) {
 
     // },
+});
+
+phina.define("Connector", {
+    // 継承
+    superClass: 'RectangleShape',
+    // コンストラクタ
+    init: function (shape1, shape2) {
+        // 親クラス初期化
+        this.superInit({
+            fill: 'blue',
+            width: 200,
+            height: 2,
+        });
+        this.shape1 = shape1;
+        this.shape2 = shape2;
+        // RectangleShape({ fill: 'red' }).setSize(150, 2)
+        // return this;
+    },
+    // update: function() {
+    // },
+    // hit: function(other) {
+
+    // },
+    setConnector: function (a, b) {
+        let left = Math.min(a.x, b.x);
+        let right = Math.max(a.x, b.x);
+        let top = Math.min(a.y, b.y);
+        let bottom = Math.max(a.y, b.y);
+        // 2点間の距離
+        let distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+        this.hide();
+        if (distance > 1) {
+            // connector.width = distance; // right - left;
+            this.width = 1000;
+            this.show();
+        }
+        // 2点間の角度
+        let radian = Math.atan2(a.y - b.y, a.x - b.x);
+        //radianをdegreeに変換
+        let degree = radian * 180 / Math.PI;
+        // this.lblDegree.text = "角度:" + parseInt(degree, 10);
+        this.rotation = degree;
+        // 2点間の中心位置
+        this.setPosition(
+            (a.x + b.x) / 2,
+            (a.y + b.y) / 2
+        );
+    }
+
 });
 
 /*

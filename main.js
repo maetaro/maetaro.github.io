@@ -55,62 +55,22 @@ phina.define("MainScene", {
         this.map.setScale(2, 2);
 
         // サウンドラベル
-        this.soundLabel = Label({ text: 'sound off' })
-            .setSize(140, 50)
-            .setPosition(100, 100)
-            .setInteractive(true)// タッチ可能にする
-            .addChildTo(this);
-        this.soundLabel.collider.show();
-        // タッチイベント登録
-        this.soundLabel.onpointstart = function (e) {
-            //alert('タッチされました');
-            if (SoundManager.playingBGM) {
-                SoundManager.playingBGM = false;
-                SoundManager.stopMusic('bgm1');
-                e.target.text = "sound off";
-            } else {
-                SoundManager.playingBGM = true;
-                SoundManager.playMusic('bgm1');
-                e.target.text = "sound on";
-            }
-        };
+        this.soundLabel = SoundLabel().addChildTo(this);
 
         // プレイヤー
-        var player = Player('tomapiko').addChildTo(this);
-        player.setPosition(100, 400);
-        player.collider
-            .setSize(player.width - 15, player.height)
-            .show();
-        player.JUMP_FLG = true;
-        player.anim.gotoAndPlay('fly');
-        player.scaleX *= -1;
-        player.vy = player.JUMP_POWOR * -1;
-        this.player = player;
+        this.player = Player('tomapiko').addChildTo(this);
+        let player = this.player;
 
-        var shape1 = RectangleShape().addChildTo(player);
-        var shape2 = RectangleShape().addChildTo(shape1);
-        shape2.fill = 'yellow';
-        shape2.width = 15;
-        shape2.height = 15;
-        this.shape1 = shape1;
-        this.shape1.height = 2;
-        this.shape1.width = 150;
-        shape2.setPosition(shape1.width/2,0);
-        this.shape1.fill = 'red';
-
-        // 画面上でのタッチ移動時
-        this.onpointmove = function (e) {
-            console.log(e);
-            let power = e.pointer.startPosition.x - e.pointer.position.x;
-            player.vx = (power > 0 ? -3 : 3);
-        };
-        // 画面タッチ時処理
-        this.onpointend = function () {
-            player.vx = 0;
-            if (!player.JUMP_FLG) {
-                player.anim.gotoAndPlay('right');
-            }
-        }
+        // var shape1 = RectangleShape().addChildTo(player);
+        // var shape2 = RectangleShape().addChildTo(shape1);
+        // shape2.fill = 'yellow';
+        // shape2.width = 15;
+        // shape2.height = 15;
+        // this.shape1 = shape1;
+        // this.shape1.height = 2;
+        // this.shape1.width = 150;
+        // shape2.setPosition(shape1.width/2,0);
+        // this.shape1.fill = 'red';
 
         // フリック
         var flickable = Flickable().attachTo(this);
@@ -134,6 +94,21 @@ phina.define("MainScene", {
 
         // コンボ数をリセット
         this.combo = 0;
+    },
+
+    // 画面上でのタッチ移動時
+    onpointmove: function (e) {
+        console.log(e);
+        let power = e.pointer.startPosition.x - e.pointer.position.x;
+        this.player.vx = (power > 0 ? -3 : 3);
+    },
+
+    // 画面タッチ時処理
+    onpointend: function () {
+        this.player.vx = 0;
+        if (!this.player.JUMP_FLG) {
+            this.player.anim.gotoAndPlay('right');
+        }
     },
 
     // 更新
@@ -188,7 +163,7 @@ phina.define("MainScene", {
                     return degree;
                 }
                 let degree = getDegree(player.vx, player.vy);
-                this.shape1.rotation = degree;
+                // this.shape1.rotation = degree;
 
                 // 衝突判定
                 let playerRect = player.collider.getAbsoluteRect();
@@ -272,6 +247,14 @@ phina.define('Player', {
             this.anim.gotoAndPlay('right');
             this.JUMP_FLG = false; // ジャンプ中かどうか
             this.JUMP_POWOR = 10; // ジャンプ力
+            this.setPosition(100, 400);
+            this.collider
+                .setSize(this.width - 15, this.height)
+                .show();
+            this.JUMP_FLG = true;
+            this.anim.gotoAndPlay('fly');
+            this.scaleX *= -1;
+            this.vy = this.JUMP_POWOR * -1;
         },
         // 毎フレーム処理
         update: function (app) {
@@ -336,6 +319,33 @@ phina.define('ComboLabel', {
                 this.remove();
             }, this)
             ;
+    },
+});
+
+/**
+ * サウンドラベル
+ */
+phina.define('SoundLabel', {
+    superClass: 'Label',
+    init: function () {
+        this.superInit({ text: 'sound off' });
+        this.setSize(140, 50);
+        this.setPosition(100, 100);
+        this.setInteractive(true); // タッチ可能にする
+        this.collider.show();
+    },
+    // タッチイベント登録
+    onpointstart: function (e) {
+        //alert('タッチされました');
+        if (SoundManager.playingBGM) {
+            SoundManager.playingBGM = false;
+            SoundManager.stopMusic('bgm1');
+            e.target.text = "sound off";
+        } else {
+            SoundManager.playingBGM = true;
+            SoundManager.playMusic('bgm1');
+            e.target.text = "sound on";
+        }
     },
 });
 
