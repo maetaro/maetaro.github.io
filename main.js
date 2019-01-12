@@ -37,9 +37,6 @@ phina.define("MainScene", {
         // super init
         this.superInit(options);
 
-        // 描画オブジェクトすべて
-        this.mapGroup = DisplayElement().addChildTo(this);
-
         this.mapBase = DisplayElement()
             .setPosition(0, 0)
             .addChildTo(this);
@@ -118,7 +115,6 @@ phina.define("MainScene", {
         this.player.x = SCREEN_WIDTH / 2;
         let vx = this.player.vx;
         if (vx != null) {
-            this.mapGroup.x -= vx;
             this.mapBase.x -= vx;
         }
         if (this.mapBase.x > 0) {
