@@ -37,8 +37,6 @@ phina.define("MainScene", {
         // super init
         this.superInit(options);
 
-        
-
         this.mapBase = DisplayElement()
             .setPosition(0, 0)
             .addChildTo(this);
@@ -58,9 +56,8 @@ phina.define("MainScene", {
 
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
-        // let player = this.player;
 
-        // var shape1 = RectangleShape().addChildTo(player);
+        // var shape1 = RectangleShape().addChildTo(this.player);
         // var shape2 = RectangleShape().addChildTo(shape1);
         // shape2.fill = 'yellow';
         // shape2.width = 15;
@@ -68,7 +65,7 @@ phina.define("MainScene", {
         // this.shape1 = shape1;
         // this.shape1.height = 2;
         // this.shape1.width = 150;
-        // shape2.setPosition(shape1.width/2,0);
+        // shape2.setPosition(shape1.width/2,shape1.height);
         // this.shape1.fill = 'red';
 
         // フリック
@@ -129,12 +126,8 @@ phina.define("MainScene", {
         //プレイヤーが画面をはみ出さないように位置を調整
         var player = this.player;
         if (player.y > SCREEN_HEIGHT + 100) {  //画面最下部に着地時
-            // player.y = SCREEN_HEIGHT + 100;
             player.vy = 0;
         }
-        // if (player.y < 0) {
-        //     player.y = 0;
-        // }
         player.y = Math.clamp(player.y, 0, SCREEN_HEIGHT + 100);
 
         var self = this;
@@ -152,16 +145,16 @@ phina.define("MainScene", {
                 let left = c * unitSize + this.mapBase.x;
 
                 // ベクトル角度
-                let getDegree = function(vx, vy) {
-                    let radian = Math.atan2(vy - 0, vx - 0);
-                    let degree = radian * 180 / Math.PI * player.scaleX;
+                {
+                    // let v = Vector2.sub(playerRect, targetRect);
+                    let degree = Vector2(player.vx, player.vy).toAngle().toDegree();
                     if (degree != 0)  degree -= 180;
                     if (degree < 0)   degree += 360;
                     if (degree > 360) degree -= 360;
-                    return degree;
+                    // this.shape1.rotation = degree;
+                    
+                    this.soundLabel.text = Math.round(degree);
                 }
-                let degree = getDegree(player.vx, player.vy);
-                // this.shape1.rotation = degree;
 
                 // 衝突判定
                 let playerRect = player.collider.getAbsoluteRect();
@@ -234,33 +227,40 @@ phina.define("MainScene", {
  * プレイヤークラス
  */
 phina.define('Player', {
-        superClass: 'Sprite',
-        // コンストラクタ
-        init: function (image) {
-            // 親クラス初期化
-            this.superInit(image);
-            // フレームアニメーションをアタッチ
-            this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
-            // 初期アニメーション指定
-            this.anim.gotoAndPlay('right');
-            this.JUMP_FLG = false; // ジャンプ中かどうか
-            this.JUMP_POWOR = 10; // ジャンプ力
-            this.setPosition(100, 400);
-            this.collider
-                .setSize(this.width - 15, this.height)
-                .show();
-            this.JUMP_FLG = true;
-            this.anim.gotoAndPlay('fly');
-            this.scaleX *= -1;
-            this.vy = this.JUMP_POWOR * -1;
-        },
-        // 毎フレーム処理
-        update: function (app) {
-            var key = app.keyboard;
-            // 上下左右移動
-            if (key.getKey('left')) { this.vx = -6;  }
-            if (key.getKey('right')) { this.vx = 6; }
-            if (key.getKey('up')) {
+    superClass: 'Sprite',
+    // コンストラクタ
+    init: function (image) {
+        // 親クラス初期化
+        this.superInit(image);
+        this.vx = 0;
+        this.vy = 0;
+        // フレームアニメーションをアタッチ
+        this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
+        // 初期アニメーション指定
+        this.anim.gotoAndPlay('right');
+        this.JUMP_FLG = false; // ジャンプ中かどうか
+        this.JUMP_POWOR = 10; // ジャンプ力
+        this.setPosition(100, 400);
+        this.collider
+            .setSize(this.width - 15, this.height)
+            .show();
+        this.JUMP_FLG = true;
+        this.anim.gotoAndPlay('fly');
+        this.scaleX *= -1;
+        this.vy = this.JUMP_POWOR * -1;
+    },
+    // 毎フレーム処理
+    update: function (app) {
+        var key = app.keyboard;
+        // 上下左右移動
+        if (key.getKey('left')) {
+            this.vx = -6;
+        }
+        if (key.getKey('right')) {
+            this.vx = 6;
+        }
+        if (key.getKey('up')) {
+            if (this.vy >= 0) {
                 SoundManager.play('se_jump');
                 if (!this.JUMP_FLG) {
                     this.JUMP_FLG = true;
@@ -269,18 +269,19 @@ phina.define('Player', {
                 }
                 this.vy = this.JUMP_POWOR * -1;
             }
-            this.move();
-        },
-        move: function () {
-            if (this.vx != null) {
-                this.x += this.vx;
-            }
-            this.vy += 0.3;
-            if (this.vy != null) {
-                this.y += this.vy;
-            }
         }
-    });
+        this.move();
+    },
+    move: function () {
+        this.x += this.vx;
+        // 重力加速
+        this.vy += 0.3;
+        this.y += this.vy;
+    },
+    hit: function(other) {
+
+    },
+});
 
 /*
  * コンボラベル
