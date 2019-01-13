@@ -56,6 +56,7 @@ phina.define("MainScene", {
 
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
+        let player = this.player;
 
         // var shape1 = RectangleShape().addChildTo(this.player);
         // var shape2 = RectangleShape().addChildTo(shape1);
@@ -75,16 +76,16 @@ phina.define("MainScene", {
         flickable.vertical = false;
         flickable.onflickstart = function (e) {
             var angle = e.direction.toAngle().toDegree() | 0;
-            this.player.vx = e.direction.x * 3.5;
+            player.vx = e.direction.x * 3.5;
             if (225 < angle && angle < 315) {
                 SoundManager.play('se_jump');
-                if (!this.player.JUMP_FLG) {
-                    this.player.JUMP_FLG = true;
-                    this.player.anim.gotoAndPlay('fly');
-                    this.player.scaleX *= -1;
+                if (!player.JUMP_FLG) {
+                    player.JUMP_FLG = true;
+                    player.anim.gotoAndPlay('fly');
+                    player.scaleX *= -1;
                 }
-                this.player.vy = player.JUMP_POWOR * -1;
-                this.player.y -= 10;
+                player.vy = player.JUMP_POWOR * -1;
+                player.y -= 10;
             }
         };
 
@@ -161,6 +162,13 @@ phina.define("MainScene", {
  */
 phina.define('Player', {
     superClass: 'Sprite',
+    GetDegree: function() {
+        let degree = Vector2(this.vx, this.vy).toAngle().toDegree();
+        if (degree != 0)  degree -= 180;
+        if (degree < 0)   degree += 360;
+        if (degree > 360) degree -= 360;
+        return degree;
+    },
     // コンストラクタ
     init: function (image) {
         // 親クラス初期化
@@ -212,17 +220,8 @@ phina.define('Player', {
         this.y += this.vy;
     },
     hit: function(other) {
-        // 進行方向
-        {
-            // let v = Vector2.sub(playerRect, targetRect);
-            let degree = Vector2(player.vx, player.vy).toAngle().toDegree();
-            if (degree != 0)  degree -= 180;
-            if (degree < 0)   degree += 360;
-            if (degree > 360) degree -= 360;
-            // this.shape1.rotation = degree;
-            
-            this.soundLabel.text = Math.round(degree);
-        }
+        // 次フレームでの四角
+        let nextRect = Rect(this.x + this.vx, this.y + this.vy, this.width, this.heigth);
 
         // 衝突方向に応じた位置調整
         var intersect = function (a, b) {
