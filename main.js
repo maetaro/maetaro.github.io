@@ -144,83 +144,16 @@ phina.define("MainScene", {
                 let top = r * unitSize;
                 let left = c * unitSize + this.mapBase.x;
 
-                // ベクトル角度
-                {
-                    // let v = Vector2.sub(playerRect, targetRect);
-                    let degree = Vector2(player.vx, player.vy).toAngle().toDegree();
-                    if (degree != 0)  degree -= 180;
-                    if (degree < 0)   degree += 360;
-                    if (degree > 360) degree -= 360;
-                    // this.shape1.rotation = degree;
-                    
-                    this.soundLabel.text = Math.round(degree);
-                }
-
                 // 衝突判定
                 let playerRect = player.collider.getAbsoluteRect();
                 let targetRect = Rect(left, top, unitSize, unitSize);
-                if (!Collision.testRectRect(playerRect, targetRect)) {
-                    continue;
-                }
-
-                // 衝突方向に応じた位置調整
-                var intersect = function (a, b) {
-                    var left = Math.max(a.left, b.left);
-                    var right = Math.min(a.right, b.right);
-                    var y = Math.max(a.top, b.top);
-                    var num2 = Math.min(a.bottom, b.bottom);
-                    // if (right >= left && num2 >= y)
-                    return { x: left, y: y, width: right - left, height: num2 - y };
-                }
-                var rect = intersect(playerRect, targetRect);
-                if (rect.height < 0 || rect.width < 0) {
-                    continue;
-                }
-                let collisionAt = "default";
-                if (rect.width > rect.height) {
-                    // 縦方向で接触
-                    player.vy = 0;
-                    if (player.y >= targetRect.y) {
-                        // 自分の上側で接触
-                        collisionAt = "top";
-                    } else {
-                        // 自分の下側で接触
-                        collisionAt = "bottom";
-                    }
-                } else {
-                    // 横方向で接触
-                    player.vx = 0;
-                    if (player.x <= targetRect.x) {
-                        // 自分の右側で接触
-                        collisionAt = "right";
-                    } else {
-                        // 自分の左側で接触
-                        collisionAt = "left";
-                    }
-                }
-                switch (collisionAt) {
-                    case "top":
-                        player.top = targetRect.y + targetRect.height;
-                        break;
-                    case "bottom":
-                        if (player.JUMP_FLG) {
-                            player.JUMP_FLG = false;
-                            SoundManager.play('se_chakuchi');
-                            player.anim.gotoAndPlay('right');
-                            player.scaleX *= -1;
-                        }
-                        player.bottom = targetRect.y;
-                        break;
-                    case "left":
-                        player.x = targetRect.x + (playerRect.width / 2);
-                        break;
-                    case "right":
-                        player.x = targetRect.x - (playerRect.width / 2);
-                        break;
+                if (Collision.testRectRect(playerRect, targetRect)) {
+                    player.hit(targetRect);
                 }
             }
         }
-    }
+    },
+    
 });
 
 /*
@@ -279,7 +212,73 @@ phina.define('Player', {
         this.y += this.vy;
     },
     hit: function(other) {
+        // 進行方向
+        {
+            // let v = Vector2.sub(playerRect, targetRect);
+            let degree = Vector2(player.vx, player.vy).toAngle().toDegree();
+            if (degree != 0)  degree -= 180;
+            if (degree < 0)   degree += 360;
+            if (degree > 360) degree -= 360;
+            // this.shape1.rotation = degree;
+            
+            this.soundLabel.text = Math.round(degree);
+        }
 
+        // 衝突方向に応じた位置調整
+        var intersect = function (a, b) {
+            var left = Math.max(a.left, b.left);
+            var right = Math.min(a.right, b.right);
+            var y = Math.max(a.top, b.top);
+            var num2 = Math.min(a.bottom, b.bottom);
+            // if (right >= left && num2 >= y)
+            return { x: left, y: y, width: right - left, height: num2 - y };
+        }
+        var rect = intersect(this, other);
+        if (rect.height < 0 || rect.width < 0) {
+            return;
+        }
+        let collisionAt = "default";
+        if (rect.width > rect.height) {
+            // 縦方向で接触
+            this.vy = 0;
+            if (this.y >= other.y) {
+                // 自分の上側で接触
+                collisionAt = "top";
+            } else {
+                // 自分の下側で接触
+                collisionAt = "bottom";
+            }
+        } else {
+            // 横方向で接触
+            this.vx = 0;
+            if (this.x <= other.x) {
+                // 自分の右側で接触
+                collisionAt = "right";
+            } else {
+                // 自分の左側で接触
+                collisionAt = "left";
+            }
+        }
+        switch (collisionAt) {
+            case "top":
+                this.top = other.y + other.height;
+                break;
+            case "bottom":
+                if (this.JUMP_FLG) {
+                    this.JUMP_FLG = false;
+                    SoundManager.play('se_chakuchi');
+                    this.anim.gotoAndPlay('right');
+                    this.scaleX *= -1;
+                }
+                this.bottom = other.y;
+                break;
+            case "left":
+                this.x = other.x + (this.width / 2);
+                break;
+            case "right":
+                this.x = other.x - (this.width / 2);
+                break;
+        }
     },
 });
 
