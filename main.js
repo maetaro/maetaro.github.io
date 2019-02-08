@@ -48,8 +48,36 @@ phina.define("MainScene", {
             .setOrigin(0, 0)
             .setPosition(0, 0)
             .addChildTo(this.mapBase);
-        this.map.tweener.clear().setUpdateType('fps');
+        // this.map.tweener.clear().setUpdateType('fps');
         this.map.setScale(2, 2);
+
+        this.blocks = [];
+        let collisionLayer = this.collisionLayer;
+        const unitSize = 16 * this.map.scaleX;
+        for (var r = 0; r < collisionLayer.height; r++) {
+            for (var c = 0; c < collisionLayer.width; c++) {
+                let index = (r * collisionLayer.width) + c;
+                if (collisionLayer.data[index] == -1) {
+                    continue;
+                }
+                let top = r * unitSize;
+                let left = c * unitSize + this.mapBase.x;
+
+                let targetRect = Rect(left, top, unitSize, unitSize);
+                let s = RectangleShape({
+                    x: targetRect.x + (targetRect.width / 2),
+                    y: targetRect.y + (targetRect.height / 2),
+                    width: targetRect.width,
+                    height: targetRect.height,
+                })
+                .addChildTo(this.mapBase);
+                s.collider.show();
+                // s.rowIndex = r;
+                // s.columnIndex = c;
+                this.blocks.push(s);
+            }
+        }
+
 
         // サウンドラベル
         this.soundLabel = SoundLabel().addChildTo(this);
@@ -57,17 +85,6 @@ phina.define("MainScene", {
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
         let player = this.player;
-
-        // var shape1 = RectangleShape().addChildTo(this.player);
-        // var shape2 = RectangleShape().addChildTo(shape1);
-        // shape2.fill = 'yellow';
-        // shape2.width = 15;
-        // shape2.height = 15;
-        // this.shape1 = shape1;
-        // this.shape1.height = 2;
-        // this.shape1.width = 150;
-        // shape2.setPosition(shape1.width/2,shape1.height);
-        // this.shape1.fill = 'red';
 
         // フリック
         var flickable = Flickable().attachTo(this);
@@ -134,25 +151,42 @@ phina.define("MainScene", {
         var self = this;
 
         // 衝突時の位置調整
-        let collisionLayer = this.collisionLayer;
-        const unitSize = 16 * this.map.scaleX;
-        for (var r = 0; r < collisionLayer.height; r++) {
-            for (var c = 0; c < collisionLayer.width; c++) {
-                let index = (r * collisionLayer.width) + c;
-                if (collisionLayer.data[index] == -1) {
-                    continue;
-                }
-                let top = r * unitSize;
-                let left = c * unitSize + this.mapBase.x;
+        // let collisionLayer = this.collisionLayer;
+        // const unitSize = 16 * this.map.scaleX;
+        // for (var r = 0; r < collisionLayer.height; r++) {
+        //     for (var c = 0; c < collisionLayer.width; c++) {
+        //         let index = (r * collisionLayer.width) + c;
+        //         if (collisionLayer.data[index] == -1) {
+        //             continue;
+        //         }
+        //         let top = r * unitSize;
+        //         let left = c * unitSize + this.mapBase.x;
 
-                // 衝突判定
-                let playerRect = player.collider.getAbsoluteRect();
-                let targetRect = Rect(left, top, unitSize, unitSize);
-                if (Collision.testRectRect(playerRect, targetRect)) {
-                    player.hit(targetRect);
-                }
+        //         // 衝突判定
+        //         let playerRect = player.collider.getAbsoluteRect();
+        //         let targetRect = Rect(left, top, unitSize, unitSize);
+        //         if (Collision.testRectRect(playerRect, targetRect)) {
+        //             player.hit(targetRect);
+        //         }
+        //     }
+        // }
+        let mapBase = this.mapBase;
+        this.blocks.each(function(block) {
+            // let playerRect = player.collider.getAbsoluteRect();
+            // let blockRect = block.collider.getAbsoluteRect();
+            // block.fill = "blue";
+            // if (Collision.testRectRect(playerRect, blockRect)) {
+            //     block.fill = "red";
+            //     player.hit(blockRect);
+            // }
+            block.fill = "blue";
+            let blockRect = block.collider.getAbsoluteRect();
+            blockRect.x = block.x + mapBase.x;
+            if (Collision.testRectRect(player.collider, blockRect)) {
+                block.fill = "red";
+                player.hit(block);
             }
-        }
+        });
     },
     
 });
@@ -179,7 +213,7 @@ phina.define('Player', {
         this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
-        this.JUMP_FLG = false; // ジャンプ中かどうか
+        // this.JUMP_FLG = false; // ジャンプ中かどうか
         this.JUMP_POWOR = 10; // ジャンプ力
         this.setPosition(100, 400);
         this.collider
@@ -195,10 +229,12 @@ phina.define('Player', {
         var key = app.keyboard;
         // 上下左右移動
         if (key.getKey('left')) {
-            this.vx = -6;
+            this.anim.gotoAndPlay('left');
+            this.vx = -4;
         }
         if (key.getKey('right')) {
-            this.vx = 6;
+            this.anim.gotoAndPlay('right');
+            this.vx = 4;
         }
         if (key.getKey('up')) {
             if (this.vy >= 0) {
@@ -220,7 +256,7 @@ phina.define('Player', {
         this.y += this.vy;
     },
     hit: function(other) {
-        // 次フレームでの四角
+        // 前フレームでの四角
         let nextRect = Rect(this.x + this.vx, this.y + this.vy, this.width, this.heigth);
 
         // 衝突方向に応じた位置調整
@@ -260,7 +296,7 @@ phina.define('Player', {
         }
         switch (collisionAt) {
             case "top":
-                this.top = other.y + other.height;
+                this.top = other.y + other.height + 1;
                 break;
             case "bottom":
                 if (this.JUMP_FLG) {
@@ -269,13 +305,13 @@ phina.define('Player', {
                     this.anim.gotoAndPlay('right');
                     this.scaleX *= -1;
                 }
-                this.bottom = other.y;
+                this.bottom = other.y - 1;
                 break;
             case "left":
-                this.x = other.x + (this.width / 2);
+                this.x = other.x + (this.width / 2) + 1;
                 break;
             case "right":
-                this.x = other.x - (this.width / 2);
+                this.x = other.x - (this.width / 2) - 1;
                 break;
         }
     },
