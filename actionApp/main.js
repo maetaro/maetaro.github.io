@@ -27,7 +27,7 @@ var ASSETS = {
     },
 };
 // グローバル変数
-    var SCALE = 1; //2.5;
+var SCALE = 2.5;
 var SCREEN_WIDTH = 566;  // スクリーン幅
 var SCREEN_HEIGHT = 980;  // スクリーン高さ
 var JUMP_POWOR = 10; // ジャンプ力
@@ -95,42 +95,6 @@ phina.define("MainScene", {
             }
         };
 
-        // logテキスト
-        this.logText1 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 0));
-        this.logText2 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 1));
-        this.logText3 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 2));
-        this.logText4 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 3));
-        this.logText5 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 4));
-        this.logText6 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 5));
-        this.logText7 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 6));
-        this.logText8 = Label().addChildTo(this).setPosition(SCREEN_WIDTH / 2, 130 + (30 * 7));
-        this.logText1.fontSize = 18;
-        this.logText2.fontSize = 18;
-        this.logText3.fontSize = 18;
-        this.logText4.fontSize = 18;
-        this.logText5.fontSize = 18;
-        this.logText6.fontSize = 18;
-        this.logText7.fontSize = 18;
-        this.logText8.fontSize = 18;
-        this.logText1.hide();
-        this.logText2.hide();
-        this.logText3.hide();
-        this.logText4.hide();
-        this.logText5.hide();
-        this.logText6.hide();
-        this.logText7.hide();
-        this.logText8.hide();
-        this.logger = function (v) {
-            this.logText1.text = this.logText2.text;
-            this.logText2.text = this.logText3.text;
-            this.logText3.text = this.logText4.text;
-            this.logText4.text = this.logText5.text;
-            this.logText5.text = this.logText6.text;
-            this.logText6.text = this.logText7.text;
-            this.logText7.text = this.logText8.text;
-            this.logText8.text = v;
-       }
-
         // プレイヤー
         var player = Player('player').addChildTo(this);
         player.setPosition(100, 400);
@@ -143,19 +107,6 @@ phina.define("MainScene", {
         player.scaleX *= -1;
         player.vy = -JUMP_POWOR;
         this.player = player;
-
-        var shape1 = RectangleShape().addChildTo(player);
-        var shape2 = RectangleShape().addChildTo(shape1);
-        shape2.fill = 'yellow';
-        shape2.width = 15;
-        shape2.height = 15;
-        this.shape1 = shape1;
-        this.shape1.height = 2;
-        this.shape1.width = 150;
-        shape2.setPosition(shape1.width / 2, 0);
-        this.shape1.fill = 'red';
-        shape1.hide();
-        shape2.hide();
 
         // 画面上でのタッチ移動時
         this.onpointmove = function (e) {
@@ -273,9 +224,6 @@ phina.define("MainScene", {
 
                 let checkResult = player.collisionBlock(blockRect);
 
-                //this.shape1.rotation = degree2;
-                this.logger(checkResult.contactAt);
-
                 // プレイヤーの上で接触
                 if (checkResult.contactAt == "top") {
                     // プレイヤーより上のブロックの底に位置を合わせる
@@ -321,43 +269,9 @@ phina.define('Player', {
         this.anim = FrameAnimation('player_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
-        this.label1 = Label().addChildTo(this);
-        this.label1.fontSize = 10;
-        this.label1.setPosition(this.label1.x, this.label1.y - this.height);
-        //this.topShape = RectangleShape().addChildTo(this);
-        //this.topShape.fill = 'yellow';
-        //this.topShape.width = 16;
-        //this.topShape.height = 1;
-        //this.topShape.setPosition(0, -8);
-        //this.bottomShape = RectangleShape().addChildTo(this);
-        //this.bottomShape.fill = 'yellow';
-        //this.bottomShape.width = 16;
-        //this.bottomShape.height = 1;
-        //this.bottomShape.setPosition(0, 16);
-        //this.leftShape = RectangleShape().addChildTo(this);
-        //this.leftShape.fill = 'yellow';
-        //this.leftShape.width = 1;
-        //this.leftShape.height = 20;
-        //this.leftShape.setPosition(-8, 4);
-        //this.rightShape = RectangleShape().addChildTo(this);
-        //this.rightShape.fill = 'yellow';
-        //this.rightShape.width = 1;
-        //this.rightShape.height = 20;
-        //this.rightShape.setPosition(8, 4);
-
         this.JUMP_FLG = false; // ジャンプ中かどうか
         this.vx = 0;
         this.vy = 0;
-        //var shape1 = RectangleShape().addChildTo(this);
-        //var shape2 = RectangleShape().addChildTo(shape1);
-        //shape2.fill = 'yellow';
-        //shape2.width = 15;
-        //shape2.height = 15;
-        //this.shape1 = shape1;
-        //this.shape1.height = 2;
-        //this.shape1.width = 150;
-        //shape2.setPosition(shape1.width / 2, 0);
-        //this.shape1.fill = 'red';
     },
     // 毎フレーム処理
     update: function (app) {
@@ -371,17 +285,16 @@ phina.define('Player', {
             this.vx += 3;
         }
         if (key.getKey('up')) {
-            SoundManager.play('se_jump');
             if (!this.JUMP_FLG) {
+                SoundManager.play('se_jump');
                 this.JUMP_FLG = true;
                 this.anim.gotoAndPlay('fly');
                 this.scaleX *= -1;
+                this.vy = -JUMP_POWOR;
             }
-            this.vy = -JUMP_POWOR;
         }
         //if (key.getKey('down')) { this.vy = 3; }
         this.move();
-        this.label1.text = this.x + " " + this.y;
     },
     move: function () {
         //if (this.vx != null) {
@@ -400,16 +313,16 @@ phina.define('Player', {
             y: this.y + this.vy
         }
 
-        if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
-            //SoundManager.play('se_chakuchi');
-            nextPos.y = SCREEN_HEIGHT + 100;
-            //if (this.JUMP_FLG) {
-            //    this.JUMP_FLG = false;
-            //    this.anim.gotoAndPlay('right');
-            //    this.scaleX *= -1;
-            //}
-            //this.vy = 0;
-        }
+        //if (nextPos.y > SCREEN_HEIGHT + 100) {  //地面に着地時
+        //    //SoundManager.play('se_chakuchi');
+        //    nextPos.y = SCREEN_HEIGHT + 100;
+        //    //if (this.JUMP_FLG) {
+        //    //    this.JUMP_FLG = false;
+        //    //    this.anim.gotoAndPlay('right');
+        //    //    this.scaleX *= -1;
+        //    //}
+        //    //this.vy = 0;
+        //}
         if (nextPos.y < 0) {
             nextPos.y = 0;
         }
@@ -445,7 +358,6 @@ phina.define('Player', {
         if (degree2 > 360) {
             degree2 -= 360;
         }
-        this.parent.logger(degree);
 
         let calc = function (p1, p2, p3, p4) {
             let dev = (p2.y - p1.y) * (p4.x - p3.x) - (p2.x - p1.x) * (p4.y - p3.y);
