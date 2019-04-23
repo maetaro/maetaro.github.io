@@ -18,7 +18,10 @@ var ASSETS = {
         'tomapiko_ss': 'https://rawgit.com/phi-jp/phina.js/develop/assets/tmss/tomapiko.tmss',
     },
     tmx: {
-        "map": "assets/tilemap/BRGFCMAP.tmx",
+        "map1": "assets/tilemap/BRGFCMAP.tmx",
+        //"FlashManStage": "assets/tilemap/FlashManStage.tmx",
+        //"MetalManStage": "assets/tilemap/MetalManStage.tmx",
+        //"AirManStage": "assets/tilemap/AirManStage.tmx",
     },
 };
 // グローバル変数
@@ -42,7 +45,7 @@ phina.define("MainScene", {
             .addChildTo(this);
 
         //.tmxファイルからマップをイメージとして取得し、スプライトで表示
-        this.tmx = AssetManager.get("tmx", "map");
+        this.tmx = AssetManager.get("tmx", "map1");
         this.collisionLayer = this.tmx.layers.filter(function (e) { return e.name == "collision"; }).first;
         this.map = Sprite(this.tmx.getImage())
             .setOrigin(0, 0)
@@ -82,27 +85,27 @@ phina.define("MainScene", {
 
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
-        //let player = this.player;
+        let player = this.player;
 
-        //// フリック
-        //var flickable = Flickable().attachTo(this);
-        //// 動かさない
-        //flickable.horizontal = false;
-        //flickable.vertical = false;
-        //flickable.onflickstart = function (e) {
-        //    var angle = e.direction.toAngle().toDegree() | 0;
-        //    player.vx = e.direction.x * 3.5;
-        //    if (225 < angle && angle < 315) {
-        //        SoundManager.play('se_jump');
-        //        if (!player.JUMP_FLG) {
-        //            player.JUMP_FLG = true;
-        //            player.anim.gotoAndPlay('fly');
-        //            player.scaleX *= -1;
-        //        }
-        //        player.vy = player.JUMP_POWOR * -1;
-        //        player.y -= 10;
-        //    }
-        //};
+        // フリック
+        var flickable = Flickable().attachTo(this);
+        // 動かさない
+        flickable.horizontal = false;
+        flickable.vertical = false;
+        flickable.onflickstart = function (e) {
+            var angle = e.direction.toAngle().toDegree() | 0;
+            player.vx = e.direction.x * 3.5;
+            if (225 < angle && angle < 315) {
+                SoundManager.play('se_jump');
+                if (!player.JUMP_FLG) {
+                    player.JUMP_FLG = true;
+                    player.anim.gotoAndPlay('fly');
+                    player.scaleX *= -1;
+                }
+                player.vy = player.JUMP_POWOR * -1;
+                player.y -= 10;
+            }
+        };
 
         //// コンボ数をリセット
         //this.combo = 0;
@@ -110,17 +113,17 @@ phina.define("MainScene", {
 
     // 画面上でのタッチ移動時
     onpointmove: function (e) {
-        // console.log(e);
-        //let power = e.pointer.startPosition.x - e.pointer.position.x;
-        //this.player.vx = (power > 0 ? -3 : 3);
+         console.log(e);
+        let power = e.pointer.startPosition.x - e.pointer.position.x;
+        this.player.vx = (power > 0 ? -3 : 3);
     },
 
     // 画面タッチ時処理
     onpointend: function () {
-        //this.player.vx = 0;
-        //if (!this.player.JUMP_FLG) {
-        //    this.player.anim.gotoAndPlay('right');
-        //}
+        this.player.vx = 0;
+        if (!this.player.JUMP_FLG) {
+            this.player.anim.gotoAndPlay('right');
+        }
     },
 
     // 更新
@@ -149,44 +152,27 @@ phina.define("MainScene", {
         var self = this;
 
         // 衝突時の位置調整
-         let collisionLayer = this.collisionLayer;
-         const unitSize = 16 * this.map.scaleX;
-         for (var r = 0; r < collisionLayer.height; r++) {
-             for (var c = 0; c < collisionLayer.width; c++) {
-                 let index = (r * collisionLayer.width) + c;
-                 if (collisionLayer.data[index] == -1) {
-                     continue;
-                 }
-                 let top = r * unitSize;
-                 let left = c * unitSize + this.mapBase.x;
+        let collisionLayer = this.collisionLayer;
+        const unitSize = 16 * this.map.scaleX;
+        for (var r = 0; r < collisionLayer.height; r++) {
+            for (var c = 0; c < collisionLayer.width; c++) {
+                let index = (r * collisionLayer.width) + c;
+                if (collisionLayer.data[index] == -1) {
+                    continue;
+                }
+                let top = r * unitSize;
+                let left = c * unitSize + this.mapBase.x;
 
-                 // 衝突判定
-                 let playerRect = player.collider.getAbsoluteRect();
-                 let targetRect = Rect(left, top, unitSize, unitSize);
-                 if (Collision.testRectRect(playerRect, targetRect)) {
-                     player.hit(targetRect);
-                 }
-             }
-         }
-        //let mapBase = this.mapBase;
-        //this.blocks.each(function(block) {
-        //    // let playerRect = player.collider.getAbsoluteRect();
-        //    // let blockRect = block.collider.getAbsoluteRect();
-        //    // block.fill = "blue";
-        //    // if (Collision.testRectRect(playerRect, blockRect)) {
-        //    //     block.fill = "red";
-        //    //     player.hit(blockRect);
-        //    // }
-        //    block.fill = "blue";
-        //    let blockRect = block.collider.getAbsoluteRect();
-        //    blockRect.x = block.x + mapBase.x;
-        //    if (Collision.testRectRect(player.collider, blockRect)) {
-        //        block.fill = "red";
-        //        player.hit(block);
-        //    }
-        //});
+                // 衝突判定
+                let playerRect = player.collider.getAbsoluteRect();
+                let targetRect = Rect(left, top, unitSize, unitSize);
+                if (Collision.testRectRect(playerRect, targetRect)) {
+                    player.hit(targetRect);
+                }
+            }
+        }
     },
-    
+
 });
 
 /*
@@ -194,10 +180,10 @@ phina.define("MainScene", {
  */
 phina.define('Player', {
     superClass: 'Sprite',
-    GetDegree: function() {
+    GetDegree: function () {
         let degree = Vector2(this.vx, this.vy).toAngle().toDegree();
-        if (degree != 0)  degree -= 180;
-        if (degree < 0)   degree += 360;
+        if (degree != 0) degree -= 180;
+        if (degree < 0) degree += 360;
         if (degree > 360) degree -= 360;
         return degree;
     },
@@ -252,7 +238,7 @@ phina.define('Player', {
         this.vy += 0.3;
         this.y += this.vy;
     },
-    hit: function(other) {
+    hit: function (other) {
         // 前フレームでの四角
         let nextRect = Rect(this.x + this.vx, this.y + this.vy, this.width, this.heigth);
 
