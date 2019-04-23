@@ -48,81 +48,79 @@ phina.define("MainScene", {
             .setOrigin(0, 0)
             .setPosition(0, 0)
             .addChildTo(this.mapBase);
-        // this.map.tweener.clear().setUpdateType('fps');
+        this.map.tweener.clear().setUpdateType('fps');
         this.map.setScale(2, 2);
 
-        this.blocks = [];
-        let collisionLayer = this.collisionLayer;
-        const unitSize = 16 * this.map.scaleX;
-        for (var r = 0; r < collisionLayer.height; r++) {
-            for (var c = 0; c < collisionLayer.width; c++) {
-                let index = (r * collisionLayer.width) + c;
-                if (collisionLayer.data[index] == -1) {
-                    continue;
-                }
-                let top = r * unitSize;
-                let left = c * unitSize + this.mapBase.x;
+        //this.blocks = [];
+        //let collisionLayer = this.collisionLayer;
+        //const unitSize = 16 * this.map.scaleX;
+        //for (var r = 0; r < collisionLayer.height; r++) {
+        //    for (var c = 0; c < collisionLayer.width; c++) {
+        //        let index = (r * collisionLayer.width) + c;
+        //        if (collisionLayer.data[index] == -1) {
+        //            continue;
+        //        }
+        //        let top = r * unitSize;
+        //        let left = c * unitSize + this.mapBase.x;
 
-                let targetRect = Rect(left, top, unitSize, unitSize);
-                let s = RectangleShape({
-                    x: targetRect.x + (targetRect.width / 2),
-                    y: targetRect.y + (targetRect.height / 2),
-                    width: targetRect.width,
-                    height: targetRect.height,
-                })
-                .addChildTo(this.mapBase);
-                s.collider.show();
-                // s.rowIndex = r;
-                // s.columnIndex = c;
-                this.blocks.push(s);
-            }
-        }
+        //        let targetRect = Rect(left, top, unitSize, unitSize);
+        //        let s = RectangleShape({
+        //            x: targetRect.x + (targetRect.width / 2),
+        //            y: targetRect.y + (targetRect.height / 2),
+        //            width: targetRect.width,
+        //            height: targetRect.height,
+        //        })
+        //        .addChildTo(this.mapBase);
+        //        //s.collider.show();
+        //        this.blocks.push(s);
+        //    }
+        //}
 
 
-        // サウンドラベル
-        this.soundLabel = SoundLabel().addChildTo(this);
+        //// サウンドラベル
+        //this.soundLabel = SoundLabel().addChildTo(this);
 
         // プレイヤー
         this.player = Player('tomapiko').addChildTo(this);
-        let player = this.player;
+        //let player = this.player;
 
-        // フリック
-        var flickable = Flickable().attachTo(this);
-        // 動かさない
-        flickable.horizontal = false;
-        flickable.vertical = false;
-        flickable.onflickstart = function (e) {
-            var angle = e.direction.toAngle().toDegree() | 0;
-            player.vx = e.direction.x * 3.5;
-            if (225 < angle && angle < 315) {
-                SoundManager.play('se_jump');
-                if (!player.JUMP_FLG) {
-                    player.JUMP_FLG = true;
-                    player.anim.gotoAndPlay('fly');
-                    player.scaleX *= -1;
-                }
-                player.vy = player.JUMP_POWOR * -1;
-                player.y -= 10;
-            }
-        };
+        //// フリック
+        //var flickable = Flickable().attachTo(this);
+        //// 動かさない
+        //flickable.horizontal = false;
+        //flickable.vertical = false;
+        //flickable.onflickstart = function (e) {
+        //    var angle = e.direction.toAngle().toDegree() | 0;
+        //    player.vx = e.direction.x * 3.5;
+        //    if (225 < angle && angle < 315) {
+        //        SoundManager.play('se_jump');
+        //        if (!player.JUMP_FLG) {
+        //            player.JUMP_FLG = true;
+        //            player.anim.gotoAndPlay('fly');
+        //            player.scaleX *= -1;
+        //        }
+        //        player.vy = player.JUMP_POWOR * -1;
+        //        player.y -= 10;
+        //    }
+        //};
 
-        // コンボ数をリセット
-        this.combo = 0;
+        //// コンボ数をリセット
+        //this.combo = 0;
     },
 
     // 画面上でのタッチ移動時
     onpointmove: function (e) {
         // console.log(e);
-        let power = e.pointer.startPosition.x - e.pointer.position.x;
-        this.player.vx = (power > 0 ? -3 : 3);
+        //let power = e.pointer.startPosition.x - e.pointer.position.x;
+        //this.player.vx = (power > 0 ? -3 : 3);
     },
 
     // 画面タッチ時処理
     onpointend: function () {
-        this.player.vx = 0;
-        if (!this.player.JUMP_FLG) {
-            this.player.anim.gotoAndPlay('right');
-        }
+        //this.player.vx = 0;
+        //if (!this.player.JUMP_FLG) {
+        //    this.player.anim.gotoAndPlay('right');
+        //}
     },
 
     // 更新
@@ -151,42 +149,42 @@ phina.define("MainScene", {
         var self = this;
 
         // 衝突時の位置調整
-        // let collisionLayer = this.collisionLayer;
-        // const unitSize = 16 * this.map.scaleX;
-        // for (var r = 0; r < collisionLayer.height; r++) {
-        //     for (var c = 0; c < collisionLayer.width; c++) {
-        //         let index = (r * collisionLayer.width) + c;
-        //         if (collisionLayer.data[index] == -1) {
-        //             continue;
-        //         }
-        //         let top = r * unitSize;
-        //         let left = c * unitSize + this.mapBase.x;
+         let collisionLayer = this.collisionLayer;
+         const unitSize = 16 * this.map.scaleX;
+         for (var r = 0; r < collisionLayer.height; r++) {
+             for (var c = 0; c < collisionLayer.width; c++) {
+                 let index = (r * collisionLayer.width) + c;
+                 if (collisionLayer.data[index] == -1) {
+                     continue;
+                 }
+                 let top = r * unitSize;
+                 let left = c * unitSize + this.mapBase.x;
 
-        //         // 衝突判定
-        //         let playerRect = player.collider.getAbsoluteRect();
-        //         let targetRect = Rect(left, top, unitSize, unitSize);
-        //         if (Collision.testRectRect(playerRect, targetRect)) {
-        //             player.hit(targetRect);
-        //         }
-        //     }
-        // }
-        let mapBase = this.mapBase;
-        this.blocks.each(function(block) {
-            // let playerRect = player.collider.getAbsoluteRect();
-            // let blockRect = block.collider.getAbsoluteRect();
-            // block.fill = "blue";
-            // if (Collision.testRectRect(playerRect, blockRect)) {
-            //     block.fill = "red";
-            //     player.hit(blockRect);
-            // }
-            block.fill = "blue";
-            let blockRect = block.collider.getAbsoluteRect();
-            blockRect.x = block.x + mapBase.x;
-            if (Collision.testRectRect(player.collider, blockRect)) {
-                block.fill = "red";
-                player.hit(block);
-            }
-        });
+                 // 衝突判定
+                 let playerRect = player.collider.getAbsoluteRect();
+                 let targetRect = Rect(left, top, unitSize, unitSize);
+                 if (Collision.testRectRect(playerRect, targetRect)) {
+                     player.hit(targetRect);
+                 }
+             }
+         }
+        //let mapBase = this.mapBase;
+        //this.blocks.each(function(block) {
+        //    // let playerRect = player.collider.getAbsoluteRect();
+        //    // let blockRect = block.collider.getAbsoluteRect();
+        //    // block.fill = "blue";
+        //    // if (Collision.testRectRect(playerRect, blockRect)) {
+        //    //     block.fill = "red";
+        //    //     player.hit(blockRect);
+        //    // }
+        //    block.fill = "blue";
+        //    let blockRect = block.collider.getAbsoluteRect();
+        //    blockRect.x = block.x + mapBase.x;
+        //    if (Collision.testRectRect(player.collider, blockRect)) {
+        //        block.fill = "red";
+        //        player.hit(block);
+        //    }
+        //});
     },
     
 });
@@ -213,7 +211,6 @@ phina.define('Player', {
         this.anim = FrameAnimation('tomapiko_ss').attachTo(this);
         // 初期アニメーション指定
         this.anim.gotoAndPlay('right');
-        // this.JUMP_FLG = false; // ジャンプ中かどうか
         this.JUMP_POWOR = 10; // ジャンプ力
         this.setPosition(100, 400);
         this.collider
@@ -317,70 +314,70 @@ phina.define('Player', {
     },
 });
 
-/*
- * コンボラベル
- */
-phina.define('ComboLabel', {
-    superClass: 'Label',
-    init: function (num) {
-        this.superInit(num + ' combo!');
+///*
+// * コンボラベル
+// */
+//phina.define('ComboLabel', {
+//    superClass: 'Label',
+//    init: function (num) {
+//        this.superInit(num + ' combo!');
 
-        this.stroke = 'white';
-        this.strokeWidth = 8;
+//        this.stroke = 'white';
+//        this.strokeWidth = 8;
 
-        // 数によって色とサイズを分岐
-        if (num < 5) {
-            this.fill = 'hsl(40, 60%, 60%)';
-            this.fontSize = 16;
-        }
-        else if (num < 10) {
-            this.fill = 'hsl(120, 60%, 60%)';
-            this.fontSize = 32;
-        }
-        else {
-            this.fill = 'hsl(220, 60%, 60%)';
-            this.fontSize = 48;
-        }
+//        // 数によって色とサイズを分岐
+//        if (num < 5) {
+//            this.fill = 'hsl(40, 60%, 60%)';
+//            this.fontSize = 16;
+//        }
+//        else if (num < 10) {
+//            this.fill = 'hsl(120, 60%, 60%)';
+//            this.fontSize = 32;
+//        }
+//        else {
+//            this.fill = 'hsl(220, 60%, 60%)';
+//            this.fontSize = 48;
+//        }
 
-        // フェードアウトして削除
-        this.tweener
-            .by({
-                alpha: -1,
-                y: -50,
-            })
-            .call(function () {
-                this.remove();
-            }, this)
-            ;
-    },
-});
+//        // フェードアウトして削除
+//        this.tweener
+//            .by({
+//                alpha: -1,
+//                y: -50,
+//            })
+//            .call(function () {
+//                this.remove();
+//            }, this)
+//            ;
+//    },
+//});
 
-/**
- * サウンドラベル
- */
-phina.define('SoundLabel', {
-    superClass: 'Label',
-    init: function () {
-        this.superInit({ text: 'sound off' });
-        this.setSize(140, 50);
-        this.setPosition(100, 100);
-        this.setInteractive(true); // タッチ可能にする
-        this.collider.show();
-    },
-    // タッチイベント登録
-    onpointstart: function (e) {
-        //alert('タッチされました');
-        if (SoundManager.playingBGM) {
-            SoundManager.playingBGM = false;
-            SoundManager.stopMusic('bgm1');
-            e.target.text = "sound off";
-        } else {
-            SoundManager.playingBGM = true;
-            SoundManager.playMusic('bgm1');
-            e.target.text = "sound on";
-        }
-    },
-});
+///**
+// * サウンドラベル
+// */
+//phina.define('SoundLabel', {
+//    superClass: 'Label',
+//    init: function () {
+//        this.superInit({ text: 'sound off' });
+//        this.setSize(140, 50);
+//        this.setPosition(100, 100);
+//        this.setInteractive(true); // タッチ可能にする
+//        this.collider.show();
+//    },
+//    // タッチイベント登録
+//    onpointstart: function (e) {
+//        //alert('タッチされました');
+//        if (SoundManager.playingBGM) {
+//            SoundManager.playingBGM = false;
+//            SoundManager.stopMusic('bgm1');
+//            e.target.text = "sound off";
+//        } else {
+//            SoundManager.playingBGM = true;
+//            SoundManager.playMusic('bgm1');
+//            e.target.text = "sound on";
+//        }
+//    },
+//});
 
 /*
  * メイン処理
