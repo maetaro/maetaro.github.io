@@ -84,7 +84,7 @@ phina.define("MainScene", {
         //this.soundLabel = SoundLabel().addChildTo(this);
 
         // プレイヤー
-        this.player = Player('tomapiko').addChildTo(this);
+        this.player = Player().addChildTo(this);
         let player = this.player;
 
         // フリック
@@ -96,14 +96,7 @@ phina.define("MainScene", {
             var angle = e.direction.toAngle().toDegree() | 0;
             player.vx = e.direction.x * 3.5;
             if (225 < angle && angle < 315) {
-                SoundManager.play('se_jump');
-                if (!player.JUMP_FLG) {
-                    player.JUMP_FLG = true;
-                    player.anim.gotoAndPlay('fly');
-                    player.scaleX *= -1;
-                }
-                player.vy = player.JUMP_POWOR * -1;
-                player.y -= 10;
+                player.jump();
             }
         };
 
@@ -121,9 +114,9 @@ phina.define("MainScene", {
     // 画面タッチ時処理
     onpointend: function () {
         this.player.vx = 0;
-        if (!this.player.JUMP_FLG) {
-            this.player.anim.gotoAndPlay('right');
-        }
+        //if (!this.player.JUMP_FLG) {
+        //    this.player.anim.gotoAndPlay('right');
+        //}
     },
 
     // 更新
@@ -188,9 +181,9 @@ phina.define('Player', {
         return degree;
     },
     // コンストラクタ
-    init: function (image) {
+    init: function () {
         // 親クラス初期化
-        this.superInit(image);
+        this.superInit("tomapiko");
         this.vx = 0;
         this.vy = 0;
         // フレームアニメーションをアタッチ
@@ -213,11 +206,11 @@ phina.define('Player', {
         // 上下左右移動
         if (key.getKey('left')) {
             this.anim.gotoAndPlay('left');
-            this.vx = -4;
+            this.vx = -2;
         }
         if (key.getKey('right')) {
             this.anim.gotoAndPlay('right');
-            this.vx = 4;
+            this.vx = 2;
         }
         if (key.getKey('up')) {
             if (this.vy >= 0) {
@@ -298,6 +291,17 @@ phina.define('Player', {
                 break;
         }
     },
+    jump: function () {
+        SoundManager.play('se_jump');
+        if (!this.JUMP_FLG) {
+            this.JUMP_FLG = true;
+            this.anim.gotoAndPlay('fly');
+            this.scaleX *= -1;
+        }
+        this.vy = this.JUMP_POWOR * -1;
+        this.y -= 10;
+
+    }
 });
 
 ///*
