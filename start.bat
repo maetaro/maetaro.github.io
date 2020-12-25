@@ -1,2 +1,2 @@
 rem python start.py
-python -m CGIHTTPServer 7999
+python -m http.server 7999
