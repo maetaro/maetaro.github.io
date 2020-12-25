@@ -205,11 +205,15 @@ phina.define('Player', {
         var key = app.keyboard;
         // 上下左右移動
         if (key.getKey('left')) {
-            this.anim.gotoAndPlay('left');
+            if (this.vx > 0) {
+                this.anim.gotoAndPlay('left');
+            }
             this.vx = -2;
         }
         if (key.getKey('right')) {
-            this.anim.gotoAndPlay('right');
+            if (this.vx < 0) {
+                this.anim.gotoAndPlay('right');
+            }
             this.vx = 2;
         }
         if (key.getKey('up')) {
