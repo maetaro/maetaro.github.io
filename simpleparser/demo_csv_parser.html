@@ -66,6 +66,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             
+              <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
             <li class="visible-xs"><a href="_sources/demo_csv_parser.rst.txt" rel="nofollow">Show Source</a></li>
@@ -133,8 +134,34 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="demo-csv-parser-module">
-<h1>demo_csv_parser module<a class="headerlink" href="#demo-csv-parser-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-demo_csv_parser">
+<span id="demo-csv-parser-module"></span><h1>demo_csv_parser module<a class="headerlink" href="#module-demo_csv_parser" title="Permalink to this headline">¶</a></h1>
+<p>csv parsing sample.</p>
+<dl class="py function">
+<dt id="demo_csv_parser.parseCsv">
+<code class="sig-prename descclassname">demo_csv_parser.</code><code class="sig-name descname">parseCsv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#demo_csv_parser.parseCsv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parsecsv.</p>
+<p><a class="reference external" href="http://book.realworldhaskell.org/read/using-parsec.html">http://book.realworldhaskell.org/read/using-parsec.html</a></p>
+<p># TODO: doctest
+# Example
+# ——-
+# &gt;&gt;&gt; p = parseCsv
+# &gt;&gt;&gt; p(“hi”).result()
+# “Left &quot;(unknown)&quot; (line 1, column 3):”
+# “unexpected end of input”
+# “expecting &quot;,&quot; or &quot;\n””
+# &gt;&gt;&gt; p(‘“hi”\n’).result()
+# [[‘“hi”’]]
+# &gt;&gt;&gt; p(‘“line1”\n”line2”\n”line3”\n’).result()
+# [[‘“line1”’], [‘“line2”’], [‘“line3”’]]
+# &gt;&gt;&gt; p(‘“cell1”,”cell2”,”cell3”\n’).result()
+# [[‘“cell1”’, ‘“cell2”’, ‘“cell3”’]]
+# &gt;&gt;&gt; p(‘“l1c1”,”l1c2”\n”l2c1”,”l2c2”\n’).result()
+# [[‘“l1c1”’, ‘“l1c2”’], [‘“l2c1”’, ‘“l2c2”’]]
+# &gt;&gt;&gt; p(“line1\r\nline2\nline3\n\rline4\rline5\n”).result()
+# [[“line1”], [“line2”], [“line3”], [“line4”], [“line5”]]</p>
+</dd></dl>
+
 </div>
 
 
@@ -156,6 +183,7 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
+        <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="#">top</a></li> 
       

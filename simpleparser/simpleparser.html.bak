@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>simpleparser package &mdash; simpleparser 1.0.0 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    './',
+            VERSION:     '1.0.0',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="simpleparser 1.0.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to simpleparser’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">simpleparser 1.0.0 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">simpleparser package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-simpleparser.mod1">simpleparser.mod1 module</a></li>
+<li><a class="reference internal" href="#module-simpleparser.parseresult">simpleparser.parseresult module</a></li>
+<li><a class="reference internal" href="#module-simpleparser.prim">simpleparser.prim module</a></li>
+<li><a class="reference internal" href="#module-simpleparser">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="index.html" title="Welcome to simpleparser’s documentation!" accesskey="P">previous </a></li>
+              <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
+              <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+            
+            <li class="visible-xs"><a href="_sources/simpleparser.rst.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">simpleparser package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-simpleparser.mod1">simpleparser.mod1 module</a></li>
+<li><a class="reference internal" href="#module-simpleparser.parseresult">simpleparser.parseresult module</a></li>
+<li><a class="reference internal" href="#module-simpleparser.prim">simpleparser.prim module</a></li>
+<li><a class="reference internal" href="#module-simpleparser">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to simpleparser’s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/simpleparser.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="simpleparser-package">
+<h1>simpleparser package<a class="headerlink" href="#simpleparser-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simpleparser.mod1">
+<span id="simpleparser-mod1-module"></span><h2>simpleparser.mod1 module<a class="headerlink" href="#module-simpleparser.mod1" title="Permalink to this headline">¶</a></h2>
+<p>a simple parser combinator.</p>
+<dl class="py class">
+<dt id="simpleparser.mod1.Parser">
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>a parser class.</p>
+<dl class="py method">
+<dt id="simpleparser.mod1.Parser.exec">
+<em class="property">property </em><code class="sig-name descname">exec</code><a class="headerlink" href="#simpleparser.mod1.Parser.exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the executable function object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simpleparser.mod1.Parser.map">
+<code class="sig-name descname">map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">selector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.Parser.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map method.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span> <span class="o">=</span> <span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">token</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;aaa&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foooo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;fooaaa&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cell</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;barrr&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;baraaa&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; aaa&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;foo aaa&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.char">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">char</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.char" title="Permalink to this definition">¶</a></dt>
+<dd><p>Char function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.choice">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">choice</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choice function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span> <span class="o">=</span> <span class="n">many</span><span class="p">(</span><span class="n">choice</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;fuga&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hogehoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;fugahoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;fuga&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;fugafoo&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;fuga&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.endBy">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">endBy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em>, <em class="sig-param"><span class="n">sep</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.endBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Endby p sep parses zero or more occurrences of p, separated and ended by sep.</p>
+<p>Returns a list of values returned by p.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">endBy</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">endBy</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">endBy</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge,&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">endBy</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge,-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">&#39;parse error.&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.lazy">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callback</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.lazy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lazy function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span> <span class="o">=</span> <span class="n">option</span><span class="p">(</span><span class="n">seq</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">),</span> <span class="n">lazy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">parse</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hogehoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hogehogehoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;, &#39;hoge&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.many">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">many</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.many" title="Permalink to this definition">¶</a></dt>
+<dd><p>Many function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">many</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hogehoge&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">many</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">many</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foobar&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.map">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em>, <em class="sig-param"><span class="n">selector</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">map</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; aaa&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;foo aaa&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.noneOf">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">noneOf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.noneOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>As the dual of oneOf, noneOf cs succeeds if the current character not in the supplied list of characters cs. Returns the parsed character.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">noneOf</span><span class="p">(</span><span class="s2">&quot;abcdefg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;h&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.option">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Option function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">option</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;fuga&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.regex">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">regex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.regex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regex function returns a function that parses the beginning of the received string with the regular expression pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – a regular expression string.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">regex</span><span class="p">(</span><span class="s2">&quot;hoge&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">regex</span><span class="p">(</span><span class="s2">&quot;([1-9][0-9]*)&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;2014a&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;2014&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;01&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">&#39;parse error at (0): unexpected 01 expecting ([1-9][0-9]*)&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.sepBy">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">sepBy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em>, <em class="sig-param"><span class="n">sep</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.sepBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse zero or more occurrences of parser, separated by sep. Returns a list of values returned by parser.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sepBy</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.seq">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">seq</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seq function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span> <span class="o">=</span> <span class="n">seq</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foobar&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;foo&#39;, &#39;bar&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foobaz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;foo&#39;, &#39;baz&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">&#39;parse error at (3): unexpected  expecting bar\nparse error at (3): unexpected  expecting baz&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.mod1.token">
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Token function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foobar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;foo&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foobar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">&#39;parse error at (0): unexpected foo expecting bar&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-simpleparser.parseresult">
+<span id="simpleparser-parseresult-module"></span><h2>simpleparser.parseresult module<a class="headerlink" href="#module-simpleparser.parseresult" title="Permalink to this headline">¶</a></h2>
+<p>a simple parser combinator.</p>
+<dl class="py class">
+<dt id="simpleparser.parseresult.Failure">
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">Failure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">simpleparser.parseresult.ParseResult</span></code></a></p>
+<p>Parsed Success class.</p>
+<dl class="py method">
+<dt id="simpleparser.parseresult.Failure.result">
+<code class="sig-name descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Failure.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return parsed result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="simpleparser.parseresult.ParseResult">
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">ParseResult</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">success</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.ParseResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parsed Result class.</p>
+<dl class="py method">
+<dt id="simpleparser.parseresult.ParseResult.result">
+<code class="sig-name descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.ParseResult.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return parsed result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="simpleparser.parseresult.Success">
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">Success</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">simpleparser.parseresult.ParseResult</span></code></a></p>
+<p>Parsed Success class.</p>
+<dl class="py method">
+<dt id="simpleparser.parseresult.Success.result">
+<code class="sig-name descname">result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Success.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return parsed result.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simpleparser.prim">
+<span id="simpleparser-prim-module"></span><h2>simpleparser.prim module<a class="headerlink" href="#module-simpleparser.prim" title="Permalink to this headline">¶</a></h2>
+<p>a simple parser combinator.</p>
+</div>
+<div class="section" id="module-simpleparser">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simpleparser" title="Permalink to this headline">¶</a></h2>
+<p>simpleparser.</p>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="index.html">simpleparser 1.0.0 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="index.html" title="Welcome to simpleparser’s documentation!" >previous</a></li>
+        <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
+        <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2020, maetaro.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.1.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

@@ -66,6 +66,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             
+              <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
             <li class="visible-xs"><a href="_sources/demo_scheme_parser.rst.txt" rel="nofollow">Show Source</a></li>
@@ -133,8 +134,30 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="demo-scheme-parser-module">
-<h1>demo_scheme_parser module<a class="headerlink" href="#demo-scheme-parser-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-demo_scheme_parser">
+<span id="demo-scheme-parser-module"></span><h1>demo_scheme_parser module<a class="headerlink" href="#module-demo_scheme_parser" title="Permalink to this headline">¶</a></h1>
+<p>scheme parsing sample.</p>
+<dl class="py class">
+<dt id="demo_scheme_parser.schemeparser">
+<em class="property">class </em><code class="sig-prename descclassname">demo_scheme_parser.</code><code class="sig-name descname">schemeparser</code><a class="headerlink" href="#demo_scheme_parser.schemeparser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Schemeparser class.</p>
+<p># TODO: doctest
+# &gt;&gt;&gt; parser = schemeparser()
+# &gt;&gt;&gt; parser.parse(“( + 1 7 )”).result()
+# [True, [‘(‘, ‘+’, ‘ ‘, ‘1’, ‘ ‘, ‘7’, ‘)’], 7]
+# &gt;&gt;&gt; parser.parse(“( + 1 ( - 2 3 ) )”).result()
+# [True, [‘(‘, ‘+’, ‘ ‘, ‘1’, ‘ ‘, ‘(‘, ‘ ‘, ‘-‘, ‘ ‘, ‘2’, ‘ ‘, ‘3’, ‘)’, ‘)’], 13]
+# &gt;&gt;&gt; parser.parse(“( + 1 ( - 2 ( + 3 4 ) ) )”).result()
+# [True, [‘(‘, ‘+’, ‘ ‘, ‘1’, ‘ ‘, ‘(‘, ‘ ‘, ‘-‘, ‘ ‘, ‘2’, ‘ ‘, ‘3’, ‘)’, ‘)’], 13]</p>
+<dl class="py method">
+<dt id="demo_scheme_parser.schemeparser.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#demo_scheme_parser.schemeparser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse method.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -156,6 +179,7 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
+        <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="#">top</a></li> 
       

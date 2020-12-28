@@ -66,6 +66,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             
+              <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
             <li class="visible-xs"><a href="_sources/demo_json_parser.rst.txt" rel="nofollow">Show Source</a></li>
@@ -133,8 +134,40 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="demo-json-parser-module">
-<h1>demo_json_parser module<a class="headerlink" href="#demo-json-parser-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-demo_json_parser">
+<span id="demo-json-parser-module"></span><h1>demo_json_parser module<a class="headerlink" href="#module-demo_json_parser" title="Permalink to this headline">¶</a></h1>
+<p>csv parsing sample.</p>
+<dl class="py class">
+<dt id="demo_json_parser.json_parser">
+<em class="property">class </em><code class="sig-prename descclassname">demo_json_parser.</code><code class="sig-name descname">json_parser</code><a class="headerlink" href="#demo_json_parser.json_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Json parser.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">json_parser</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;{&#39;, &#39;}&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:2}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:{p1:1,p2:2}}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;, &#39;}&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[[1,2,3],[2],[3]]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;[&#39;, &#39;[&#39;, 1, 2, 3, &#39;]&#39;, &#39;[&#39;, 2, &#39;]&#39;, &#39;[&#39;, 3, &#39;]&#39;, &#39;]&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[1,2,3]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;[&#39;, 1, 2, 3, &#39;]&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p2:&#39;a&#39;}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;{&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;}&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:&#39;a&#39;,p3:[]}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;p3&#39;, &#39;:&#39;, &#39;[&#39;, &#39;]&#39;, &#39;}&#39;]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="demo_json_parser.json_parser.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#demo_json_parser.json_parser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse method.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -156,6 +189,7 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
+        <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="#">top</a></li> 
       

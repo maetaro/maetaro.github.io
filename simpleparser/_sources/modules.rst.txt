@@ -1,5 +1,5 @@
 simpleparser
-=============
+============
 
 .. toctree::
    :maxdepth: 4
