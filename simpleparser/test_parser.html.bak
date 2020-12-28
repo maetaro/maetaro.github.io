@@ -155,6 +155,12 @@
 <dd><p>test_token_1.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt id="test_parser.test_token_2">
+<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#test_parser.test_token_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>test_token_2.</p>
+</dd></dl>
+
 </div>
 
 

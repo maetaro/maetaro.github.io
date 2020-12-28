@@ -301,7 +301,7 @@
 
 <dl class="py function">
 <dt id="simpleparser.mod1.option">
-<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.option" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.option" title="Permalink to this definition">¶</a></dt>
 <dd><p>Option function.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">option</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">))</span>
@@ -348,7 +348,7 @@
 
 <dl class="py function">
 <dt id="simpleparser.mod1.seq">
-<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">seq</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.seq" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">seq</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.seq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Seq function.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span> <span class="o">=</span> <span class="n">seq</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">choice</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)))</span>
@@ -384,12 +384,12 @@
 <dt id="simpleparser.parseresult.Failure">
 <em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">Failure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Failure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">simpleparser.parseresult.ParseResult</span></code></a></p>
-<p>Parsed Success class.</p>
+<p>Parsed Failure class.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="simpleparser.parseresult.ParseResult">
-<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">ParseResult</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">success</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.ParseResult" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">ParseResult</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">success</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">tokens</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.ParseResult" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Parsed Result class.</p>
 <dl class="py method">
@@ -408,7 +408,7 @@
 
 <dl class="py class">
 <dt id="simpleparser.parseresult.Success">
-<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">Success</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Success" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parseresult.</code><code class="sig-name descname">Success</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tokens</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">position</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parseresult.Success" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">simpleparser.parseresult.ParseResult</span></code></a></p>
 <p>Parsed Success class.</p>
 </dd></dl>

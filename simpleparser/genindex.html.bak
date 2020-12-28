@@ -359,11 +359,13 @@
         <li><a href="test_parser.html#module-test_parser">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="test_parser.html#test_parser.test_regex_1">test_regex_1() (in module test_parser)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="test_parser.html#test_parser.test_token_1">test_token_1() (in module test_parser)</a>
+</li>
+      <li><a href="test_parser.html#test_parser.test_token_2">test_token_2() (in module test_parser)</a>
 </li>
       <li><a href="simpleparser.html#simpleparser.parseresult.ParseResult.then">then() (simpleparser.parseresult.ParseResult method)</a>
 </li>
