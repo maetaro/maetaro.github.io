@@ -195,7 +195,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="simpleparser.html#simpleparser.mod1.Parser.exec">exec() (simpleparser.mod1.Parser property)</a>
+      <li><a href="simpleparser.html#simpleparser.parser.Parser.exec">exec() (simpleparser.parser.Parser property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -230,11 +230,7 @@
       <li><a href="simpleparser.html#simpleparser.mod1.many">many() (in module simpleparser.mod1)</a>
 </li>
       <li><a href="simpleparser.html#simpleparser.mod1.map">map() (in module simpleparser.mod1)</a>
-
-      <ul>
-        <li><a href="simpleparser.html#simpleparser.mod1.Parser.map">(simpleparser.mod1.Parser method)</a>
 </li>
-      </ul></li>
       <li>
     module
 
@@ -248,6 +244,8 @@
         <li><a href="simpleparser.html#module-simpleparser">simpleparser</a>
 </li>
         <li><a href="simpleparser.html#module-simpleparser.mod1">simpleparser.mod1</a>
+</li>
+        <li><a href="simpleparser.html#module-simpleparser.parser">simpleparser.parser</a>
 </li>
         <li><a href="simpleparser.html#module-simpleparser.parseresult">simpleparser.parseresult</a>
 </li>
@@ -288,7 +286,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="demo_csv_parser.html#demo_csv_parser.parseCsv">parseCsv() (in module demo_csv_parser)</a>
 </li>
-      <li><a href="simpleparser.html#simpleparser.mod1.Parser">Parser (class in simpleparser.mod1)</a>
+      <li><a href="simpleparser.html#simpleparser.parser.Parser">Parser (class in simpleparser.parser)</a>
 </li>
       <li><a href="simpleparser.html#simpleparser.parseresult.ParseResult">ParseResult (class in simpleparser.parseresult)</a>
 </li>
@@ -328,6 +326,13 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    simpleparser.parser
+
+      <ul>
+        <li><a href="simpleparser.html#module-simpleparser.parser">module</a>
+</li>
+      </ul></li>
       <li>
     simpleparser.parseresult
 

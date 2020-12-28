@@ -12,6 +12,14 @@ simpleparser.mod1 module
    :undoc-members:
    :show-inheritance:
 
+simpleparser.parser module
+--------------------------
+
+.. automodule:: simpleparser.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simpleparser.parseresult module
 -------------------------------
 
