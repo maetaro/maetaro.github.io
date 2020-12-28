@@ -177,7 +177,7 @@
 <p>a simple parser combinator.</p>
 <dl class="py class">
 <dt id="simpleparser.mod1.Parser">
-<em class="property">class </em><code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.Parser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">, </span><a class="reference internal" href="#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult">simpleparser.parseresult.ParseResult</a><span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.mod1.Parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>a parser class.</p>
 <dl class="py method">
@@ -248,7 +248,7 @@
 
 <dl class="py function">
 <dt id="simpleparser.mod1.lazy">
-<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callback</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.lazy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">simpleparser.mod1.</code><code class="sig-name descname">lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callback</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">]</span><span class="p">, </span><a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#simpleparser.mod1.Parser" title="simpleparser.mod1.Parser">simpleparser.mod1.Parser</a><a class="headerlink" href="#simpleparser.mod1.lazy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lazy function.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse</span> <span class="o">=</span> <span class="n">option</span><span class="p">(</span><span class="n">seq</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;hoge&#39;</span><span class="p">),</span> <span class="n">lazy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">parse</span><span class="p">)))</span>
