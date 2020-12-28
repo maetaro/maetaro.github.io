@@ -144,19 +144,19 @@
 <p>Json parser.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">json_parser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:2}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:2}&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:{p1:1,p2:2}}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:{p1:1,p2:2}}&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[[1,2,3],[2],[3]]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[[1,2,3],[2],[3]]&quot;</span><span class="p">)</span>
 <span class="go">[&#39;[&#39;, &#39;[&#39;, 1, 2, 3, &#39;]&#39;, &#39;[&#39;, 2, &#39;]&#39;, &#39;[&#39;, 3, &#39;]&#39;, &#39;]&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[1,2,3]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[1,2,3]&quot;</span><span class="p">)</span>
 <span class="go">[&#39;[&#39;, 1, 2, 3, &#39;]&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p2:&#39;a&#39;}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p2:&#39;a&#39;}&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:&#39;a&#39;,p3:[]}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:&#39;a&#39;,p3:[]}&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;p3&#39;, &#39;:&#39;, &#39;[&#39;, &#39;]&#39;, &#39;}&#39;]</span>
 </pre></div>
 </div>
