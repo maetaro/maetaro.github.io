@@ -147,22 +147,22 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;}&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:2}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;]</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &#39;2&#39;, &#39;}&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:{p1:1,p2:2}}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, 2, &#39;}&#39;, &#39;}&#39;]</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &#39;2&#39;, &#39;}&#39;, &#39;}&#39;]  # noqa F501</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[[1,2,3],[2],[3]]&quot;</span><span class="p">)</span>
-<span class="go">[&#39;[&#39;, &#39;[&#39;, 1, 2, 3, &#39;]&#39;, &#39;[&#39;, 2, &#39;]&#39;, &#39;[&#39;, 3, &#39;]&#39;, &#39;]&#39;]</span>
+<span class="go">[&#39;[&#39;, &#39;[&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;]&#39;, &#39;[&#39;, &#39;2&#39;, &#39;]&#39;, &#39;[&#39;, &#39;3&#39;, &#39;]&#39;, &#39;]&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[1,2,3]&quot;</span><span class="p">)</span>
-<span class="go">[&#39;[&#39;, 1, 2, 3, &#39;]&#39;]</span>
+<span class="go">[&#39;[&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;]&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p2:&#39;a&#39;}&quot;</span><span class="p">)</span>
 <span class="go">[&#39;{&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;}&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:&#39;a&#39;,p3:[]}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, 1, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;p3&#39;, &#39;:&#39;, &#39;[&#39;, &#39;]&#39;, &#39;}&#39;]</span>
+<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;p3&#39;, &#39;:&#39;, &#39;[&#39;, &#39;]&#39;, &#39;}&#39;]</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt id="demo_json_parser.json_parser.parse">
-<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#demo_json_parser.json_parser.parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="simpleparser.html#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult">simpleparser.parseresult.ParseResult</a><a class="headerlink" href="#demo_json_parser.json_parser.parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse method.</p>
 </dd></dl>
 
