@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>simpleparser.prim &mdash; simpleparser 0.0.1 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="../../static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="../../static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="../../static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="../../static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="../../static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    '../../',
+            VERSION:     '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="../../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/underscore.js"></script>
+    <script type="text/javascript" src="../../static/doctools.js"></script>
+    <script type="text/javascript" src="../../static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../../static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="simpleparser 0.0.1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">simpleparser 0.0.1 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+              <li><a href="../../py-modindex.html" title="Python Module Index" >modules </a></li>
+              <li><a href="../../genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="../index.html" accesskey="U">Module code</a></li>
+            
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="../../search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="../../search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <h1>Source code for simpleparser.prim</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;a simple parser combinator.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">simpleparser.parseresult</span> <span class="kn">import</span> <span class="n">ParseResult</span><span class="p">,</span> <span class="n">Success</span><span class="p">,</span> <span class="n">Failure</span>
+<span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
+
+
+<div class="viewcode-block" id="token"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.prim.token">[docs]</a><span class="k">def</span> <span class="nf">token</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Token function.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; token(&quot;foo&quot;).exec(&quot;foobar&quot;)</span>
+<span class="sd">    [&#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; token(&quot;bar&quot;).exec(&quot;foobar&quot;)</span>
+<span class="sd">    parse error at (0): unexpected foo expecting bar</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">s</span><span class="p">],</span> <span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;parse error at (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;):&quot;</span>
+               <span class="s2">&quot; unexpected &quot;</span> <span class="o">+</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span>
+               <span class="s2">&quot; expecting &quot;</span> <span class="o">+</span> <span class="n">s</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="regex"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.prim.regex">[docs]</a><span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Regex function returns a function that parses the beginning of the received string with the regular expression pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pattern: str</span>
+<span class="sd">        a regular expression string.</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; parser = regex(&quot;hoge&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;hoge&#39;, 0)</span>
+<span class="sd">    [&#39;hoge&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; parser = regex(&quot;([1-9][0-9]*)&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;2014a&#39;, 0)</span>
+<span class="sd">    [&#39;2014&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;01&#39;, 0)</span>
+<span class="sd">    parse error at (0): unexpected 01 expecting ([1-9][0-9]*)</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:])</span>
+        <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()],</span> <span class="n">position</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()))</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;parse error at (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;):&quot;</span>
+               <span class="s2">&quot; unexpected &quot;</span> <span class="o">+</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:]</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span>
+               <span class="s2">&quot; expecting &quot;</span> <span class="o">+</span> <span class="n">pattern</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="../../index.html">simpleparser 0.0.1 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="../../py-modindex.html" title="Python Module Index" >modules</a></li>
+        <li><a href="../../genindex.html" title="General Index" >index</a></li>
+        <li><a href="../index.html" >Module code</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2020, maetaro.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.1.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

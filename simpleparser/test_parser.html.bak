@@ -139,26 +139,26 @@
 <p>test.</p>
 <dl class="py function">
 <dt id="test_parser.test_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#test_parser.test_1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/test_parser.html#test_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_1" title="Permalink to this definition">¶</a></dt>
 <dd><p>test_1.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="test_parser.test_regex_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_regex_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#test_parser.test_regex_1" title="Permalink to this definition">¶</a></dt>
-<dd><p>test_regex_2.</p>
-</dd></dl>
-
-<dl class="py function">
 <dt id="test_parser.test_token_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#test_parser.test_token_1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/test_parser.html#test_token_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_token_1" title="Permalink to this definition">¶</a></dt>
 <dd><p>test_token_1.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="test_parser.test_token_2">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#test_parser.test_token_2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/test_parser.html#test_token_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_token_2" title="Permalink to this definition">¶</a></dt>
 <dd><p>test_token_2.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="test_parser.test_regex_1">
+<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_regex_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/test_parser.html#test_regex_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_regex_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>test_regex_2.</p>
 </dd></dl>
 
 </div>
