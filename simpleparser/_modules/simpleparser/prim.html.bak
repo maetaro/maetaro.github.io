@@ -139,12 +139,19 @@
 <div class="viewcode-block" id="token"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.prim.token">[docs]</a><span class="k">def</span> <span class="nf">token</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Token function.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    s: str</span>
+<span class="sd">        a literal string.</span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; token(&quot;foo&quot;).exec(&quot;foobar&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token</span>
+<span class="sd">    &gt;&gt;&gt; foo = token(&quot;foo&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; foo.exec(&quot;foobar&quot;)</span>
 <span class="sd">    [&#39;foo&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; token(&quot;bar&quot;).exec(&quot;foobar&quot;)</span>
-<span class="sd">    parse error at (0): unexpected foo expecting bar</span>
+<span class="sd">    &gt;&gt;&gt; foo.exec(&quot;alice&quot;)</span>
+<span class="sd">    parse error at (0): unexpected ali expecting foo</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
@@ -166,16 +173,15 @@
 <span class="sd">    ----------</span>
 <span class="sd">    pattern: str</span>
 <span class="sd">        a regular expression string.</span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; parser = regex(&quot;hoge&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;hoge&#39;, 0)</span>
-<span class="sd">    [&#39;hoge&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; parser = regex(&quot;([1-9][0-9]*)&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;2014a&#39;, 0)</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import regex</span>
+<span class="sd">    &gt;&gt;&gt; num = regex(&quot;([1-9][0-9]*)&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; num.exec(&#39;2014a&#39;)</span>
 <span class="sd">    [&#39;2014&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;01&#39;, 0)</span>
-<span class="sd">    parse error at (0): unexpected 01 expecting ([1-9][0-9]*)</span>
+<span class="sd">    &gt;&gt;&gt; num.exec(&#39;abc&#39;)</span>
+<span class="sd">    parse error at (0): unexpected abc expecting ([1-9][0-9]*)</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:])</span>
@@ -187,6 +193,11 @@
         <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="char"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.prim.char">[docs]</a><span class="k">def</span> <span class="nf">char</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Char function.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">regex</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\S&quot;</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

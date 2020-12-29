@@ -134,7 +134,6 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parseresult</span> <span class="kn">import</span> <span class="n">ParseResult</span><span class="p">,</span> <span class="n">Success</span><span class="p">,</span> <span class="n">Failure</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
-<span class="kn">from</span> <span class="nn">simpleparser.prim</span> <span class="kn">import</span> <span class="n">token</span>
 
 
 <div class="viewcode-block" id="noneOf"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.noneOf">[docs]</a><span class="k">def</span> <span class="nf">noneOf</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
@@ -143,6 +142,7 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import noneOf</span>
 <span class="sd">    &gt;&gt;&gt; noneOf(&quot;abcdefg&quot;).exec(&quot;hello&quot;, 0)</span>
 <span class="sd">    [&#39;h&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
@@ -160,11 +160,6 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="char"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.char">[docs]</a><span class="k">def</span> <span class="nf">char</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Char function.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">token</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="endBy"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.endBy">[docs]</a><span class="k">def</span> <span class="nf">endBy</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Endby p sep parses zero or more occurrences of p, separated and ended by sep.</span>
 
@@ -172,7 +167,7 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser.prim import regex</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, regex, endBy</span>
 <span class="sd">    &gt;&gt;&gt; endBy(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;&#39;)</span>
 <span class="sd">    [&#39;&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; endBy(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge&#39;)</span>
@@ -211,7 +206,7 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser.prim import regex</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, regex, sepBy</span>
 <span class="sd">    &gt;&gt;&gt; sepBy(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge&#39;)</span>
 <span class="sd">    [&#39;hoge&#39;, &#39;hoge&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: D401, E501</span>
@@ -241,7 +236,7 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser.comb import seq, option</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, seq, option</span>
 <span class="sd">    &gt;&gt;&gt; parse = option(seq(token(&#39;hoge&#39;), lazy(lambda: parse)))</span>
 <span class="sd">    &gt;&gt;&gt; parse.exec(&#39;hoge&#39;, 0)</span>
 <span class="sd">    [&#39;hoge&#39;]</span>
@@ -262,6 +257,7 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, map</span>
 <span class="sd">    &gt;&gt;&gt; map(token(&quot;foo&quot;), lambda x: [&quot;,&quot;.join(x) + &quot; aaa&quot;]).exec(&quot;foo&quot;, 0)</span>
 <span class="sd">    [&#39;foo aaa&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
