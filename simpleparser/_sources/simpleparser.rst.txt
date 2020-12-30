@@ -8,7 +8,6 @@ Submodules
    :maxdepth: 4
 
    simpleparser.comb
-   simpleparser.mod1
    simpleparser.parser
    simpleparser.parseresult
    simpleparser.prim

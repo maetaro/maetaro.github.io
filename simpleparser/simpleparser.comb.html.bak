@@ -50,7 +50,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
     <link rel="up" title="simpleparser package" href="simpleparser.html" />
-    <link rel="next" title="simpleparser.mod1 module" href="simpleparser.mod1.html" />
+    <link rel="next" title="simpleparser.parser module" href="simpleparser.parser.html" />
     <link rel="prev" title="simpleparser package" href="simpleparser.html" /> 
   </head>
   <body role="document">
@@ -70,7 +70,7 @@
 
             
               <li><a href="simpleparser.html" title="simpleparser package" accesskey="P">previous </a></li>
-              <li><a href="simpleparser.mod1.html" title="simpleparser.mod1 module" accesskey="N">next </a></li>
+              <li><a href="simpleparser.parser.html" title="simpleparser.parser module" accesskey="N">next </a></li>
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
               <li><a href="simpleparser.html" accesskey="U">simpleparser package</a></li>
@@ -111,8 +111,8 @@
   <p class="topless"><a href="simpleparser.html"
                         title="previous chapter">simpleparser package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="simpleparser.mod1.html"
-                        title="next chapter">simpleparser.mod1 module</a></p>
+  <p class="topless"><a href="simpleparser.parser.html"
+                        title="next chapter">simpleparser.parser module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -293,10 +293,87 @@ Apply the received function to the parse result and return it.</p>
 </dl>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">transform</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; aaa&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; aaa&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 <span class="go">[&#39;foo aaa&#39;]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.comb.end_by">
+<code class="sig-prename descclassname">simpleparser.comb.</code><code class="sig-name descname">end_by</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">sep</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/comb.html#end_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.comb.end_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Endby p sep parses zero or more occurrences of p, separated and ended by sep.</p>
+<p>Returns a list of values returned by p.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">end_by</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end_by</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="go">[&#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end_by</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge&#39;</span><span class="p">)</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end_by</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge,&#39;</span><span class="p">)</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;, &#39;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">end_by</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge,-&#39;</span><span class="p">)</span>
+<span class="go">parse error.</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><em>simpleparser.parser.Parser</em></a>) – </p></li>
+<li><p><strong>sep</strong> (<a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><em>simpleparser.parser.Parser</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser">simpleparser.parser.Parser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.comb.sep_by">
+<code class="sig-prename descclassname">simpleparser.comb.</code><code class="sig-name descname">sep_by</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">sep</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/comb.html#sep_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.comb.sep_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse zero or more occurrences of parser, separated by sep. Returns a list of values returned by parser.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">sep_by</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sep_by</span><span class="p">(</span><span class="n">regex</span><span class="p">(</span><span class="s1">&#39;\w*&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;hoge,hoge&#39;</span><span class="p">)</span>
+<span class="go">[&#39;hoge&#39;, &#39;hoge&#39;]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><em>simpleparser.parser.Parser</em></a>) – </p></li>
+<li><p><strong>sep</strong> (<a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><em>simpleparser.parser.Parser</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser">simpleparser.parser.Parser</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.comb.lazy">
+<code class="sig-prename descclassname">simpleparser.comb.</code><code class="sig-name descname">lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">callback</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/comb.html#lazy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.comb.lazy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lazy function.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">lazy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">option</span><span class="p">(</span><span class="n">seq</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">lazy</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">p</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="go">[&#39;foo&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foofoo&#39;</span><span class="p">)</span>
+<span class="go">[&#39;foo&#39;, &#39;foo&#39;]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><em>simpleparser.parser.Parser</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser">simpleparser.parser.Parser</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -321,7 +398,7 @@ Apply the received function to the parse result and return it.</p>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
         <li><a href="simpleparser.html" title="simpleparser package" >previous</a></li>
-        <li><a href="simpleparser.mod1.html" title="simpleparser.mod1 module" >next</a></li>
+        <li><a href="simpleparser.parser.html" title="simpleparser.parser module" >next</a></li>
         <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="simpleparser.html" >simpleparser package</a></li>
