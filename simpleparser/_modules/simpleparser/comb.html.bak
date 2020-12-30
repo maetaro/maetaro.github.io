@@ -314,6 +314,9 @@
 <div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">selector</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>  <span class="c1"># noqa E501</span>
     <span class="sd">&quot;&quot;&quot;Transform function.</span>
 
+<span class="sd">    Receives a parser object and a function that transforms the parse results.</span>
+<span class="sd">    Apply the received function to the parse result and return it.</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    parser</span>
