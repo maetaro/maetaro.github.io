@@ -139,6 +139,16 @@
 <div class="viewcode-block" id="many"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.many">[docs]</a><span class="k">def</span> <span class="nf">many</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Many function.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parser</span>
+<span class="sd">        The Parser object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Parser</span>
+<span class="sd">        generated new Paraser object.</span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser import many, token</span>
