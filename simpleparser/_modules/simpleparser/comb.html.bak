@@ -151,7 +151,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Parser</span>
-<span class="sd">        generated new Paraser object.</span>
+<span class="sd">        Generated new Parser object.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
@@ -198,7 +198,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Parser</span>
-<span class="sd">        generated new Paraser object.</span>
+<span class="sd">        Generated new Parser object.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
@@ -243,7 +243,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Parser</span>
-<span class="sd">        generated new Paraser object.</span>
+<span class="sd">        Generated new Parser object.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
@@ -279,13 +279,27 @@
 <div class="viewcode-block" id="option"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.option">[docs]</a><span class="k">def</span> <span class="nf">option</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Option function.</span>
 
+<span class="sd">    Receives one parser object.</span>
+<span class="sd">    Regardless of the success or failure of Perth,</span>
+<span class="sd">    this parser will always succeed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parser</span>
+<span class="sd">        The Parser object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Parser</span>
+<span class="sd">        Generated new Parser object.</span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser.prim import token</span>
-<span class="sd">    &gt;&gt;&gt; parser = option(token(&#39;hoge&#39;))</span>
-<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;hoge&#39;, 0)</span>
-<span class="sd">    [&#39;hoge&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; parser.exec(&#39;fuga&#39;, 0)</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, option</span>
+<span class="sd">    &gt;&gt;&gt; p = option(token(&#39;foo&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foobar&#39;)</span>
+<span class="sd">    [&#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)  # not fail.</span>
 <span class="sd">    []</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
@@ -298,7 +312,19 @@
 
 
 <div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">selector</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>  <span class="c1"># noqa E501</span>
-    <span class="sd">&quot;&quot;&quot;Map function.</span>
+    <span class="sd">&quot;&quot;&quot;Transform function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parser</span>
+<span class="sd">        The Parser object.</span>
+<span class="sd">    selector</span>
+<span class="sd">        The function that formats and returns the parse result.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Parser</span>
+<span class="sd">        Generated new Parser object.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
