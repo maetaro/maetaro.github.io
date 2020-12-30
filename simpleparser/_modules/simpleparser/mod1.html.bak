@@ -136,7 +136,7 @@
 <span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 
 
-<div class="viewcode-block" id="noneOf"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.noneOf">[docs]</a><span class="k">def</span> <span class="nf">noneOf</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="noneOf"><a class="viewcode-back" href="../../simpleparser.mod1.html#simpleparser.mod1.noneOf">[docs]</a><span class="k">def</span> <span class="nf">noneOf</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    As the dual of oneOf, noneOf cs succeeds if the current character not in the supplied list of characters cs. Returns the parsed character.</span>
 
@@ -160,7 +160,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="endBy"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.endBy">[docs]</a><span class="k">def</span> <span class="nf">endBy</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="endBy"><a class="viewcode-back" href="../../simpleparser.mod1.html#simpleparser.mod1.endBy">[docs]</a><span class="k">def</span> <span class="nf">endBy</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Endby p sep parses zero or more occurrences of p, separated and ended by sep.</span>
 
 <span class="sd">    Returns a list of values returned by p.</span>
@@ -201,7 +201,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sepBy"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.sepBy">[docs]</a><span class="k">def</span> <span class="nf">sepBy</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="sepBy"><a class="viewcode-back" href="../../simpleparser.mod1.html#simpleparser.mod1.sepBy">[docs]</a><span class="k">def</span> <span class="nf">sepBy</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Parse zero or more occurrences of parser, separated by sep. Returns a list of values returned by parser.</span>
 
 <span class="sd">    Example</span>
@@ -231,7 +231,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="lazy"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.lazy">[docs]</a><span class="k">def</span> <span class="nf">lazy</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Parser</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="lazy"><a class="viewcode-back" href="../../simpleparser.mod1.html#simpleparser.mod1.lazy">[docs]</a><span class="k">def</span> <span class="nf">lazy</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Parser</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Lazy function.</span>
 
 <span class="sd">    Example</span>
@@ -248,25 +248,6 @@
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">parse</span> <span class="o">=</span> <span class="n">callback</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">parse</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="map"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.mod1.map">[docs]</a><span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">selector</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Map function.</span>
-
-<span class="sd">    Example</span>
-<span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser import token, map</span>
-<span class="sd">    &gt;&gt;&gt; map(token(&quot;foo&quot;), lambda x: [&quot;,&quot;.join(x) + &quot; aaa&quot;]).exec(&quot;foo&quot;, 0)</span>
-<span class="sd">    [&#39;foo aaa&#39;]</span>
-<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">result</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 

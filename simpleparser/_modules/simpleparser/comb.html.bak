@@ -131,22 +131,25 @@
   <h1>Source code for simpleparser.comb</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;a simple parser combinator.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parseresult</span> <span class="kn">import</span> <span class="n">ParseResult</span><span class="p">,</span> <span class="n">Success</span><span class="p">,</span> <span class="n">Failure</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 
 
-<div class="viewcode-block" id="many"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.comb.many">[docs]</a><span class="k">def</span> <span class="nf">many</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="many"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.many">[docs]</a><span class="k">def</span> <span class="nf">many</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Many function.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser.prim import token</span>
-<span class="sd">    &gt;&gt;&gt; many(token(&#39;hoge&#39;)).exec(&#39;hogehoge&#39;)</span>
-<span class="sd">    [&#39;hoge&#39;, &#39;hoge&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; many(token(&#39;hoge&#39;)).exec(&#39;&#39;, 0)</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import many, token</span>
+<span class="sd">    &gt;&gt;&gt; p = many(token(&quot;foo&quot;))</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;&#39;)</span>
 <span class="sd">    []</span>
-<span class="sd">    &gt;&gt;&gt; many(token(&#39;foobar&#39;)).exec(&#39;foo&#39;, 0)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo&#39;)</span>
+<span class="sd">    [&#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foofoo&#39;)</span>
+<span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)</span>
 <span class="sd">    []</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
@@ -165,7 +168,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="choice"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.comb.choice">[docs]</a><span class="k">def</span> <span class="nf">choice</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="choice"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.choice">[docs]</a><span class="k">def</span> <span class="nf">choice</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Choice function.</span>
 
 <span class="sd">    Example</span>
@@ -196,7 +199,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="seq"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.comb.seq">[docs]</a><span class="k">def</span> <span class="nf">seq</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="seq"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.seq">[docs]</a><span class="k">def</span> <span class="nf">seq</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Seq function.</span>
 
 <span class="sd">    Example</span>
@@ -230,7 +233,7 @@
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="option"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.comb.option">[docs]</a><span class="k">def</span> <span class="nf">option</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="option"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.option">[docs]</a><span class="k">def</span> <span class="nf">option</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Option function.</span>
 
 <span class="sd">    Example</span>
@@ -247,6 +250,25 @@
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="n">Success</span><span class="p">([],</span> <span class="n">position</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="transform"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.transform">[docs]</a><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">selector</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Map function.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, transform</span>
+<span class="sd">    &gt;&gt;&gt; transform(token(&quot;foo&quot;), lambda x: [&quot;,&quot;.join(x) + &quot; aaa&quot;]).exec(&quot;foo&quot;)</span>
+<span class="sd">    [&#39;foo aaa&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 

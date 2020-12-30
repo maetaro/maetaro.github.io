@@ -4,45 +4,14 @@ simpleparser package
 Submodules
 ----------
 
-simpleparser.comb module
-------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: simpleparser.comb
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simpleparser.mod1 module
-------------------------
-
-.. automodule:: simpleparser.mod1
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simpleparser.parser module
---------------------------
-
-.. automodule:: simpleparser.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simpleparser.parseresult module
--------------------------------
-
-.. automodule:: simpleparser.parseresult
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simpleparser.prim module
-------------------------
-
-.. automodule:: simpleparser.prim
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   simpleparser.comb
+   simpleparser.mod1
+   simpleparser.parser
+   simpleparser.parseresult
+   simpleparser.prim
 
 Module contents
 ---------------

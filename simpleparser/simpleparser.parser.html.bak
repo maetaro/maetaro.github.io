@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     
-    <title>test_parser module &mdash; simpleparser 0.0.1 documentation</title>
+    <title>simpleparser.parser module &mdash; simpleparser 0.0.1 documentation</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -48,7 +48,10 @@
 </script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" /> 
+    <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
+    <link rel="up" title="simpleparser package" href="simpleparser.html" />
+    <link rel="next" title="simpleparser.parseresult module" href="simpleparser.parseresult.html" />
+    <link rel="prev" title="simpleparser.mod1 module" href="simpleparser.mod1.html" /> 
   </head>
   <body role="document">
     <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
@@ -66,10 +69,13 @@
           <ul class="nav navbar-nav navbar-right">
 
             
+              <li><a href="simpleparser.mod1.html" title="simpleparser.mod1 module" accesskey="P">previous </a></li>
+              <li><a href="simpleparser.parseresult.html" title="simpleparser.parseresult module" accesskey="N">next </a></li>
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="simpleparser.html" accesskey="U">simpleparser package</a></li>
             
-            <li class="visible-xs"><a href="_sources/test_parser.rst.txt" rel="nofollow">Show Source</a></li>
+            <li class="visible-xs"><a href="_sources/simpleparser.parser.rst.txt" rel="nofollow">Show Source</a></li>
 
             <li class="visible-xs">
                 <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
@@ -101,10 +107,16 @@
          
 <div class="col-md-3 hidden-xs" id="sidebar-wrapper">
   <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simpleparser.mod1.html"
+                        title="previous chapter">simpleparser.mod1 module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simpleparser.parseresult.html"
+                        title="next chapter">simpleparser.parseresult module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/test_parser.rst.txt"
+      <li><a href="_sources/simpleparser.parser.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -134,51 +146,31 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="module-test_parser">
-<span id="test-parser-module"></span><h1>test_parser module<a class="headerlink" href="#module-test_parser" title="Permalink to this headline">¶</a></h1>
-<p>test.</p>
-<dl class="py function">
-<dt id="test_parser.test_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/test_parser.html#test_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_1" title="Permalink to this definition">¶</a></dt>
-<dd><p>test_1.</p>
+  <div class="section" id="module-simpleparser.parser">
+<span id="simpleparser-parser-module"></span><h1>simpleparser.parser module<a class="headerlink" href="#module-simpleparser.parser" title="Permalink to this headline">¶</a></h1>
+<p>a parser module.</p>
+<dl class="py class">
+<dt id="simpleparser.parser.Parser">
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parser.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#Parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>a parser class.</p>
+<dl class="py method">
+<dt id="simpleparser.parser.Parser.exec">
+<code class="sig-name descname">exec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#Parser.exec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.Parser.exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the executable function object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) – </p></li>
+<li><p><strong>i</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="simpleparser.parseresult.html#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult">simpleparser.parseresult.ParseResult</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="test_parser.test_token_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/test_parser.html#test_token_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_token_1" title="Permalink to this definition">¶</a></dt>
-<dd><p>test_token_1.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="test_parser.test_token_2">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_token_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/test_parser.html#test_token_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_token_2" title="Permalink to this definition">¶</a></dt>
-<dd><p>test_token_2.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="test_parser.test_regex_1">
-<code class="sig-prename descclassname">test_parser.</code><code class="sig-name descname">test_regex_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/test_parser.html#test_regex_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test_parser.test_regex_1" title="Permalink to this definition">¶</a></dt>
-<dd><p>test_regex_2.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
 </dd></dl>
 
 </div>
@@ -202,8 +194,11 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
+        <li><a href="simpleparser.mod1.html" title="simpleparser.mod1 module" >previous</a></li>
+        <li><a href="simpleparser.parseresult.html" title="simpleparser.parseresult module" >next</a></li>
         <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="simpleparser.html" >simpleparser package</a></li>
         <li><a href="#">top</a></li> 
       
     </ul>

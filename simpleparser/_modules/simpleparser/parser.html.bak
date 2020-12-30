@@ -135,7 +135,7 @@
 <span class="kn">from</span> <span class="nn">simpleparser.parseresult</span> <span class="kn">import</span> <span class="n">ParseResult</span>
 
 
-<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.parser.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
+<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../simpleparser.parser.html#simpleparser.parser.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;a parser class.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">ParseResult</span><span class="p">]):</span>
@@ -143,7 +143,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__f</span> <span class="o">=</span> <span class="n">f</span>
         <span class="k">return</span>
 
-<div class="viewcode-block" id="Parser.exec"><a class="viewcode-back" href="../../simpleparser.html#simpleparser.parser.Parser.exec">[docs]</a>    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
+<div class="viewcode-block" id="Parser.exec"><a class="viewcode-back" href="../../simpleparser.parser.html#simpleparser.parser.Parser.exec">[docs]</a>    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Return the executable function object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span></div></div>
 
