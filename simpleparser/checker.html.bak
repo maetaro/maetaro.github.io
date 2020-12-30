@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     
-    <title>simpleparser &mdash; simpleparser 0.0.1 documentation</title>
+    <title>checker module &mdash; simpleparser 0.0.1 documentation</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -69,7 +69,7 @@
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
-            <li class="visible-xs"><a href="_sources/modules.rst.txt" rel="nofollow">Show Source</a></li>
+            <li class="visible-xs"><a href="_sources/checker.rst.txt" rel="nofollow">Show Source</a></li>
 
             <li class="visible-xs">
                 <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
@@ -104,7 +104,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/modules.rst.txt"
+      <li><a href="_sources/checker.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -134,29 +134,13 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="simpleparser">
-<h1>simpleparser<a class="headerlink" href="#simpleparser" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="checker.html">checker module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo_csv_parser.html">demo_csv_parser module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo_json_parser.html">demo_json_parser module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="demo_scheme_parser.html">demo_scheme_parser module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simpleparser.html">simpleparser package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simpleparser.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="simpleparser.comb.html">simpleparser.comb module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="simpleparser.mod1.html">simpleparser.mod1 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="simpleparser.parser.html">simpleparser.parser module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="simpleparser.parseresult.html">simpleparser.parseresult module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="simpleparser.prim.html">simpleparser.prim module</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="simpleparser.html#module-simpleparser">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="test_parser.html">test_parser module</a></li>
-</ul>
-</div>
+  <div class="section" id="module-checker">
+<span id="checker-module"></span><h1>checker module<a class="headerlink" href="#module-checker" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="checker.run">
+<code class="sig-prename descclassname">checker.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/checker.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#checker.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

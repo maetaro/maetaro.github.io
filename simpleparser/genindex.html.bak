@@ -150,6 +150,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="simpleparser.parseresult.html#simpleparser.parseresult.ParseResult.catch">catch() (simpleparser.parseresult.ParseResult method)</a>
 </li>
+      <li>
+    checker
+
+      <ul>
+        <li><a href="checker.html#module-checker">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="simpleparser.comb.html#simpleparser.comb.choice">choice() (in module simpleparser.comb)</a>
@@ -231,6 +238,8 @@
     module
 
       <ul>
+        <li><a href="checker.html#module-checker">checker</a>
+</li>
         <li><a href="demo_csv_parser.html#module-demo_csv_parser">demo_csv_parser</a>
 </li>
         <li><a href="demo_json_parser.html#module-demo_json_parser">demo_json_parser</a>
@@ -295,6 +304,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="simpleparser.prim.html#simpleparser.prim.regex">regex() (in module simpleparser.prim)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="checker.html#checker.run">run() (in module checker)</a>
 </li>
   </ul></td>
 </tr></table>

@@ -51,6 +51,10 @@
     <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
  
 
+    <script>
+      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
+    </script>
+
 
   </head>
   <body role="document">
@@ -133,12 +137,21 @@
    <h1>Python Module Index</h1>
 
    <div class="modindex-jumpbox">
+   <a href="#cap-c"><strong>c</strong></a> | 
    <a href="#cap-d"><strong>d</strong></a> | 
    <a href="#cap-s"><strong>s</strong></a> | 
    <a href="#cap-t"><strong>t</strong></a>
    </div>
 
    <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-c"><td></td><td>
+       <strong>c</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="checker.html#module-checker"><code class="xref">checker</code></a></td><td>
+       <em></em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-d"><td></td><td>
        <strong>d</strong></td><td></td></tr>

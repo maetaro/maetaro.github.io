@@ -127,7 +127,8 @@
                 <div class="body">
                   
   <h1>All modules for which code is available</h1>
-<ul><li><a href="demo_csv_parser.html">demo_csv_parser</a></li>
+<ul><li><a href="checker.html">checker</a></li>
+<li><a href="demo_csv_parser.html">demo_csv_parser</a></li>
 <li><a href="demo_json_parser.html">demo_json_parser</a></li>
 <li><a href="demo_scheme_parser.html">demo_scheme_parser</a></li>
 <li><a href="simpleparser/comb.html">simpleparser.comb</a></li>
