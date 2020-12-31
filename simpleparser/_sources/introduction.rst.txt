@@ -28,4 +28,4 @@ then, start python interpreter.
 >>> p.exec("foobar")
 ['foo']
 
-token function is create parser functin object.
+:py:func:`token` function is create parser functin object.
