@@ -210,6 +210,35 @@
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt id="simpleparser.builtin_parsers.newline">
+<code class="sig-prename descclassname">simpleparser.builtin_parsers.</code><code class="sig-name descname">newline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/builtin_parsers.html#newline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.builtin_parsers.newline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new line parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Parser</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>CRLF(rn) or CR(r) or LF(n) parser.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">newline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">newline</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\r\nfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\r\\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\rfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\r&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\nfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="go">parse error at (0): unexpected fo expecting \n (by token)</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 

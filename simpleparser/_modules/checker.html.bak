@@ -138,8 +138,8 @@
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../checker.html#checker.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Run check utils.&quot;&quot;&quot;</span>
     <span class="n">cmds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;flake8 simpleparser --count --select=E9,F63,F7,F82 --show-source --statistics&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;flake8 simpleparser --count --max-complexity=10 --max-line-length=127 --statistics&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flake8 simpleparser --count --select=E9,F63,F7,F82 --show-source --statistics&quot;</span><span class="p">,</span>  <span class="c1"># noqa E501</span>
+        <span class="s2">&quot;flake8 simpleparser --count --max-complexity=10 --max-line-length=127 --statistics&quot;</span><span class="p">,</span>  <span class="c1"># noqa E501</span>
         <span class="s2">&quot;mypy .&quot;</span><span class="p">,</span>
         <span class="s2">&quot;pytest&quot;</span><span class="p">,</span>
         <span class="s2">&quot;coverage xml&quot;</span><span class="p">,</span>
@@ -149,8 +149,8 @@
 
     <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">return</span></div>
 
 

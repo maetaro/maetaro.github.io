@@ -131,8 +131,7 @@
   <h1>Source code for simpleparser.builtin_parsers</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;a simple parser combinator.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
-<span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">transform</span>
+<span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">choice</span><span class="p">,</span> <span class="n">Parser</span>
 
 
 <div class="viewcode-block" id="lf"><a class="viewcode-back" href="../../simpleparser.builtin_parsers.html#simpleparser.builtin_parsers.lf">[docs]</a><span class="k">def</span> <span class="nf">lf</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
@@ -190,6 +189,31 @@
 <span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">transform</span><span class="p">(</span><span class="n">seq</span><span class="p">(</span><span class="n">cr</span><span class="p">(),</span> <span class="n">lf</span><span class="p">()),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="newline"><a class="viewcode-back" href="../../simpleparser.builtin_parsers.html#simpleparser.builtin_parsers.newline">[docs]</a><span class="k">def</span> <span class="nf">newline</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a new line parser.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        Parser: CRLF(\r\n) or CR(\r) or LF(\n) parser.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser.builtin_parsers import newline</span>
+<span class="sd">    &gt;&gt;&gt; p = newline()</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\r\nfoo&quot;)</span>
+<span class="sd">    [&#39;\\r\\n&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\rfoo&quot;)</span>
+<span class="sd">    [&#39;\\r&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\nfoo&quot;)</span>
+<span class="sd">    [&#39;\\n&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;foo&quot;)</span>
+<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="sd">    parse error at (0): unexpected fo expecting \n (by token)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">crlf</span><span class="p">(),</span> <span class="n">cr</span><span class="p">(),</span> <span class="n">lf</span><span class="p">())</span></div>
 
 
 <span class="c1"># def char() -&gt; Parser:</span>
