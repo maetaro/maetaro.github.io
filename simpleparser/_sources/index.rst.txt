@@ -3,14 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to simpleparser's documentation!
-=========================================
+simpleparser package Documentation
+==================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   introduction
    simpleparser
+   demo_csv_parser
+   demo_json_parser
+   demo_scheme_parser
+   test_parser
 
 Indices and tables
 ==================

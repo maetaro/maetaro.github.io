@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     
-    <title>Welcome to simpleparser’s documentation! &mdash; simpleparser 0.0.1 documentation</title>
+    <title>simpleparser package Documentation &mdash; simpleparser 0.0.1 documentation</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="simpleparser 0.0.1 documentation" href="#" />
-    <link rel="next" title="simpleparser package" href="simpleparser.html" /> 
+    <link rel="next" title="Getting Started" href="introduction.html" /> 
   </head>
   <body role="document">
     <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
@@ -69,7 +69,7 @@
                 <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
                 <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
                 <ul>
-<li><a class="reference internal" href="#">Welcome to simpleparser’s documentation!</a></li>
+<li><a class="reference internal" href="#">simpleparser package Documentation</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
@@ -77,7 +77,7 @@
               </li>
 
             
-              <li><a href="simpleparser.html" title="simpleparser package" accesskey="N">next </a></li>
+              <li><a href="introduction.html" title="Getting Started" accesskey="N">next </a></li>
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
@@ -115,13 +115,13 @@
   <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
   <h3><a href="#">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to simpleparser’s documentation!</a></li>
+<li><a class="reference internal" href="#">simpleparser package Documentation</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
   <h4>Next topic</h4>
-  <p class="topless"><a href="simpleparser.html"
-                        title="next chapter">simpleparser package</a></p>
+  <p class="topless"><a href="introduction.html"
+                        title="next chapter">Getting Started</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -155,16 +155,26 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="welcome-to-simpleparser-s-documentation">
-<h1>Welcome to simpleparser’s documentation!<a class="headerlink" href="#welcome-to-simpleparser-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="simpleparser-package-documentation">
+<h1>simpleparser package Documentation<a class="headerlink" href="#simpleparser-package-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#introduction-to-simpleparser">Introduction to simpleparser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#introduction-to-parser-combinator">Introduction to parser combinator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#quic-start">Quic Start</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="simpleparser.html">simpleparser package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpleparser.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="simpleparser.html#module-simpleparser">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="demo_csv_parser.html">demo_csv_parser module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo_json_parser.html">demo_json_parser module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo_scheme_parser.html">demo_scheme_parser module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_parser.html">test_parser module</a></li>
 </ul>
 </div>
 </div>
@@ -196,7 +206,7 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
-        <li><a href="simpleparser.html" title="simpleparser package" >next</a></li>
+        <li><a href="introduction.html" title="Getting Started" >next</a></li>
         <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="#">top</a></li> 

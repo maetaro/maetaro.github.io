@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     
-    <title>demo_json_parser module &mdash; simpleparser 0.0.1 documentation</title>
+    <title>Getting Started &mdash; simpleparser 0.0.1 documentation</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -49,8 +49,8 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
-    <link rel="next" title="demo_scheme_parser module" href="demo_scheme_parser.html" />
-    <link rel="prev" title="demo_csv_parser module" href="demo_csv_parser.html" /> 
+    <link rel="next" title="simpleparser package" href="simpleparser.html" />
+    <link rel="prev" title="simpleparser package Documentation" href="index.html" /> 
   </head>
   <body role="document">
     <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
@@ -66,14 +66,28 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#introduction-to-simpleparser">Introduction to simpleparser</a></li>
+<li><a class="reference internal" href="#introduction-to-parser-combinator">Introduction to parser combinator</a></li>
+<li><a class="reference internal" href="#quic-start">Quic Start</a></li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
 
             
-              <li><a href="demo_csv_parser.html" title="demo_csv_parser module" accesskey="P">previous </a></li>
-              <li><a href="demo_scheme_parser.html" title="demo_scheme_parser module" accesskey="N">next </a></li>
+              <li><a href="index.html" title="simpleparser package Documentation" accesskey="P">previous </a></li>
+              <li><a href="simpleparser.html" title="simpleparser package" accesskey="N">next </a></li>
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
             
-            <li class="visible-xs"><a href="_sources/demo_json_parser.rst.txt" rel="nofollow">Show Source</a></li>
+            <li class="visible-xs"><a href="_sources/introduction.rst.txt" rel="nofollow">Show Source</a></li>
 
             <li class="visible-xs">
                 <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
@@ -105,16 +119,26 @@
          
 <div class="col-md-3 hidden-xs" id="sidebar-wrapper">
   <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#introduction-to-simpleparser">Introduction to simpleparser</a></li>
+<li><a class="reference internal" href="#introduction-to-parser-combinator">Introduction to parser combinator</a></li>
+<li><a class="reference internal" href="#quic-start">Quic Start</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="demo_csv_parser.html"
-                        title="previous chapter">demo_csv_parser module</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">simpleparser package Documentation</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="demo_scheme_parser.html"
-                        title="next chapter">demo_scheme_parser module</a></p>
+  <p class="topless"><a href="simpleparser.html"
+                        title="next chapter">simpleparser package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/demo_json_parser.rst.txt"
+      <li><a href="_sources/introduction.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -144,48 +168,34 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <div class="section" id="module-demo_json_parser">
-<span id="demo-json-parser-module"></span><h1>demo_json_parser module<a class="headerlink" href="#module-demo_json_parser" title="Permalink to this headline">¶</a></h1>
-<p>csv parsing sample.</p>
-<dl class="py class">
-<dt id="demo_json_parser.json_parser">
-<em class="property">class </em><code class="sig-prename descclassname">demo_json_parser.</code><code class="sig-name descname">json_parser</code><a class="reference internal" href="_modules/demo_json_parser.html#json_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#demo_json_parser.json_parser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Json parser.</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">json_parser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:2}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &#39;2&#39;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:</span><span class="si">{p1:1}</span><span class="s2">}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;}&#39;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[[1,2,3],[2],[3]]&quot;</span><span class="p">)</span>
-<span class="go">[&#39;[&#39;, &#39;[&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;]&#39;, &#39;[&#39;, &#39;2&#39;, &#39;]&#39;, &#39;[&#39;, &#39;3&#39;, &#39;]&#39;, &#39;]&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;[1,2,3]&quot;</span><span class="p">)</span>
-<span class="go">[&#39;[&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;]&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p2:&#39;a&#39;}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;}&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;{p1:1,p2:&#39;a&#39;,p3:[]}&quot;</span><span class="p">)</span>
-<span class="go">[&#39;{&#39;, &#39;p1&#39;, &#39;:&#39;, &#39;1&#39;, &#39;p2&#39;, &#39;:&#39;, &quot;&#39;a&#39;&quot;, &#39;p3&#39;, &#39;:&#39;, &#39;[&#39;, &#39;]&#39;, &#39;}&#39;]</span>
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-to-simpleparser">
+<h2>Introduction to simpleparser<a class="headerlink" href="#introduction-to-simpleparser" title="Permalink to this headline">¶</a></h2>
+<p>simpleparser is a parser combinator.</p>
+</div>
+<div class="section" id="introduction-to-parser-combinator">
+<h2>Introduction to parser combinator<a class="headerlink" href="#introduction-to-parser-combinator" title="Permalink to this headline">¶</a></h2>
+<p>Combine functions to decompose the target in an appropriate
+and easy-to-understand expression.</p>
+</div>
+<div class="section" id="quic-start">
+<h2>Quic Start<a class="headerlink" href="#quic-start" title="Permalink to this headline">¶</a></h2>
+<p>install by pip.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># not yet.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># pip install simpleparser</span>
 </pre></div>
 </div>
-<dl class="py method">
-<dt id="demo_json_parser.json_parser.parse">
-<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/demo_json_parser.html#json_parser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#demo_json_parser.json_parser.parse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="simpleparser.parseresult.html#simpleparser.parseresult.ParseResult" title="simpleparser.parseresult.ParseResult">simpleparser.parseresult.ParseResult</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<p>then, start python interpreter.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">python</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">token</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foobar&quot;</span><span class="p">)</span>
+<span class="go">[&#39;foo&#39;]</span>
+</pre></div>
+</div>
+<p>token function is create parser functin object.</p>
+</div>
 </div>
 
 
@@ -207,8 +217,8 @@
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
-        <li><a href="demo_csv_parser.html" title="demo_csv_parser module" >previous</a></li>
-        <li><a href="demo_scheme_parser.html" title="demo_scheme_parser module" >next</a></li>
+        <li><a href="index.html" title="simpleparser package Documentation" >previous</a></li>
+        <li><a href="simpleparser.html" title="simpleparser package" >next</a></li>
         <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>
         <li><a href="#">top</a></li> 

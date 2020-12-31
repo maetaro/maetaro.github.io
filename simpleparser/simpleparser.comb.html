@@ -334,8 +334,8 @@ Apply the received function to the parse result and return it.</p>
 <dl class="py function">
 <dt id="simpleparser.comb.sep_by">
 <code class="sig-prename descclassname">simpleparser.comb.</code><code class="sig-name descname">sep_by</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">sep</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/comb.html#sep_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.comb.sep_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse zero or more occurrences of parser, separated by sep.
-Returns a list of values returned by parser.</p>
+<dd><p>Parse zero or more occurrences of parser, separated by sep.</p>
+<p>Returns a list of values returned by parser.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">sep_by</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">sep_by</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
