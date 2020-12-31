@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>simpleparser.builtin_parsers module &mdash; simpleparser 0.0.1 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    './',
+            VERSION:     '0.0.1',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
+    <link rel="up" title="simpleparser package" href="simpleparser.html" />
+    <link rel="next" title="simpleparser.comb module" href="simpleparser.comb.html" />
+    <link rel="prev" title="simpleparser package" href="simpleparser.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">simpleparser 0.0.1 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+              <li><a href="simpleparser.html" title="simpleparser package" accesskey="P">previous </a></li>
+              <li><a href="simpleparser.comb.html" title="simpleparser.comb module" accesskey="N">next </a></li>
+              <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
+              <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+              <li><a href="simpleparser.html" accesskey="U">simpleparser package</a></li>
+            
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simpleparser.html"
+                        title="previous chapter">simpleparser package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simpleparser.comb.html"
+                        title="next chapter">simpleparser.comb module</a></p>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="module-simpleparser.builtin_parsers">
+<span id="simpleparser-builtin-parsers-module"></span><h1>simpleparser.builtin_parsers module<a class="headerlink" href="#module-simpleparser.builtin_parsers" title="Permalink to this headline">¶</a></h1>
+<p>a simple parser combinator.</p>
+<dl class="py function">
+<dt id="simpleparser.builtin_parsers.lf">
+<code class="sig-prename descclassname">simpleparser.builtin_parsers.</code><code class="sig-name descname">lf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/builtin_parsers.html#lf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.builtin_parsers.lf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a LF parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Parser</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>LF(n) parser.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">lf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">lf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\nfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">parse error at (0): unexpected fo expecting \n (by token)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.builtin_parsers.cr">
+<code class="sig-prename descclassname">simpleparser.builtin_parsers.</code><code class="sig-name descname">cr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/builtin_parsers.html#cr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.builtin_parsers.cr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a CR parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Parser</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>CR(r) parser.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">cr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">cr</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\rfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\r&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="simpleparser.builtin_parsers.crlf">
+<code class="sig-prename descclassname">simpleparser.builtin_parsers.</code><code class="sig-name descname">crlf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/builtin_parsers.html#crlf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.builtin_parsers.crlf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a CRLF parser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>Parser</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>CRLF(rn) parser.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">crlf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">crlf</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\r\nfoo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\\r\\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="index.html">simpleparser 0.0.1 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="simpleparser.html" title="simpleparser package" >previous</a></li>
+        <li><a href="simpleparser.comb.html" title="simpleparser.comb module" >next</a></li>
+        <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
+        <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="simpleparser.html" >simpleparser package</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2020, maetaro.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.1.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>

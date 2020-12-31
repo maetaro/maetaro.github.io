@@ -51,7 +51,7 @@
     <link rel="top" title="simpleparser 0.0.1 documentation" href="index.html" />
     <link rel="up" title="simpleparser package" href="simpleparser.html" />
     <link rel="next" title="simpleparser.parser module" href="simpleparser.parser.html" />
-    <link rel="prev" title="simpleparser package" href="simpleparser.html" /> 
+    <link rel="prev" title="simpleparser.builtin_parsers module" href="simpleparser.builtin_parsers.html" /> 
   </head>
   <body role="document">
     <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
@@ -69,7 +69,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             
-              <li><a href="simpleparser.html" title="simpleparser package" accesskey="P">previous </a></li>
+              <li><a href="simpleparser.builtin_parsers.html" title="simpleparser.builtin_parsers module" accesskey="P">previous </a></li>
               <li><a href="simpleparser.parser.html" title="simpleparser.parser module" accesskey="N">next </a></li>
               <li><a href="py-modindex.html" title="Python Module Index" >modules </a></li>
               <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
@@ -107,8 +107,8 @@
 <div class="col-md-3 hidden-xs" id="sidebar-wrapper">
   <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="simpleparser.html"
-                        title="previous chapter">simpleparser package</a></p>
+  <p class="topless"><a href="simpleparser.builtin_parsers.html"
+                        title="previous chapter">simpleparser.builtin_parsers module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="simpleparser.parser.html"
                         title="next chapter">simpleparser.parser module</a></p>
@@ -392,7 +392,7 @@ Apply the received function to the parse result and return it.</p>
     </ul>
 <ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
       
-        <li><a href="simpleparser.html" title="simpleparser package" >previous</a></li>
+        <li><a href="simpleparser.builtin_parsers.html" title="simpleparser.builtin_parsers module" >previous</a></li>
         <li><a href="simpleparser.parser.html" title="simpleparser.parser module" >next</a></li>
         <li><a href="py-modindex.html" title="Python Module Index" >modules</a></li>
         <li><a href="genindex.html" title="General Index" >index</a></li>

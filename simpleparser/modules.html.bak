@@ -133,6 +133,7 @@
 <li class="toctree-l1"><a class="reference internal" href="checker.html">checker module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleparser.html">simpleparser package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="simpleparser.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="simpleparser.builtin_parsers.html">simpleparser.builtin_parsers module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="simpleparser.comb.html">simpleparser.comb module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="simpleparser.parser.html">simpleparser.parser module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="simpleparser.parseresult.html">simpleparser.parseresult module</a></li>

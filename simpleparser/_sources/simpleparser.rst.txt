@@ -7,6 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   simpleparser.builtin_parsers
    simpleparser.comb
    simpleparser.parser
    simpleparser.parseresult

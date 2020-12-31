@@ -12,10 +12,6 @@ simpleparser package Documentation
 
    introduction
    simpleparser
-   demo_csv_parser
-   demo_json_parser
-   demo_scheme_parser
-   test_parser
 
 Indices and tables
 ==================
