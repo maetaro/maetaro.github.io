@@ -142,8 +142,8 @@
         <span class="s2">&quot;flake8 simpleparser --count --max-complexity=10 --max-line-length=127 --statistics&quot;</span><span class="p">,</span>
         <span class="s2">&quot;mypy .&quot;</span><span class="p">,</span>
         <span class="s2">&quot;pytest&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;sphinx-apidoc -f -e -o ./docs/source ./&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;sphinx-build -b html ./docs/source ./docs/build/html&quot;</span>
+        <span class="s2">&quot;sphinx-apidoc -f -e -o ./doc/source ./&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sphinx-build -b html ./doc/source ./doc/build/html&quot;</span>
     <span class="p">]</span>
 
     <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">cmds</span><span class="p">:</span>
