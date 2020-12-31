@@ -137,7 +137,6 @@
  | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -201,7 +200,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="simpleparser.parser.html#simpleparser.parser.Parser.exec">exec() (simpleparser.parser.Parser method)</a>
+
+      <ul>
+        <li><a href="simpleparser.parser.html#simpleparser.parser.PrimitiveParser.exec">(simpleparser.parser.PrimitiveParser method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -262,14 +265,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="simpleparser.prim.html#simpleparser.prim.noneOf">noneOf() (in module simpleparser.prim)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -287,13 +282,15 @@
         <li><a href="demo_scheme_parser.html#demo_scheme_parser.schemeparser.parse">(demo_scheme_parser.schemeparser method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="demo_csv_parser.html#demo_csv_parser.parse_csv">parse_csv() (in module demo_csv_parser)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="simpleparser.parser.html#simpleparser.parser.Parser">Parser (class in simpleparser.parser)</a>
 </li>
       <li><a href="simpleparser.parseresult.html#simpleparser.parseresult.ParseResult">ParseResult (class in simpleparser.parseresult)</a>
+</li>
+      <li><a href="simpleparser.parser.html#simpleparser.parser.PrimitiveParser">PrimitiveParser (class in simpleparser.parser)</a>
 </li>
   </ul></td>
 </tr></table>

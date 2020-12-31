@@ -162,7 +162,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foobar&quot;</span><span class="p">)</span>
 <span class="go">[&#39;foo&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;alice&quot;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected ali expecting foo</span>
+<span class="go">parse error at (0): unexpected ali expecting foo (by token)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -170,7 +170,9 @@
 <dl class="py function">
 <dt id="simpleparser.prim.regex">
 <code class="sig-prename descclassname">simpleparser.prim.</code><code class="sig-name descname">regex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/prim.html#regex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.prim.regex" title="Permalink to this definition">¶</a></dt>
-<dd><p>Regex function returns a function that parses the beginning of the received string with the regular expression pattern.</p>
+<dd><p>Regex function.</p>
+<p>Returns a function that parses the beginning of the
+received string with the regular expression pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – a regular expression string.</p>
@@ -185,29 +187,9 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">num</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;2014a&#39;</span><span class="p">)</span>
 <span class="go">[&#39;2014&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">num</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected abc expecting ([1-9][0-9]*)</span>
+<span class="go">parse error at (0): unexpected abc expecting ([1-9][0-9]*) (by regex)</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="simpleparser.prim.noneOf">
-<code class="sig-prename descclassname">simpleparser.prim.</code><code class="sig-name descname">noneOf</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/prim.html#noneOf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.prim.noneOf" title="Permalink to this definition">¶</a></dt>
-<dd><p>As the dual of oneOf, noneOf cs succeeds if the current character not in the supplied list of characters cs. Returns the parsed character.</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">noneOf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noneOf</span><span class="p">(</span><span class="s2">&quot;abcdefg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="go">[&#39;h&#39;]</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="simpleparser.parser.html#simpleparser.parser.Parser" title="simpleparser.parser.Parser">simpleparser.parser.Parser</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 </div>

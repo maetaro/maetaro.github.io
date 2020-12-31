@@ -162,7 +162,7 @@
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foofoo&#39;)</span>
 <span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)</span>
-<span class="sd">    parse error at (0): unexpected bar expecting foo</span>
+<span class="sd">    parse error at (0): unexpected bar expecting foo (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -209,8 +209,8 @@
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)</span>
 <span class="sd">    [&#39;bar&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;alice&#39;)</span>
-<span class="sd">    parse error at (0): unexpected ali expecting foo</span>
-<span class="sd">    parse error at (0): unexpected ali expecting bar</span>
+<span class="sd">    parse error at (0): unexpected ali expecting foo (by token)</span>
+<span class="sd">    parse error at (0): unexpected ali expecting bar (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parsers</span> <span class="o">=</span> <span class="n">args</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
@@ -252,9 +252,9 @@
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foobar&#39;)</span>
 <span class="sd">    [&#39;foo&#39;, &#39;bar&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo&#39;)</span>
-<span class="sd">    parse error at (3): unexpected  expecting bar</span>
+<span class="sd">    parse error at (3): unexpected  expecting bar (by token)</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foobaz&#39;)</span>
-<span class="sd">    parse error at (3): unexpected baz expecting bar</span>
+<span class="sd">    parse error at (3): unexpected baz expecting bar (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
     <span class="n">parsers</span> <span class="o">=</span> <span class="n">args</span>
@@ -347,21 +347,22 @@
 
 
 <div class="viewcode-block" id="end_by"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.end_by">[docs]</a><span class="k">def</span> <span class="nf">end_by</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Endby p sep parses zero or more occurrences of p, separated and ended by sep.</span>
+    <span class="sd">&quot;&quot;&quot;Endby p sep parses zero or more occurrences of p, separated and ended by sep.</span>
 
 <span class="sd">    Returns a list of values returned by p.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser import token, regex, end_by</span>
-<span class="sd">    &gt;&gt;&gt; end_by(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;&#39;)</span>
-<span class="sd">    [&#39;&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; end_by(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge&#39;)</span>
-<span class="sd">    [&#39;hoge&#39;, &#39;hoge&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; end_by(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge,&#39;)</span>
-<span class="sd">    [&#39;hoge&#39;, &#39;hoge&#39;, &#39;&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; end_by(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge,-&#39;)</span>
-<span class="sd">    parse error.</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, end_by</span>
+<span class="sd">    &gt;&gt;&gt; p = end_by(token(&#39;foo&#39;), token(&#39;,&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;&#39;)</span>
+<span class="sd">    []</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo&#39;)</span>
+<span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo,&#39;)</span>
+<span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo,-&#39;)</span>
+<span class="sd">    parse error at (0): unexpected foo,f expecting foo (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: D401, E501</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -380,7 +381,10 @@
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
         <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="s2">&quot;parse error.&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">expression</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
 
@@ -388,14 +392,16 @@
 
 
 <div class="viewcode-block" id="sep_by"><a class="viewcode-back" href="../../simpleparser.comb.html#simpleparser.comb.sep_by">[docs]</a><span class="k">def</span> <span class="nf">sep_by</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Parse zero or more occurrences of parser, separated by sep. Returns a list of values returned by parser.</span>
+    <span class="sd">&quot;&quot;&quot;Parse zero or more occurrences of parser, separated by sep.</span>
+<span class="sd">    Returns a list of values returned by parser.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser import token, regex, sep_by</span>
-<span class="sd">    &gt;&gt;&gt; sep_by(regex(&#39;\w*&#39;), token(&#39;,&#39;)).exec(&#39;hoge,hoge&#39;)</span>
-<span class="sd">    [&#39;hoge&#39;, &#39;hoge&#39;]</span>
-<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: D401, E501</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import token, sep_by</span>
+<span class="sd">    &gt;&gt;&gt; p = sep_by(token(&#39;foo&#39;), token(&#39;,&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo&#39;)</span>
+<span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">position</span>
