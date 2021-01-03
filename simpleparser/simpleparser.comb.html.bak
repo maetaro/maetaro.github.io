@@ -168,6 +168,8 @@ Must succeed at least once.</p>
 <span class="go">[&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="go">parse error at (0): unexpected bar expecting foo (by token)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foobar&#39;</span><span class="p">)</span>
+<span class="go">[&#39;foo&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -300,12 +302,10 @@ Apply the received function to the parse result and return it.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser</span> <span class="kn">import</span> <span class="n">token</span><span class="p">,</span> <span class="n">end_by</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">end_by</span><span class="p">(</span><span class="n">token</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">),</span> <span class="n">token</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="go">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo,foo&#39;</span><span class="p">)</span>
-<span class="go">[&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo,foo,&#39;</span><span class="p">)</span>
 <span class="go">[&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo,foo&#39;</span><span class="p">)</span>
+<span class="go">parse error at (0): unexpected foo,f expecting foo (by token)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s1">&#39;foo,foo,-&#39;</span><span class="p">)</span>
 <span class="go">parse error at (0): unexpected foo,f expecting foo (by token)</span>
 </pre></div>

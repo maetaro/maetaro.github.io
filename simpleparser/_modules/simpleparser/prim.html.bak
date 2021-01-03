@@ -155,15 +155,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;token </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">PrimitiveParser</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
           <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">s</span><span class="p">],</span> <span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">s</span><span class="p">],</span> <span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
                <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
                <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">PrimitiveParser</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
 
@@ -188,15 +189,16 @@
 <span class="sd">    &gt;&gt;&gt; num.exec(&#39;abc&#39;)</span>
 <span class="sd">    parse error at (0): unexpected abc expecting ([1-9][0-9]*) (by regex)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;regex </span><span class="si">{</span><span class="n">pattern</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">PrimitiveParser</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
           <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:])</span>
         <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()],</span> <span class="n">position</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()))</span>
+            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()],</span> <span class="n">position</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
                <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
                <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">pattern</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">PrimitiveParser</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span></div>
 
@@ -207,15 +209,30 @@
 
 
 <div class="viewcode-block" id="none_of"><a class="viewcode-back" href="../../simpleparser.prim.html#simpleparser.prim.none_of">[docs]</a><span class="k">def</span> <span class="nf">none_of</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;As the dual of oneOf, noneOf cs succeeds if the current character not in the supplied list of characters cs. Returns the parsed character.  # noqa E501</span>
+    <span class="sd">&quot;&quot;&quot;none_of function.</span>
+
+<span class="sd">    As the dual of oneOf, none_of(cs) succeeds if the current character</span>
+<span class="sd">    not in the supplied list of characters cs. Returns the parsed character.</span>
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; from simpleparser import none_of</span>
+<span class="sd">    &gt;&gt;&gt; from simpleparser import none_of, choice, token, many, transform, seq</span>
 <span class="sd">    &gt;&gt;&gt; p = none_of(&quot;abcdefg&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&quot;hello&quot;)</span>
 <span class="sd">    [&#39;h&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; chars = choice(token(&#39;&quot;&quot;&#39;), none_of(&#39;&quot;,&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; p = transform(many(chars), lambda x: [&quot;&quot;.join(x)])</span>
+<span class="sd">    &gt;&gt;&gt; text = r&#39;Shirt with &quot;&quot;Haskell&quot;&quot; text&#39;</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(text)</span>
+<span class="sd">    [&#39;Shirt with &quot;&quot;Haskell&quot;&quot; text&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; dq = token(&#39;&quot;&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; p2 = transform(seq(dq, p, dq), lambda x: [&quot;&quot;.join(x)])</span>
+<span class="sd">    &gt;&gt;&gt; text = r&#39;&quot;Shirt with &quot;&quot;Haskell&quot;&quot; text&quot;&#39;</span>
+<span class="sd">    &gt;&gt;&gt; p2.exec(text)</span>
+<span class="sd">    [&#39;&quot;Shirt with &quot;&quot;Haskell&quot;&quot; text&quot;&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;none_of </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span>
+
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">exists</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">targetChar</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
@@ -224,15 +241,15 @@
                 <span class="n">exists</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">break</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">targetChar</span><span class="p">],</span> <span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="s2">&quot;parse error at (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;): unexpected &quot;</span> <span class="o">+</span> <span class="n">targetChar</span> <span class="o">+</span> <span class="s2">&quot; expecting &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
+            <span class="k">return</span> <span class="n">Success</span><span class="p">([</span><span class="n">targetChar</span><span class="p">],</span> <span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="s2">&quot;parse error at (&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;): unexpected &quot;</span> <span class="o">+</span> <span class="n">targetChar</span> <span class="o">+</span> <span class="s2">&quot; expecting &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">doctest</span>
-    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+<span class="c1"># if __name__ == &quot;__main__&quot;:</span>
+<span class="c1">#     import doctest</span>
+<span class="c1">#     doctest.testmod()</span>
 </pre></div>
 
                 </div>

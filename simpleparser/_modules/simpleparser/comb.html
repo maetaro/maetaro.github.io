@@ -130,8 +130,9 @@
                   
   <h1>Source code for simpleparser.comb</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;a parser function&#39;s combinator.&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FrameType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">cast</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parseresult</span> <span class="kn">import</span> <span class="n">ParseResult</span><span class="p">,</span> <span class="n">Success</span><span class="p">,</span> <span class="n">Failure</span>
 <span class="kn">from</span> <span class="nn">simpleparser.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 
@@ -163,23 +164,31 @@
 <span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)</span>
 <span class="sd">    parse error at (0): unexpected bar expecting foo (by token)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foobar&#39;)</span>
+<span class="sd">    [&#39;foo&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
+
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">position</span>
         <span class="n">first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">first</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
                 <span class="k">break</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
             <span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
-        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
@@ -212,18 +221,21 @@
 <span class="sd">    parse error at (0): unexpected ali expecting foo (by token)</span>
 <span class="sd">    parse error at (0): unexpected ali expecting bar (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
     <span class="n">parsers</span> <span class="o">=</span> <span class="n">args</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">parsed</span>
             <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">messages</span><span class="p">),</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">messages</span><span class="p">),</span> <span class="n">position</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
@@ -258,20 +270,23 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
     <span class="n">parsers</span> <span class="o">=</span> <span class="n">args</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
 
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pos_org</span> <span class="o">=</span> <span class="n">position</span>
         <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
             <span class="n">parsed</span><span class="p">:</span> <span class="n">ParseResult</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">pos_org</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">pos_org</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
             <span class="n">position</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
-        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
@@ -302,11 +317,14 @@
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;bar&#39;)  # not fail.</span>
 <span class="sd">    []</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
+
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span>
-        <span class="k">return</span> <span class="n">Success</span><span class="p">([],</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Success</span><span class="p">([],</span> <span class="n">position</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
@@ -355,38 +373,64 @@
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser import token, end_by</span>
 <span class="sd">    &gt;&gt;&gt; p = end_by(token(&#39;foo&#39;), token(&#39;,&#39;))</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&#39;&#39;)</span>
-<span class="sd">    []</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo&#39;)</span>
-<span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo,&#39;)</span>
 <span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo&#39;)</span>
+<span class="sd">    parse error at (0): unexpected foo,f expecting foo (by token)</span>
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo,-&#39;)</span>
 <span class="sd">    parse error at (0): unexpected foo,f expecting foo (by token)</span>
 <span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: D401, E501</span>
-    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">position</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
 
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="n">last_is_not_sep</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
+                       <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                       <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">expression</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+                <span class="c1"># break</span>
+            <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="n">last_is_not_sep</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-                <span class="k">break</span>
+                <span class="c1"># fail</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
+                       <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                       <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">expression</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+                <span class="c1"># break</span>
+            <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="n">last_is_not_sep</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
-        <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">last_is_not_sep</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parse error at (</span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">):&quot;</span>
                    <span class="sa">f</span><span class="s2">&quot; unexpected </span><span class="si">{</span><span class="n">target</span><span class="p">[</span><span class="n">position</span><span class="p">:</span><span class="n">position</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
                    <span class="sa">f</span><span class="s2">&quot; expecting </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">expression</span><span class="si">}</span><span class="s2"> (by </span><span class="si">{</span><span class="n">parser</span><span class="o">.</span><span class="n">parser_type</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Failure</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="c1"># if pos != len(target):</span>
+        <span class="c1">#     msg = (f&quot;parse error at ({position}):&quot;</span>
+        <span class="c1">#            f&quot; unexpected {target[position:position + 5]}&quot;</span>
+        <span class="c1">#            f&quot; expecting {parser.expression} (by {parser.parser_type})&quot;)</span>
+        <span class="c1">#     return Failure(msg, pos)</span>
+
+        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
@@ -403,23 +447,28 @@
 <span class="sd">    &gt;&gt;&gt; p.exec(&#39;foo,foo&#39;)</span>
 <span class="sd">    [&#39;foo&#39;, &#39;foo&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getframeinfo</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">FrameType</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()))</span><span class="o">.</span><span class="n">function</span>
+
     <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParseResult</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
             <span class="n">parsed</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">position</span>
 
-        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Success</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">Parser</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 

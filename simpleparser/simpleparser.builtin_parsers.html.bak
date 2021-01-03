@@ -156,10 +156,8 @@
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">lf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">lf</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\nfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\n&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected fo expecting \n (by token)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\n&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -179,10 +177,8 @@
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">cr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">cr</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\rfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\r&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\r&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -202,10 +198,8 @@
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">crlf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">crlf</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\r\nfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\r\\n&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\r\n&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -225,16 +219,12 @@
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simpleparser.builtin_parsers</span> <span class="kn">import</span> <span class="n">newline</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">newline</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\r\nfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\r\\n&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\rfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\r&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\nfoo&quot;</span><span class="p">)</span>
-<span class="go">[&#39;\\n&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
-<span class="go">parse error at (0): unexpected fo expecting \r (by token)</span>
-<span class="go">parse error at (0): unexpected fo expecting \n (by token)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\r\n&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\r&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">foo&quot;</span><span class="p">)</span>
+<span class="go">[&#39;\n&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>

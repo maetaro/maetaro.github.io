@@ -145,12 +145,10 @@
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser.builtin_parsers import lf</span>
 <span class="sd">    &gt;&gt;&gt; p = lf()</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\nfoo&quot;)</span>
-<span class="sd">    [&#39;\\n&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&quot;foo&quot;)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \n (by token)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\nfoo&quot;)</span>
+<span class="sd">    [&#39;\n&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">token</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">token</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="cr"><a class="viewcode-back" href="../../simpleparser.builtin_parsers.html#simpleparser.builtin_parsers.cr">[docs]</a><span class="k">def</span> <span class="nf">cr</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
@@ -164,12 +162,10 @@
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser.builtin_parsers import cr</span>
 <span class="sd">    &gt;&gt;&gt; p = cr()</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\rfoo&quot;)</span>
-<span class="sd">    [&#39;\\r&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&quot;foo&quot;)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\rfoo&quot;)</span>
+<span class="sd">    [&#39;\r&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">token</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\r&quot;</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">token</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="crlf"><a class="viewcode-back" href="../../simpleparser.builtin_parsers.html#simpleparser.builtin_parsers.crlf">[docs]</a><span class="k">def</span> <span class="nf">crlf</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Parser</span><span class="p">:</span>
@@ -183,10 +179,8 @@
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser.builtin_parsers import crlf</span>
 <span class="sd">    &gt;&gt;&gt; p = crlf()</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\r\nfoo&quot;)</span>
-<span class="sd">    [&#39;\\r\\n&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&quot;foo&quot;)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\r\nfoo&quot;)</span>
+<span class="sd">    [&#39;\r\n&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">transform</span><span class="p">(</span><span class="n">seq</span><span class="p">(</span><span class="n">cr</span><span class="p">(),</span> <span class="n">lf</span><span class="p">()),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span></div>
 
@@ -202,16 +196,12 @@
 <span class="sd">    -------</span>
 <span class="sd">    &gt;&gt;&gt; from simpleparser.builtin_parsers import newline</span>
 <span class="sd">    &gt;&gt;&gt; p = newline()</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\r\nfoo&quot;)</span>
-<span class="sd">    [&#39;\\r\\n&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\rfoo&quot;)</span>
-<span class="sd">    [&#39;\\r&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(r&quot;\nfoo&quot;)</span>
-<span class="sd">    [&#39;\\n&#39;]</span>
-<span class="sd">    &gt;&gt;&gt; p.exec(&quot;foo&quot;)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \r (by token)</span>
-<span class="sd">    parse error at (0): unexpected fo expecting \n (by token)</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\r\nfoo&quot;)</span>
+<span class="sd">    [&#39;\r\n&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\rfoo&quot;)</span>
+<span class="sd">    [&#39;\r&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; p.exec(&quot;\nfoo&quot;)</span>
+<span class="sd">    [&#39;\n&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">crlf</span><span class="p">(),</span> <span class="n">cr</span><span class="p">(),</span> <span class="n">lf</span><span class="p">())</span></div>
 
