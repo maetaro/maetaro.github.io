@@ -131,7 +131,7 @@
 <p>check and doc build utility.</p>
 <dl class="py function">
 <dt id="checker.run">
-<code class="sig-prename descclassname">checker.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/checker.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#checker.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">checker.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#checker.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run check utils.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>

@@ -143,12 +143,12 @@
 <p>a parser module.</p>
 <dl class="py class">
 <dt id="simpleparser.parser.Parser">
-<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parser.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#Parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.Parser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parser.</code><code class="sig-name descname">Parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parser.Parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>a parser class.</p>
 <dl class="py method">
 <dt id="simpleparser.parser.Parser.exec">
-<code class="sig-name descname">exec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#Parser.exec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.Parser.exec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">exec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parser.Parser.exec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the executable function object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -167,12 +167,12 @@
 
 <dl class="py class">
 <dt id="simpleparser.parser.PrimitiveParser">
-<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parser.</code><code class="sig-name descname">PrimitiveParser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">expression</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#PrimitiveParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.PrimitiveParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">simpleparser.parser.</code><code class="sig-name descname">PrimitiveParser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">expression</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parser.PrimitiveParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#simpleparser.parser.Parser" title="simpleparser.parser.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">simpleparser.parser.Parser</span></code></a></p>
 <p>a parser class.</p>
 <dl class="py method">
 <dt id="simpleparser.parser.PrimitiveParser.exec">
-<code class="sig-name descname">exec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simpleparser/parser.html#PrimitiveParser.exec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simpleparser.parser.PrimitiveParser.exec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">exec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleparser.parser.PrimitiveParser.exec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the executable function object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
