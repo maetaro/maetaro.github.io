@@ -72,8 +72,74 @@
         if (self.stones[index] != 0) {
           return;
         }
-        self.stones[index] = self.turn.innerText == "黒" ? 2 : 1;
+        const turnNo = self.turn.innerText == "黒" ? 2 : 1
+        const turnNo2 = self.turn.innerText == "黒" ? 1 : 2
+        if (!self.canPut(self.stones, index, turnNo2)) {
+          return;
+        }
+        self.stones[index] = turnNo;
         self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+      }
+      canPut(stones, index, turnNo) {
+        const getIdx = (pos, x, y) => {
+          return (pos.x + x) + ((pos.y + y) * 8);
+        }
+        const getPos = (index) => {
+          const x = index % 8;
+          const y = Math.floor(index / 8);
+          return { x: x, y: y }
+        }
+        const currPos = getPos(index);
+        // 上下左右に走査する。自分または空セルの場合は中断。
+        // 上
+        let flipCount = 0;
+        for (let y = currPos.y; y >= 0; y--) {
+          const i = getIdx(currPos, 0, y * -1);
+          if (stones[i] == 0 || stones[i] == turnNo) {
+            break;
+          }
+          if (flipCount >= 1 && stones[i] == turnNo) {
+            return true;
+          }
+          flipCount++;
+        }
+        // 下
+        for (let y = currPos.y; y < 8; y++) {
+          const i = getIdx(currPos, 0, y);
+          if (stones[i] == 0 || stones[i] == turnNo) {
+            break;
+          }
+          if (flipCount >= 1 && stones[i] == turnNo) {
+            return true;
+          }
+          flipCount++;
+        }
+        // 左
+        for (let x = currPos.x; x >= 0; x--) {
+          const i = getIdx(currPos, x * -1, 0);
+          if (stones[i] == 0 || stones[i] == turnNo) {
+            break;
+          }
+          if (flipCount >= 1 && stones[i] == turnNo) {
+            return true;
+          }
+          flipCount++;
+        }
+        // 右
+        for (let x = currPos.x; x < 8; x++) {
+          const i = getIdx(currPos, x, 0);
+          if (stones[i] == 0 || stones[i] == turnNo) {
+            break;
+          }
+          if (flipCount >= 1 && stones[i] == turnNo) {
+            return true;
+          }
+          flipCount++;
+        }
+        if (flipCount > 0) {
+          return true;
+        }
+        return false;
       }
       update(timestamp) {
         // console.log(timestamp);
