@@ -73,14 +73,17 @@
           return;
         }
         const turnNo = self.turn.innerText == "黒" ? 2 : 1
-        const turnNo2 = self.turn.innerText == "黒" ? 1 : 2
-        if (!self.canPut(self.stones, index, turnNo2)) {
+        // if (!self.canPut(self.stones, index, turnNo2)) {
+        //   return;
+        // }
+        console.log(self.stones);
+        if (!self.put(self, index, turnNo)) {
           return;
         }
-        self.stones[index] = turnNo;
+        console.log(self.stones);
         self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
       }
-      canPut(stones, index, turnNo) {
+      put(self, index, turnNo) {
         const getIdx = (pos, x, y) => {
           return (pos.x + x) + ((pos.y + y) * 8);
         }
@@ -91,55 +94,43 @@
         }
         const currPos = getPos(index);
         // 上下左右に走査する。自分または空セルの場合は中断。
-        // 上
         let flipCount = 0;
-        for (let y = currPos.y; y >= 0; y--) {
-          const i = getIdx(currPos, 0, y * -1);
-          if (stones[i] == 0 || stones[i] == turnNo) {
+        const flip = (f1, f2) => {
+          for (let y = 1; y < 8 - currPos.y; y++) {
+            const i = f1(currPos, y);
+            if (self.stones[i] != 0 && self.stones[i] != turnNo) {
+              continue;
+            }
+            if (y > 1 && self.stones[i] == turnNo) {
+              for (const j of f2(i)) {
+                flipCount++;
+                self.stones[j] = turnNo;
+              }
+            }
             break;
           }
-          if (flipCount >= 1 && stones[i] == turnNo) {
-            return true;
-          }
-          flipCount++;
         }
-        // 下
-        for (let y = currPos.y; y < 8; y++) {
-          const i = getIdx(currPos, 0, y);
-          if (stones[i] == 0 || stones[i] == turnNo) {
-            break;
-          }
-          if (flipCount >= 1 && stones[i] == turnNo) {
-            return true;
-          }
-          flipCount++;
-        }
-        // 左
-        for (let x = currPos.x; x >= 0; x--) {
-          const i = getIdx(currPos, x * -1, 0);
-          if (stones[i] == 0 || stones[i] == turnNo) {
-            break;
-          }
-          if (flipCount >= 1 && stones[i] == turnNo) {
-            return true;
-          }
-          flipCount++;
-        }
+        // 上
+        // 右上
         // 右
-        for (let x = currPos.x; x < 8; x++) {
-          const i = getIdx(currPos, x, 0);
-          if (stones[i] == 0 || stones[i] == turnNo) {
-            break;
-          }
-          if (flipCount >= 1 && stones[i] == turnNo) {
-            return true;
-          }
-          flipCount++;
+        // 右下↘︎
+        // 下
+        // 左下
+        // 左
+        // 左上
+        flip((currPos, y) => { return getIdx(currPos,      0, y * -1); }, function* (i) { for (let j = i; j < index; j += 8) { yield j; } });
+        flip((currPos, y) => { return getIdx(currPos,      y, y * -1); }, function* (i) { for (let j = i; j < index; j += 7) { yield j; } });
+        flip((currPos, x) => { return getIdx(currPos,      x,      0); }, function* (i) { for (let j = i; j > index; j -= 1) { yield j; } });
+        flip((currPos, x) => { return getIdx(currPos,      x,      x); }, function* (i) { for (let j = i; j > index; j -= 9) { yield j; } });
+        flip((currPos, y) => { return getIdx(currPos,      0,      y); }, function* (i) { for (let j = i; j > index; j -= 8) { yield j; } });
+        flip((currPos, y) => { return getIdx(currPos, y * -1,      y); }, function* (i) { for (let j = i; j > index; j -= 7) { yield j; } });
+        flip((currPos, x) => { return getIdx(currPos, x * -1,      0); }, function* (i) { for (let j = i; j < index; j += 1) { yield j; } });
+        flip((currPos, y) => { return getIdx(currPos, y * -1, y * -1); }, function* (i) { for (let j = i; j < index; j += 9) { yield j; } });
+        if (flipCount == 0) {
+          return false;
         }
-        if (flipCount > 0) {
-          return true;
-        }
-        return false;
+        self.stones[index] = turnNo;
+        return true;
       }
       update(timestamp) {
         // console.log(timestamp);
@@ -203,7 +194,7 @@
     }
     </script>
   <div>
-    <span>リバーシだよ</span>
+    <span>リバーシだよ。</span>
     <span id="turn"></span><span>の番です。</span>
     <span id="fps"></span>
   </div>
