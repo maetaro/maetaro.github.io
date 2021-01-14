@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script>
+    //   async function run(){
+    //     // load model
+    //     const path = "/reversi/model/model.json";
+    //     const model = await tf.loadLayersModel(path);
+
+    //     // predict
+    //     const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
+    //     y_pred = await model.predict(xs);
+    //     y_pred.print();
+
+    //     // convert to array
+    //     const values = await y_pred.data();
+    //     const arr = await Array.from(values);
+    //     console.log(arr);
+    //   }
+    //   run();
+    </script>
+    <script>
+    class Game {
+      constructor(parent) {
+        const self = this;
+        // 描画情報
+        this.fps = document.getElementById('fps');
+        this.canvas = document.createElement("canvas");
+        this.context = this.canvas.getContext('2d');
+        this.frameCount = 0;
+        this.prevTime = performance.now();
+        parent.appendChild(this.canvas);
+        this.canvas.onclick = (e) => self.onclick(self, e);
+        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        this.borderWeight = 3;
+        this.cellWidth = (this.size - (this.borderWeight * 9)) / 8;
+        // リバーシ情報
+        this.stones = new Array(64).fill(0);
+        this.stones[27] = 1;
+        this.stones[28] = 2;
+        this.stones[35] = 2;
+        this.stones[36] = 1;
+        this.turn = document.getElementById('turn');
+        this.turn.innerText = "黒"
+        requestAnimationFrame((timestamp) => this.mainloop(timestamp));
+      }
+      mainloop(timestamp) {
+        this.frameCount++;
+        this.update();
+        this.draw();
+        const now = performance.now();
+        const elapsed = (now - this.prevTime);
+        if (elapsed > 1000) {
+          this.fps.innerText = `${this.frameCount}fps`;
+          this.prevTime = performance.now();
+          this.frameCount = 0;
+        }
+        requestAnimationFrame((timestamp) => this.mainloop(timestamp));
+      }
+      onclick(self, e) {
+        const rect = e.target.getBoundingClientRect();
+        const mouseX = e.clientX - Math.floor(rect.left) - 2;
+        const mouseY = e.clientY - Math.floor(rect.top) - 2;
+        const x = Math.floor(mouseX / self.cellWidth);
+        const y = Math.floor(mouseY / self.cellWidth);
+        const index = x + (y * 8);
+        // console.log(`${mouseX} ${mouseY} ${x} ${y}`);
+        if (self.stones[index] != 0) {
+          return;
+        }
+        self.stones[index] = self.turn.innerText == "黒" ? 2 : 1;
+        self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+      }
+      update(timestamp) {
+        // console.log(timestamp);
+      }
+      draw() {
+        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        const size = this.size;
+        this.canvas.width = size;
+        this.canvas.height = size;
+        this.context.clearRect(0, 0, size, size);
+
+        // 盤面
+        this.context.fillStyle = "green";
+        this.context.fillRect(0, 0, size, size);
+        this.borderWeight = 3;
+        const borderWeight = this.borderWeight;
+        this.cellWidth = (size - (borderWeight * 9)) / 8;
+        const cellWidth = this.cellWidth;
+        this.context.fillStyle = "black";
+        for (let i = 0; i < 9; i++) {
+          const pos = (borderWeight + cellWidth) * i;
+          this.context.fillRect(pos, 0, borderWeight, size);
+          this.context.fillRect(0, pos, size, borderWeight);
+        }
+
+        // 石
+        for (let i = 0; i < this.stones.length; i++) {
+          const stone = this.stones[i];
+          const x = i % 8;
+          const y = Math.floor(i / 8);
+          const drawCircle = (color) => {
+            this.context.beginPath();
+            this.context.arc(
+                ((borderWeight + cellWidth) * x) + (cellWidth / 2),
+                ((borderWeight + cellWidth) * y) + (cellWidth / 2),
+                (cellWidth / 2) - 5,
+                0 * Math.PI / 180,
+                360 * Math.PI / 180,
+                false);
+            this.context.fillStyle = color;
+            this.context.fill();
+            this.context.strokeStyle = "black";
+            this.context.lineWidth = 3;
+            this.context.stroke();
+          }
+          if (stone == 1) {
+            // 白
+            drawCircle("white");
+          }
+          if (stone == 2) {
+            // 黒
+            drawCircle("black");
+          }
+        }
+
+      }
+    }
+    window.onload = function() {
+      const div = document.getElementById("board");
+      new Game(div);
+    }
+    </script>
+  <div>
+    <span>リバーシだよ</span>
+    <span id="turn"></span><span>の番です。</span>
+    <span id="fps"></span>
+  </div>
+  <div id="board"></div>
+  </body>
+</html>
