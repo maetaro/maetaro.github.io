@@ -4,24 +4,45 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.6.1/dist/tf.min.js"></script>
     <script>
-    //   async function run(){
-    //     // load model
-    //     const path = "/reversi/model/model.json";
-    //     const model = await tf.loadLayersModel(path);
+      async function run(){
+        // load model
+        const path = "http://localhost:8000/reversi/model/model.json";
+        const model = await tf.loadLayersModel(path);
 
-    //     // predict
-    //     const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
-    //     y_pred = await model.predict(xs);
-    //     y_pred.print();
+        // predict
+        const xs = tf.tensor(
+          [[
+            [[0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,1,0,0,0],
+            [0,0,0,1,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0]],
 
-    //     // convert to array
-    //     const values = await y_pred.data();
-    //     const arr = await Array.from(values);
-    //     console.log(arr);
-    //   }
-    //   run();
+            [[0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,1,0,0,0,0],
+            [0,0,0,0,1,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0]]]]
+        );
+        y_pred = await model.predict(xs);
+        y_pred.print();
+
+        // convert to array
+        const values = await y_pred.data();
+        console.log(values);
+        const data = await tf.argMax(values).data();
+        console.log(data);
+
+      }
+      run();
     </script>
     <script>
     class Game {
