@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.6.1/dist/tf.min.js"></script>
     <script>
     class Node {
+      constructor(game) {
+        this.game = game;
+      }
       update() {
       }
       draw() {
@@ -14,8 +17,7 @@
     }
     class Board extends Node {
       constructor(game) {
-        super();
-        this.game = game;
+        super(game);
       }
       update() {
       }
