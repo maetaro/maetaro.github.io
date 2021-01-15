@@ -19,6 +19,16 @@
       update() {
       }
       draw(context) {
+        context.fillStyle = "green";
+        context.fillRect(0, 0, Game.size, Game.size);
+        const borderWeight = Game.borderWeight;
+        const cellWidth = Game.cellWidth;
+        context.fillStyle = "black";
+        for (let i = 0; i < 9; i++) {
+          const pos = (borderWeight + cellWidth) * i;
+          context.fillRect(pos, 0, borderWeight, Game.size);
+          context.fillRect(0, pos, Game.size, borderWeight);
+        }
       }
     }
     class Stone extends Node {
@@ -35,6 +45,7 @@
     class Game {
       static borderWeight = 2;
       static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
+      static size = 0;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -47,8 +58,8 @@
         this.canvas.onclick = (e) => self.onclick(self, e);
         this.canvas.onmousemove = (e) => self.onmousemove(self, e);
         this.canvas.onmouseout = (e) => self.onmouseout(self, e);
-        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        Game.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
+        Game.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        Game.cellWidth = (Game.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
         this.stones[27] = Stone.white;
@@ -246,8 +257,10 @@
         }
       }
       draw() {
-        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        const size = this.size;
+        Game.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        Game.cellWidth = (Game.size - (Game.borderWeight * 9)) / 8;
+
+        const size = Game.size;
         this.canvas.width = size;
         this.canvas.height = size;
 
@@ -258,18 +271,8 @@
           iterator.draw(context);
         }
 
-        // 盤面
-        context.fillStyle = "green";
-        context.fillRect(0, 0, size, size);
         const borderWeight = Game.borderWeight;
-        Game.cellWidth = (size - (borderWeight * 9)) / 8;
         const cellWidth = Game.cellWidth;
-        context.fillStyle = "black";
-        for (let i = 0; i < 9; i++) {
-          const pos = (borderWeight + cellWidth) * i;
-          context.fillRect(pos, 0, borderWeight, size);
-          context.fillRect(0, pos, size, borderWeight);
-        }
 
         if (this.hoverCellIndex != null) {
           const i = this.hoverCellIndex;
