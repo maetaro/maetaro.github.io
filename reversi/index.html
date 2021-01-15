@@ -13,21 +13,22 @@
       }
     }
     class Board extends Node {
-      constructor() {
+      constructor(game) {
         super();
+        this.game = game;
       }
       update() {
       }
       draw(context) {
         context.fillStyle = "green";
-        context.fillRect(0, 0, Game.size, Game.size);
+        context.fillRect(0, 0, this.game.size, this.game.size);
         const borderWeight = Game.borderWeight;
         const cellWidth = Game.cellWidth;
         context.fillStyle = "black";
         for (let i = 0; i < 9; i++) {
           const pos = (borderWeight + cellWidth) * i;
-          context.fillRect(pos, 0, borderWeight, Game.size);
-          context.fillRect(0, pos, Game.size, borderWeight);
+          context.fillRect(pos, 0, borderWeight, this.game.size);
+          context.fillRect(0, pos, this.game.size, borderWeight);
         }
         if (Game.hoverCellIndex != null) {
           const i = Game.hoverCellIndex;
@@ -76,7 +77,7 @@
     class Game {
       static borderWeight = 2;
       static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
-      static size = 0;
+      //   static size = 0;
       static hoverCellIndex = null;
       constructor(parent) {
         const self = this;
@@ -90,8 +91,8 @@
         this.canvas.onclick = (e) => self.onclick(self, e);
         this.canvas.onmousemove = (e) => self.onmousemove(self, e);
         this.canvas.onmouseout = (e) => self.onmouseout(self, e);
-        Game.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        Game.cellWidth = (Game.size - (Game.borderWeight * 9)) / 8;
+        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        Game.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
         this.stones[27] = Stone.white;
@@ -101,7 +102,7 @@
         this.turn = document.getElementById('turn');
         this.turn.innerText = Stone.black
         this.children = [];
-        this.children.push(new Board());
+        this.children.push(new Board(this));
         requestAnimationFrame((timestamp) => this.mainloop(timestamp));
       }
       mainloop(timestamp) {
@@ -296,10 +297,10 @@
         }
       }
       draw() {
-        Game.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        Game.cellWidth = (Game.size - (Game.borderWeight * 9)) / 8;
+        this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
+        Game.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
 
-        const size = Game.size;
+        const size = this.size;
         const borderWeight = Game.borderWeight;
         const cellWidth = Game.cellWidth;
         const context = this.context;
