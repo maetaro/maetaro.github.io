@@ -6,7 +6,23 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.6.1/dist/tf.min.js"></script>
     <script>
+    class Node {
+      update() {
+      }
+      draw() {
+      }
+    }
+    class Board extends Node {
+      constructor() {
+        super();
+      }
+      update() {
+      }
+      draw(context) {
+      }
+    }
     class Game {
+      static borderWeight = 3;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -21,7 +37,7 @@
         this.canvas.onmouseout = (e) => self.onmouseout(self, e);
         this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
         this.borderWeight = 3;
-        this.cellWidth = (this.size - (this.borderWeight * 9)) / 8;
+        this.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
         this.stones[27] = "白";
@@ -31,6 +47,8 @@
         this.turn = document.getElementById('turn');
         this.turn.innerText = "黒"
         this.hoverCellIndex = null;
+        this.children = [];
+        this.children.push(new Board());
         requestAnimationFrame((timestamp) => this.mainloop(timestamp));
       }
       mainloop(timestamp) {
@@ -204,26 +222,35 @@
       }
       update(timestamp) {
         // console.log(timestamp);
+        for (const iterator of this.children) {
+          iterator.update(timestamp);
+        }
       }
       draw() {
         this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
         const size = this.size;
         this.canvas.width = size;
         this.canvas.height = size;
-        this.context.clearRect(0, 0, size, size);
+
+        const context = this.context;
+        context.clearRect(0, 0, size, size);
+
+        for (const iterator of this.children) {
+          iterator.draw(context);
+        }
 
         // 盤面
-        this.context.fillStyle = "green";
-        this.context.fillRect(0, 0, size, size);
+        context.fillStyle = "green";
+        context.fillRect(0, 0, size, size);
         this.borderWeight = 2;
         const borderWeight = this.borderWeight;
         this.cellWidth = (size - (borderWeight * 9)) / 8;
         const cellWidth = this.cellWidth;
-        this.context.fillStyle = "black";
+        context.fillStyle = "black";
         for (let i = 0; i < 9; i++) {
           const pos = (borderWeight + cellWidth) * i;
-          this.context.fillRect(pos, 0, borderWeight, size);
-          this.context.fillRect(0, pos, size, borderWeight);
+          context.fillRect(pos, 0, borderWeight, size);
+          context.fillRect(0, pos, size, borderWeight);
         }
 
         if (this.hoverCellIndex != null) {
@@ -234,13 +261,13 @@
           const top = (borderWeight + cellWidth) * y + 1;
           const width = borderWeight + cellWidth;
           const height = borderWeight + cellWidth;
-          this.context.font = "48px serif";
-          this.context.fillText(`${i}`, 10, 50);
-          this.context.beginPath();
-          this.context.rect(left, top, width, height);
-          this.context.strokeStyle = "white" ;
-          this.context.lineWidth = 1 ;
-          this.context.stroke() ;
+          context.font = "48px serif";
+          context.fillText(`${i}`, 10, 50);
+          context.beginPath();
+          context.rect(left, top, width, height);
+          context.strokeStyle = "white" ;
+          context.lineWidth = 1 ;
+          context.stroke() ;
         }
 
         // 石
