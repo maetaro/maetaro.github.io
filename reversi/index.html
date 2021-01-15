@@ -50,12 +50,12 @@
         this.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
-        this.stones[27] = "白";
-        this.stones[28] = "黒";
-        this.stones[35] = "黒";
-        this.stones[36] = "白";
+        this.stones[27] = Stone.white;
+        this.stones[28] = Stone.black;
+        this.stones[35] = Stone.black;
+        this.stones[36] = Stone.white;
         this.turn = document.getElementById('turn');
-        this.turn.innerText = "黒"
+        this.turn.innerText = Stone.black
         this.hoverCellIndex = null;
         this.children = [];
         this.children.push(new Board());
@@ -88,11 +88,11 @@
         if (self.stones[index] != 0) {
           return;
         }
-        const turnNo = self.turn.innerText == "黒" ? "黒" : "白"
+        const turnNo = self.turn.innerText == Stone.black ? Stone.black : Stone.white
         // if (!self.canPut(self.stones, index, turnNo2)) {
         //   return;
         // }
-        if (turnNo == "白") {
+        if (turnNo == Stone.white) {
           index = await self.putByAI(self, turnNo);
         }
         // console.log(self.stones);
@@ -100,15 +100,15 @@
           return;
         }
         // console.log(self.stones);
-        self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+        self.turn.innerText = self.turn.innerText == Stone.black ? Stone.white : Stone.black;
         // 白を自動で実行
-        const turnNo2 = self.turn.innerText == "黒" ? "黒" : "白"
+        const turnNo2 = self.turn.innerText == Stone.black ? Stone.black : Stone.white
         index = await self.putByAI(self, turnNo2);
         console.log(index);
         if (!self.put(self, index, turnNo2)) {
           return;
         }
-        self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+        self.turn.innerText = self.turn.innerText == Stone.black ? Stone.white : Stone.black;
       }
       onmousemove(self, e) {
         const rect = e.target.getBoundingClientRect();
@@ -151,10 +151,10 @@
             }
             return tmp;
           }
-          // console.log(get("黒"));
-          // console.log(get("白"));
+          // console.log(get(Stone.black));
+          // console.log(get(Stone.white));
           const playerBoard = to8x8(get(turnNo));
-          const enemyBoard = to8x8(get(turnNo == "白" ? "黒" : "白"));
+          const enemyBoard = to8x8(get(turnNo == Stone.white ? Stone.black : Stone.white));
           return tf.tensor([[playerBoard, enemyBoard]]);
         }
         const xs = toPreditionData();
@@ -307,10 +307,10 @@
             this.context.lineWidth = 1;
             this.context.stroke();
           }
-          if (stone == "白") {
+          if (stone == Stone.white) {
             drawCircle("white");
           }
-          if (stone == "黒") {
+          if (stone == Stone.black) {
             drawCircle("black");
           }
         }
