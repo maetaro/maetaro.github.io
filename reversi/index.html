@@ -215,7 +215,7 @@
         // 盤面
         this.context.fillStyle = "green";
         this.context.fillRect(0, 0, size, size);
-        this.borderWeight = 3;
+        this.borderWeight = 2;
         const borderWeight = this.borderWeight;
         this.cellWidth = (size - (borderWeight * 9)) / 8;
         const cellWidth = this.cellWidth;
@@ -251,8 +251,8 @@
           const drawCircle = (color) => {
             this.context.beginPath();
             this.context.arc(
-                ((borderWeight + cellWidth) * x) + (cellWidth / 2),
-                ((borderWeight + cellWidth) * y) + (cellWidth / 2),
+                ((borderWeight + cellWidth) * x) + (cellWidth / 2) + 2,
+                ((borderWeight + cellWidth) * y) + (cellWidth / 2) + 2,
                 (cellWidth / 2) - 5,
                 0 * Math.PI / 180,
                 360 * Math.PI / 180,
@@ -260,15 +260,13 @@
             this.context.fillStyle = color;
             this.context.fill();
             this.context.strokeStyle = "black";
-            this.context.lineWidth = 3;
+            this.context.lineWidth = 1;
             this.context.stroke();
           }
           if (stone == "白") {
-            // 白
             drawCircle("white");
           }
           if (stone == "黒") {
-            // 黒
             drawCircle("black");
           }
         }
@@ -283,6 +281,7 @@
   <div>
     <span>リバーシだよ。</span>
     <span id="turn"></span><span>の番です。</span>
+    <span id="stat"></span>
     <span id="fps"></span>
   </div>
   <div id="board"></div>
