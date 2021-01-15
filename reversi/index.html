@@ -34,6 +34,7 @@
     }
     class Game {
       static borderWeight = 2;
+      static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -47,7 +48,7 @@
         this.canvas.onmousemove = (e) => self.onmousemove(self, e);
         this.canvas.onmouseout = (e) => self.onmouseout(self, e);
         this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        this.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
+        Game.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
         this.stones[27] = Stone.white;
@@ -81,8 +82,8 @@
         if (mouseX < 0 || mouseY < 0) {
           return;
         }
-        const x = Math.floor(mouseX / (Game.borderWeight + self.cellWidth));
-        const y = Math.floor(mouseY / (Game.borderWeight + self.cellWidth));
+        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
+        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
         let index = x + (y * 8);
         // console.log(`${mouseX} ${mouseY} ${x} ${y}`);
         if (self.stones[index] != 0) {
@@ -117,8 +118,8 @@
         if (mouseX < 0 || mouseY < 0) {
           return;
         }
-        const x = Math.floor(mouseX / (Game.borderWeight + self.cellWidth));
-        const y = Math.floor(mouseY / (Game.borderWeight + self.cellWidth));
+        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
+        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
         const index = x + (y * 8);
         self.hoverCellIndex = index;
       }
@@ -129,8 +130,8 @@
         // if (mouseX < 0 || mouseY < 0) {
         //   return;
         // }
-        const x = Math.floor(mouseX / self.cellWidth);
-        const y = Math.floor(mouseY / self.cellWidth);
+        const x = Math.floor(mouseX / Game.cellWidth);
+        const y = Math.floor(mouseY / Game.cellWidth);
         const index = x + (y * 8);
         self.hoverCellIndex = null;
       }
@@ -261,8 +262,8 @@
         context.fillStyle = "green";
         context.fillRect(0, 0, size, size);
         const borderWeight = Game.borderWeight;
-        this.cellWidth = (size - (borderWeight * 9)) / 8;
-        const cellWidth = this.cellWidth;
+        Game.cellWidth = (size - (borderWeight * 9)) / 8;
+        const cellWidth = Game.cellWidth;
         context.fillStyle = "black";
         for (let i = 0; i < 9; i++) {
           const pos = (borderWeight + cellWidth) * i;
