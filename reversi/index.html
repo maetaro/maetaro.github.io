@@ -21,8 +21,19 @@
       draw(context) {
       }
     }
+    class Stone extends Node {
+      static black = "黒";
+      static white = "白";
+      constructor() {
+        super();
+      }
+      update() {
+      }
+      draw(context) {
+      }
+    }
     class Game {
-      static borderWeight = 3;
+      static borderWeight = 2;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -36,7 +47,6 @@
         this.canvas.onmousemove = (e) => self.onmousemove(self, e);
         this.canvas.onmouseout = (e) => self.onmouseout(self, e);
         this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-        this.borderWeight = 3;
         this.cellWidth = (this.size - (Game.borderWeight * 9)) / 8;
         // リバーシ情報
         this.stones = new Array(64).fill(0);
@@ -71,8 +81,8 @@
         if (mouseX < 0 || mouseY < 0) {
           return;
         }
-        const x = Math.floor(mouseX / (self.borderWeight + self.cellWidth));
-        const y = Math.floor(mouseY / (self.borderWeight + self.cellWidth));
+        const x = Math.floor(mouseX / (Game.borderWeight + self.cellWidth));
+        const y = Math.floor(mouseY / (Game.borderWeight + self.cellWidth));
         let index = x + (y * 8);
         // console.log(`${mouseX} ${mouseY} ${x} ${y}`);
         if (self.stones[index] != 0) {
@@ -99,8 +109,8 @@
         if (mouseX < 0 || mouseY < 0) {
           return;
         }
-        const x = Math.floor(mouseX / (self.borderWeight + self.cellWidth));
-        const y = Math.floor(mouseY / (self.borderWeight + self.cellWidth));
+        const x = Math.floor(mouseX / (Game.borderWeight + self.cellWidth));
+        const y = Math.floor(mouseY / (Game.borderWeight + self.cellWidth));
         const index = x + (y * 8);
         self.hoverCellIndex = index;
       }
@@ -143,7 +153,7 @@
         // console.log(xs);
         // load model
         const path = "http://localhost:8000/reversi/model/model.json";
-        const model = await tf.loadLayersModel(path);
+        const model = await tf.loadGraphModel(path);
         // predict
         const y_pred = await model.predict(xs);
         y_pred.print();
@@ -242,8 +252,7 @@
         // 盤面
         context.fillStyle = "green";
         context.fillRect(0, 0, size, size);
-        this.borderWeight = 2;
-        const borderWeight = this.borderWeight;
+        const borderWeight = Game.borderWeight;
         this.cellWidth = (size - (borderWeight * 9)) / 8;
         const cellWidth = this.cellWidth;
         context.fillStyle = "black";
