@@ -93,13 +93,21 @@
         //   return;
         // }
         if (turnNo == "白") {
-          index = await self.putByAI(self, index, turnNo);
+          index = await self.putByAI(self, turnNo);
         }
         // console.log(self.stones);
         if (!self.put(self, index, turnNo)) {
           return;
         }
         // console.log(self.stones);
+        self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+        // 白を自動で実行
+        const turnNo2 = self.turn.innerText == "黒" ? "黒" : "白"
+        index = await self.putByAI(self, turnNo2);
+        console.log(index);
+        if (!self.put(self, index, turnNo2)) {
+          return;
+        }
         self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
       }
       onmousemove(self, e) {
@@ -126,7 +134,7 @@
         const index = x + (y * 8);
         self.hoverCellIndex = null;
       }
-      async putByAI(self, index, turnNo) {
+      async putByAI(self, turnNo) {
         const toPreditionData = () => {
           const get = (no) => {
             // console.log(no);
@@ -152,7 +160,7 @@
         const xs = toPreditionData();
         // console.log(xs);
         // load model
-        const path = "http://localhost:8000/reversi/model/model.json";
+        const path = "/reversi/model/model.json";
         const model = await tf.loadGraphModel(path);
         // predict
         const y_pred = await model.predict(xs);
