@@ -144,6 +144,7 @@
         }
         // console.log(self.stones);
         self.turn.innerText = self.turn.innerText == Stone.black ? Stone.white : Stone.black;
+        self.showStat();
         // 白を自動で実行
         const turnNo2 = self.turn.innerText == Stone.black ? Stone.black : Stone.white
         index = await self.putByAI(self, turnNo2);
@@ -152,6 +153,13 @@
           return;
         }
         self.turn.innerText = self.turn.innerText == Stone.black ? Stone.white : Stone.black;
+        self.showStat();
+      }
+      showStat() {
+        const label = document.getElementById("stat");
+        const b = this.stones.filter(e => e == Stone.black).length;
+        const w = this.stones.filter(e => e == Stone.white).length;
+        label.innerText = `黒:${b}まい 白:${w}まい`;
       }
       onmousemove(self, e) {
         const rect = e.target.getBoundingClientRect();
@@ -292,18 +300,17 @@
         Game.cellWidth = (Game.size - (Game.borderWeight * 9)) / 8;
 
         const size = Game.size;
+        const borderWeight = Game.borderWeight;
+        const cellWidth = Game.cellWidth;
+        const context = this.context;
+
         this.canvas.width = size;
         this.canvas.height = size;
-
-        const context = this.context;
         context.clearRect(0, 0, size, size);
 
         for (const iterator of this.children) {
           iterator.draw(context);
         }
-
-        const borderWeight = Game.borderWeight;
-        const cellWidth = Game.cellWidth;
 
         // 石
         for (let i = 0; i < this.stones.length; i++) {
@@ -327,6 +334,7 @@
     </script>
   <div>
     <span>リバーシだよ。</span>
+    <button>始める</button>
     <span id="turn"></span><span>の番です。</span>
     <span id="stat"></span>
     <span id="fps"></span>
