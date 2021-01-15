@@ -35,6 +35,8 @@
         this.prevTime = performance.now();
         parent.appendChild(this.canvas);
         this.canvas.onclick = (e) => self.onclick(self, e);
+        this.canvas.onmousemove = (e) => self.onmousemove(self, e);
+        this.canvas.onmouseout = (e) => self.onmouseout(self, e);
         this.size = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
         this.borderWeight = 3;
         this.cellWidth = (this.size - (this.borderWeight * 9)) / 8;
@@ -46,6 +48,7 @@
         this.stones[36] = 1;
         this.turn = document.getElementById('turn');
         this.turn.innerText = "黒"
+        this.hoverCellIndex = null;
         requestAnimationFrame((timestamp) => this.mainloop(timestamp));
       }
       mainloop(timestamp) {
@@ -65,8 +68,11 @@
         const rect = e.target.getBoundingClientRect();
         const mouseX = e.clientX - Math.floor(rect.left) - 2;
         const mouseY = e.clientY - Math.floor(rect.top) - 2;
-        const x = Math.floor(mouseX / self.cellWidth);
-        const y = Math.floor(mouseY / self.cellWidth);
+        if (mouseX < 0 || mouseY < 0) {
+          return;
+        }
+        const x = Math.floor(mouseX / (self.borderWeight + self.cellWidth));
+        const y = Math.floor(mouseY / (self.borderWeight + self.cellWidth));
         const index = x + (y * 8);
         // console.log(`${mouseX} ${mouseY} ${x} ${y}`);
         if (self.stones[index] != 0) {
@@ -82,6 +88,30 @@
         }
         console.log(self.stones);
         self.turn.innerText = self.turn.innerText == "黒" ? "白" : "黒";
+      }
+      onmousemove(self, e) {
+        const rect = e.target.getBoundingClientRect();
+        const mouseX = e.clientX - Math.floor(rect.left) - 2;
+        const mouseY = e.clientY - Math.floor(rect.top) - 2;
+        if (mouseX < 0 || mouseY < 0) {
+          return;
+        }
+        const x = Math.floor(mouseX / (self.borderWeight + self.cellWidth));
+        const y = Math.floor(mouseY / (self.borderWeight + self.cellWidth));
+        const index = x + (y * 8);
+        self.hoverCellIndex = index;
+      }
+      onmouseout(self, e) {
+        const rect = e.target.getBoundingClientRect();
+        const mouseX = e.clientX - Math.floor(rect.left) - 2;
+        const mouseY = e.clientY - Math.floor(rect.top) - 2;
+        // if (mouseX < 0 || mouseY < 0) {
+        //   return;
+        // }
+        const x = Math.floor(mouseX / self.cellWidth);
+        const y = Math.floor(mouseY / self.cellWidth);
+        const index = x + (y * 8);
+        self.hoverCellIndex = null;
       }
       put(self, index, turnNo) {
         const getIdx = (pos, x, y) => {
@@ -154,6 +184,23 @@
           const pos = (borderWeight + cellWidth) * i;
           this.context.fillRect(pos, 0, borderWeight, size);
           this.context.fillRect(0, pos, size, borderWeight);
+        }
+
+        if (this.hoverCellIndex != null) {
+          const i = this.hoverCellIndex;
+          const x = i % 8;
+          const y = Math.floor(i / 8);
+          const left = (borderWeight + cellWidth) * x + 1;
+          const top = (borderWeight + cellWidth) * y + 1;
+          const width = borderWeight + cellWidth;
+          const height = borderWeight + cellWidth;
+          this.context.font = "48px serif";
+          this.context.fillText(`${i}`, 10, 50);
+          this.context.beginPath();
+          this.context.rect(left, top, width, height);
+          this.context.strokeStyle = "white" ;
+          this.context.lineWidth = 1 ;
+          this.context.stroke() ;
         }
 
         // 石
