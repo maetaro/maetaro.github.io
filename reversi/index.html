@@ -164,7 +164,7 @@
         const model = await tf.loadGraphModel(path);
         // predict
         const y_pred = await model.predict(xs);
-        y_pred.print();
+        // y_pred.print();
 
         // convert to array
         const values = await y_pred.data();
