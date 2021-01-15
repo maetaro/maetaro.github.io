@@ -29,6 +29,22 @@
           context.fillRect(pos, 0, borderWeight, Game.size);
           context.fillRect(0, pos, Game.size, borderWeight);
         }
+        if (Game.hoverCellIndex != null) {
+          const i = Game.hoverCellIndex;
+          const x = i % 8;
+          const y = Math.floor(i / 8);
+          const left = (borderWeight + cellWidth) * x + 1;
+          const top = (borderWeight + cellWidth) * y + 1;
+          const width = borderWeight + cellWidth;
+          const height = borderWeight + cellWidth;
+          // context.font = "48px serif";
+          // context.fillText(`${i}`, 10, 50);
+          context.beginPath();
+          context.rect(left, top, width, height);
+          context.strokeStyle = "white" ;
+          context.lineWidth = 1 ;
+          context.stroke() ;
+        }
       }
     }
     class Stone extends Node {
@@ -41,11 +57,27 @@
       }
       draw(context) {
       }
+      static drawCircle(x, y, color, context, borderWeight, cellWidth) {
+        context.beginPath();
+        context.arc(
+            ((borderWeight + cellWidth) * x) + (cellWidth / 2) + 2,
+            ((borderWeight + cellWidth) * y) + (cellWidth / 2) + 2,
+            (cellWidth / 2) - 5,
+            0 * Math.PI / 180,
+            360 * Math.PI / 180,
+            false);
+        context.fillStyle = color;
+        context.fill();
+        context.strokeStyle = "black";
+        context.lineWidth = 1;
+        context.stroke();
+      }
     }
     class Game {
       static borderWeight = 2;
       static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
       static size = 0;
+      static hoverCellIndex = null;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -68,7 +100,6 @@
         this.stones[36] = Stone.white;
         this.turn = document.getElementById('turn');
         this.turn.innerText = Stone.black
-        this.hoverCellIndex = null;
         this.children = [];
         this.children.push(new Board());
         requestAnimationFrame((timestamp) => this.mainloop(timestamp));
@@ -132,7 +163,7 @@
         const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
         const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
         const index = x + (y * 8);
-        self.hoverCellIndex = index;
+        Game.hoverCellIndex = index;
       }
       onmouseout(self, e) {
         const rect = e.target.getBoundingClientRect();
@@ -144,7 +175,7 @@
         const x = Math.floor(mouseX / Game.cellWidth);
         const y = Math.floor(mouseY / Game.cellWidth);
         const index = x + (y * 8);
-        self.hoverCellIndex = null;
+        Game.hoverCellIndex = null;
       }
       async putByAI(self, turnNo) {
         const toPreditionData = () => {
@@ -274,48 +305,16 @@
         const borderWeight = Game.borderWeight;
         const cellWidth = Game.cellWidth;
 
-        if (this.hoverCellIndex != null) {
-          const i = this.hoverCellIndex;
-          const x = i % 8;
-          const y = Math.floor(i / 8);
-          const left = (borderWeight + cellWidth) * x + 1;
-          const top = (borderWeight + cellWidth) * y + 1;
-          const width = borderWeight + cellWidth;
-          const height = borderWeight + cellWidth;
-          context.font = "48px serif";
-          context.fillText(`${i}`, 10, 50);
-          context.beginPath();
-          context.rect(left, top, width, height);
-          context.strokeStyle = "white" ;
-          context.lineWidth = 1 ;
-          context.stroke() ;
-        }
-
         // 石
         for (let i = 0; i < this.stones.length; i++) {
           const stone = this.stones[i];
           const x = i % 8;
           const y = Math.floor(i / 8);
-          const drawCircle = (color) => {
-            this.context.beginPath();
-            this.context.arc(
-                ((borderWeight + cellWidth) * x) + (cellWidth / 2) + 2,
-                ((borderWeight + cellWidth) * y) + (cellWidth / 2) + 2,
-                (cellWidth / 2) - 5,
-                0 * Math.PI / 180,
-                360 * Math.PI / 180,
-                false);
-            this.context.fillStyle = color;
-            this.context.fill();
-            this.context.strokeStyle = "black";
-            this.context.lineWidth = 1;
-            this.context.stroke();
-          }
           if (stone == Stone.white) {
-            drawCircle("white");
+            Stone.drawCircle(x, y, "white", this.context, borderWeight, cellWidth);
           }
           if (stone == Stone.black) {
-            drawCircle("black");
+            Stone.drawCircle(x, y, "black", this.context, borderWeight, cellWidth);
           }
         }
 
