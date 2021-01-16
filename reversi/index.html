@@ -14,10 +14,15 @@
       }
       draw() {
       }
+      onmousemove(self, e) {
+      }
+      onmouseout(self, e) {
+      }
     }
     class Board extends Node {
       constructor(game) {
         super(game);
+        this.hoverCellIndex = null;
       }
       update() {
       }
@@ -32,8 +37,8 @@
           context.fillRect(pos, 0, borderWeight, this.game.size);
           context.fillRect(0, pos, this.game.size, borderWeight);
         }
-        if (Game.hoverCellIndex != null) {
-          const i = Game.hoverCellIndex;
+        if (this.hoverCellIndex != null) {
+          const i = this.hoverCellIndex;
           const x = i % 8;
           const y = Math.floor(i / 8);
           const left = (borderWeight + cellWidth) * x + 1;
@@ -48,6 +53,30 @@
           context.lineWidth = 1 ;
           context.stroke() ;
         }
+      }
+      onmousemove(self, e) {
+        const rect = e.target.getBoundingClientRect();
+        const mouseX = e.clientX - Math.floor(rect.left) - 2;
+        const mouseY = e.clientY - Math.floor(rect.top) - 2;
+        if (mouseX < 0 || mouseY < 0) {
+          return;
+        }
+        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
+        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
+        const index = x + (y * 8);
+        this.hoverCellIndex = index;
+      }
+      onmouseout(self, e) {
+        const rect = e.target.getBoundingClientRect();
+        const mouseX = e.clientX - Math.floor(rect.left) - 2;
+        const mouseY = e.clientY - Math.floor(rect.top) - 2;
+        // if (mouseX < 0 || mouseY < 0) {
+        //   return;
+        // }
+        const x = Math.floor(mouseX / Game.cellWidth);
+        const y = Math.floor(mouseY / Game.cellWidth);
+        const index = x + (y * 8);
+        Game.hoverCellIndex = null;
       }
     }
     class Stone extends Node {
@@ -80,7 +109,6 @@
       static borderWeight = 2;
       static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
       //   static size = 0;
-      static hoverCellIndex = null;
       constructor(parent) {
         const self = this;
         // 描画情報
@@ -165,28 +193,14 @@
         label.innerText = `黒:${b}まい 白:${w}まい`;
       }
       onmousemove(self, e) {
-        const rect = e.target.getBoundingClientRect();
-        const mouseX = e.clientX - Math.floor(rect.left) - 2;
-        const mouseY = e.clientY - Math.floor(rect.top) - 2;
-        if (mouseX < 0 || mouseY < 0) {
-          return;
+        for (const iterator of this.children) {
+          iterator.onmousemove(self, e);
         }
-        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
-        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
-        const index = x + (y * 8);
-        Game.hoverCellIndex = index;
       }
       onmouseout(self, e) {
-        const rect = e.target.getBoundingClientRect();
-        const mouseX = e.clientX - Math.floor(rect.left) - 2;
-        const mouseY = e.clientY - Math.floor(rect.top) - 2;
-        // if (mouseX < 0 || mouseY < 0) {
-        //   return;
-        // }
-        const x = Math.floor(mouseX / Game.cellWidth);
-        const y = Math.floor(mouseY / Game.cellWidth);
-        const index = x + (y * 8);
-        Game.hoverCellIndex = null;
+        for (const iterator of this.children) {
+          iterator.onmouseout(self, e);
+        }
       }
       async putByAI(self, turnNo) {
         const toPreditionData = () => {
@@ -293,7 +307,6 @@
         return true;
       }
       update(timestamp) {
-        // console.log(timestamp);
         for (const iterator of this.children) {
           iterator.update(timestamp);
         }
