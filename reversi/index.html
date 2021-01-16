@@ -70,9 +70,6 @@
         const rect = e.target.getBoundingClientRect();
         const mouseX = e.clientX - Math.floor(rect.left) - 2;
         const mouseY = e.clientY - Math.floor(rect.top) - 2;
-        // if (mouseX < 0 || mouseY < 0) {
-        //   return;
-        // }
         const x = Math.floor(mouseX / Game.cellWidth);
         const y = Math.floor(mouseY / Game.cellWidth);
         const index = x + (y * 8);
