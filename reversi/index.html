@@ -52,16 +52,11 @@
         }
       }
       async onclick(self, e) {
-        const rect = e.target.getBoundingClientRect();
-        const mouseX = e.clientX - Math.floor(rect.left) - 2;
-        const mouseY = e.clientY - Math.floor(rect.top) - 2;
-        if (mouseX < 0 || mouseY < 0) {
-          return;
-        }
-        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
-        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
-        let index = x + (y * 8);
-        // console.log(`${mouseX} ${mouseY} ${x} ${y}`);
+        const pos = this.getMousePosition(e);
+        if (!pos) return;
+        const x = pos.x;
+        const y = pos.y;
+        let index = pos.index;
         if (self.stones[index] != 0) {
           return;
         }
@@ -90,25 +85,24 @@
         self.showStat();
       }
       onmousemove(self, e) {
+        const pos = this.getMousePosition(e);
+        if (!pos) return;
+        this.hoverCellIndex = pos.index;
+      }
+      onmouseout(self, e) {
+        this.hoverCellIndex = null;
+      }
+      getMousePosition(e) {
         const rect = e.target.getBoundingClientRect();
         const mouseX = e.clientX - Math.floor(rect.left) - 2;
         const mouseY = e.clientY - Math.floor(rect.top) - 2;
         if (mouseX < 0 || mouseY < 0) {
-          return;
+          return null;
         }
-        const x = Math.floor(mouseX / (Game.borderWeight + Game.cellWidth));
-        const y = Math.floor(mouseY / (Game.borderWeight + Game.cellWidth));
-        const index = x + (y * 8);
-        this.hoverCellIndex = index;
-      }
-      onmouseout(self, e) {
-        const rect = e.target.getBoundingClientRect();
-        const mouseX = e.clientX - Math.floor(rect.left) - 2;
-        const mouseY = e.clientY - Math.floor(rect.top) - 2;
         const x = Math.floor(mouseX / Game.cellWidth);
         const y = Math.floor(mouseY / Game.cellWidth);
         const index = x + (y * 8);
-        Game.hoverCellIndex = null;
+        return {x:x,y:y,index:index};
       }
       canPut(self, index, turnNo) {
         return this.put(self, index, turnNo, true);
