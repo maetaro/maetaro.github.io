@@ -10,16 +10,11 @@
       constructor(game) {
         this.game = game;
       }
-      update() {
-      }
-      draw() {
-      }
-      onclick(self, e) {
-      }
-      onmousemove(self, e) {
-      }
-      onmouseout(self, e) {
-      }
+      update() {}
+      draw() {}
+      onclick(self, e) {}
+      onmousemove(self, e) {}
+      onmouseout(self, e) {}
     }
     class Board extends Node {
       constructor(game) {
@@ -249,7 +244,6 @@
     class Game {
       static borderWeight = 2;
       static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
-      //   static size = 0;
       constructor(parent) {
         const self = this;
         // 描画情報
