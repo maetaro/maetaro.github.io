@@ -61,17 +61,12 @@
           return;
         }
         const turnNo = self.turn.innerText == Stone.black ? Stone.black : Stone.white
-        // if (!self.canPut(self.stones, index, turnNo2)) {
-        //   return;
-        // }
         if (turnNo == Stone.white) {
           index = await this.putByAI(self, turnNo);
         }
-        // console.log(self.stones);
         if (!this.put(self, index, turnNo)) {
           return;
         }
-        // console.log(self.stones);
         self.turn.innerText = self.turn.innerText == Stone.black ? Stone.white : Stone.black;
         self.showStat();
         // 白を自動で実行
