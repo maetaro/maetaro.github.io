@@ -96,7 +96,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="reversi.board.html#game" class="tsd-kind-icon">game</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="reversi.board.html#hovercellindex" class="tsd-kind-icon">hover<wbr>Cell<wbr>Index</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="reversi.board.html#position" class="tsd-kind-icon">position</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="reversi.board.html#zoder" class="tsd-kind-icon">z<wbr>Oder</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="reversi.board.html#borderweight" class="tsd-kind-icon">border<wbr>Weight</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="reversi.board.html#cellwidth" class="tsd-kind-icon">cell<wbr>Width</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -128,7 +131,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L10">reversi.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L13">reversi.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -151,17 +154,28 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#game">game</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/game.ts#L5">game.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/game.ts#L15">game.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="hovercellindex" class="tsd-anchor"></a>
 					<h3>hover<wbr>Cell<wbr>Index</h3>
-					<div class="tsd-signature tsd-kind-icon">hover<wbr>Cell<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">hover<wbr>Cell<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L10">reversi.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L13">reversi.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="position" class="tsd-anchor"></a>
+					<h3>position</h3>
+					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <a href="game.vector2.html" class="tsd-signature-type" data-tsd-kind="Class">Vector2</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#position">position</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/game.ts#L17">game.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +186,27 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#zoder">zOder</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/game.ts#L6">game.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/game.ts#L16">game.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="borderweight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> border<wbr>Weight</h3>
+					<div class="tsd-signature tsd-kind-icon">border<wbr>Weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L11">reversi.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="cellwidth" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> cell<wbr>Width</h3>
+					<div class="tsd-signature tsd-kind-icon">cell<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L12">reversi.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -183,19 +217,19 @@
 					<a name="canput" class="tsd-anchor"></a>
 					<h3>can<wbr>Put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">can<wbr>Put<span class="tsd-signature-symbol">(</span>self<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, turnNo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">can<wbr>Put<span class="tsd-signature-symbol">(</span>self<span class="tsd-signature-symbol">: </span><a href="reversi.reversi-1.html" class="tsd-signature-type" data-tsd-kind="Class">Reversi</a>, index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, turnNo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L100">reversi.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L103">reversi.ts:103</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>self: <span class="tsd-signature-type">any</span></h5>
+									<h5>self: <a href="reversi.reversi-1.html" class="tsd-signature-type" data-tsd-kind="Class">Reversi</a></h5>
 								</li>
 								<li>
 									<h5>index: <span class="tsd-signature-type">number</span></h5>
@@ -219,7 +253,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#draw">draw</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L16">reversi.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L19">reversi.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -243,7 +277,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#onclick">onclick</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L52">reversi.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L55">reversi.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -270,7 +304,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#onmousemove">onmousemove</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L85">reversi.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L88">reversi.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -297,7 +331,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#onmouseout">onmouseout</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L97">reversi.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L100">reversi.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -323,7 +357,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L103">reversi.ts:103</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L106">reversi.ts:106</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -355,7 +389,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L259">reversi.ts:259</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L262">reversi.ts:262</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -382,7 +416,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="game.gameobject.html">GameObject</a>.<a href="game.gameobject.html#update">update</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/ec3396a/src/reversi.ts#L15">reversi.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/maetaro/reversi/blob/47fa9f6/src/reversi.ts#L18">reversi.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -431,7 +465,16 @@
 								<a href="reversi.board.html#hovercellindex" class="tsd-kind-icon">hover<wbr>Cell<wbr>Index</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="reversi.board.html#position" class="tsd-kind-icon">position</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="reversi.board.html#zoder" class="tsd-kind-icon">z<wbr>Oder</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="reversi.board.html#borderweight" class="tsd-kind-icon">border<wbr>Weight</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="reversi.board.html#cellwidth" class="tsd-kind-icon">cell<wbr>Width</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="reversi.board.html#canput" class="tsd-kind-icon">can<wbr>Put</a>
@@ -487,6 +530,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 			</ul>
 		</div>
 	</div>

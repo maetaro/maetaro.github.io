@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.07% </span>
+                <span class="strong">6.74% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/280</span>
+                <span class='fraction'>19/282</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5.43% </span>
+                <span class="strong">6.15% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/258</span>
+                <span class='fraction'>16/260</span>
             </div>
         
             
@@ -521,10 +521,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -789,8 +792,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -934,7 +935,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -978,21 +978,24 @@ import "linq";
 import Enumerable from "linq";
 &nbsp;
 import { GameObject, Game } from "./game";
+// TODO:import { Grid } from "./grid";
 &nbsp;
 export const sum = (...a: number[]) =&gt; a.reduce((acc, val) =&gt; acc + val, 0);
 &nbsp;
 export class Board extends GameObject {
-  hoverCellIndex: number | null;
+  static borderWeight = 2;
+  static cellWidth = 0; //(this.size - (Game.borderWeight * 9)) / 8;
+<span class="cstat-no" title="statement not covered" >  hoverCellIndex: number | null = null;</span>
 <span class="fstat-no" title="function not covered" >  constructor(g</span>ame: Game) {
 <span class="cstat-no" title="statement not covered" >    super(game);</span>
-<span class="cstat-no" title="statement not covered" >    this.hoverCellIndex = null;</span>
+<span class="cstat-no" title="statement not covered" >    Board.cellWidth = (game.size - Board.borderWeight * 9) / 8;</span>
   }
 <span class="fstat-no" title="function not covered" >  update(</span>timestamp: number) {}
 <span class="fstat-no" title="function not covered" >  draw(</span>context: CanvasRenderingContext2D) {
 <span class="cstat-no" title="statement not covered" >    context.fillStyle = "green";</span>
 <span class="cstat-no" title="statement not covered" >    context.fillRect(0, 0, this.game.size, this.game.size);</span>
-    const borderWeight = <span class="cstat-no" title="statement not covered" >Game.borderWeight;</span>
-    const cellWidth = <span class="cstat-no" title="statement not covered" >Game.cellWidth;</span>
+    const borderWeight = <span class="cstat-no" title="statement not covered" >Board.borderWeight;</span>
+    const cellWidth = <span class="cstat-no" title="statement not covered" >Board.cellWidth;</span>
 <span class="cstat-no" title="statement not covered" >    context.fillStyle = "black";</span>
 <span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; 9; i++) {</span>
       const pos = <span class="cstat-no" title="statement not covered" >(borderWeight + cellWidth) * i;</span>
@@ -1064,15 +1067,15 @@ export class Board extends GameObject {
 <span class="cstat-no" title="statement not covered" >    if (mouseX &lt; 0 || mouseY &lt; 0) {</span>
 <span class="cstat-no" title="statement not covered" >      return null;</span>
     }
-    const x = <span class="cstat-no" title="statement not covered" >Math.floor(mouseX / Game.cellWidth);</span>
-    const y = <span class="cstat-no" title="statement not covered" >Math.floor(mouseY / Game.cellWidth);</span>
+    const x = <span class="cstat-no" title="statement not covered" >Math.floor(mouseX / Board.cellWidth);</span>
+    const y = <span class="cstat-no" title="statement not covered" >Math.floor(mouseY / Board.cellWidth);</span>
     const index = <span class="cstat-no" title="statement not covered" >x + y * 8;</span>
 <span class="cstat-no" title="statement not covered" >    this.hoverCellIndex = index;</span>
   }
 <span class="fstat-no" title="function not covered" >  onmouseout(</span>self: Game, e: MouseEvent) {
 <span class="cstat-no" title="statement not covered" >    this.hoverCellIndex = null;</span>
   }
-<span class="fstat-no" title="function not covered" >  canPut(</span>self: any, index: number, turnNo: any) {
+<span class="fstat-no" title="function not covered" >  canPut(</span>self: Reversi, index: number, turnNo: any) {
 <span class="cstat-no" title="statement not covered" >    return this.put(self, index, turnNo, true);</span>
   }
 <span class="fstat-no" title="function not covered" >  put(</span>game: Reversi, index: number, turnNo: string, dryRun = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span> {
@@ -1248,8 +1251,6 @@ export class Board extends GameObject {
         }
 <span class="cstat-no" title="statement not covered" >        return tmp;</span>
       };
-      // console.log(get(Stone.black));
-      // console.log(get(Stone.white));
       const playerBoard = <span class="cstat-no" title="statement not covered" >to8x8(get(turnNo));</span>
       const enemyBoard = <span class="cstat-no" title="statement not covered" >to8x8(</span>
         get(turnNo == Stone.white ? Stone.black : Stone.white)
@@ -1305,7 +1306,7 @@ class Stone extends GameObject {
   static image: HTMLImageElement | null = null;
   static margin = 2;
   currentFrame;
-  frames: any;
+  frames: { ms: number; frames: number[] }[];
   prevtime: number;
   x: number;
   y: number;
@@ -1377,8 +1378,8 @@ class Stone extends GameObject {
     const frameIndex = <span class="cstat-no" title="statement not covered" >this.color == Stone.black ? 0 : 3;</span>
     const frame = <span class="cstat-no" title="statement not covered" >this.frames[frameIndex];</span>
     const frames = <span class="cstat-no" title="statement not covered" >frame.frames.slice(0, 8);</span>
-<span class="cstat-no" title="statement not covered" >    frames[4] += (Game.borderWeight + 67) * this.x + 2;</span>
-<span class="cstat-no" title="statement not covered" >    frames[5] += (Game.borderWeight + 67) * this.y + 2;</span>
+<span class="cstat-no" title="statement not covered" >    frames[4] += (Board.borderWeight + 67) * this.x + 2;</span>
+<span class="cstat-no" title="statement not covered" >    frames[5] += (Board.borderWeight + 67) * this.y + 2;</span>
 <span class="cstat-no" title="statement not covered" >    context.drawImage(Stone.image, ...frames);</span>
   }
 <span class="fstat-no" title="function not covered" >  flip(</span>) {
@@ -1393,7 +1394,6 @@ export class Reversi extends Game {
   turn: HTMLElement;
 <span class="fstat-no" title="function not covered" >  constructor(p</span>arent: HTMLElement) {
 <span class="cstat-no" title="statement not covered" >    super(parent);</span>
-<span class="cstat-no" title="statement not covered" >    Game.cellWidth = (this.size - Game.borderWeight * 9) / 8;</span>
     // リバーシ情報
 <span class="cstat-no" title="statement not covered" >    this.stones = new Stones();</span>
     const addStone = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(x</span>: number, y: number, color: string) =&gt; {</span>
@@ -1420,7 +1420,7 @@ export class Reversi extends Game {
   }
 <span class="fstat-no" title="function not covered" >  update(</span>timestamp: number) {
 <span class="cstat-no" title="statement not covered" >    this.size = 560; </span>// Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) - 50;
-<span class="cstat-no" title="statement not covered" >    Game.cellWidth = (this.size - Game.borderWeight * 9) / 8;</span>
+<span class="cstat-no" title="statement not covered" >    Board.cellWidth = (this.size - Board.borderWeight * 9) / 8;</span>
   }
 }
 &nbsp;
@@ -1438,7 +1438,7 @@ window.onload = <span class="fstat-no" title="function not covered" >() =</span>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jan 20 2021 05:33:10 GMT+0000 (Coordinated Universal Time)
+                at Wed Jan 20 2021 08:09:52 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="prettify.js"></script>
