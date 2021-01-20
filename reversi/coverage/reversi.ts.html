@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.74% </span>
+                <span class="strong">6.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>19/282</span>
+                <span class='fraction'>19/290</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/99</span>
+                <span class='fraction'>0/105</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">4.44% </span>
+                <span class="strong">4.35% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/45</span>
+                <span class='fraction'>2/46</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.15% </span>
+                <span class="strong">5.97% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/260</span>
+                <span class='fraction'>16/268</span>
             </div>
         
             
@@ -515,7 +515,10 @@
 <a name='L456'></a><a href='#L456'>456</a>
 <a name='L457'></a><a href='#L457'>457</a>
 <a name='L458'></a><a href='#L458'>458</a>
-<a name='L459'></a><a href='#L459'>459</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L459'></a><a href='#L459'>459</a>
+<a name='L460'></a><a href='#L460'>460</a>
+<a name='L461'></a><a href='#L461'>461</a>
+<a name='L462'></a><a href='#L462'>462</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -589,15 +592,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -833,6 +836,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1045,17 +1051,17 @@ export class Board extends GameObject {
 <span class="cstat-no" title="statement not covered" >      self.turn.innerText =</span>
         self.turn.innerText == Stone.black ? Stone.white : Stone.black;
 <span class="cstat-no" title="statement not covered" >      self.showStat();</span>
-      // // 白を自動で実行
-      // const turnNo2 =
-      //   self.turn.innerText == Stone.black ? Stone.black : Stone.white;
-      // index = await this.putByAI(self, turnNo2);
-      // console.log(index);
-      // if (!this.put(self, index, turnNo2)) {
-      //   return;
-      // }
-      // self.turn.innerText =
-      //   self.turn.innerText == Stone.black ? Stone.white : Stone.black;
-      // self.showStat();
+      // 白を自動で実行
+      const turnNo2 =
+<span class="cstat-no" title="statement not covered" >        self.turn.innerText == Stone.black ? Stone.black : Stone.white;</span>
+<span class="cstat-no" title="statement not covered" >      index = await this.putByAI(self, turnNo2);</span>
+<span class="cstat-no" title="statement not covered" >      console.log(index);</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.put(self, index, turnNo2)) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      self.turn.innerText =</span>
+        self.turn.innerText == Stone.black ? Stone.white : Stone.black;
+<span class="cstat-no" title="statement not covered" >      self.showStat();</span>
     } catch (err) {
 <span class="cstat-no" title="statement not covered" >      console.error(`${err}`);</span>
     }
@@ -1234,11 +1240,11 @@ export class Board extends GameObject {
 <span class="cstat-no" title="statement not covered" >      throw err;</span>
     }
   }
-<span class="fstat-no" title="function not covered" >  async </span>putByAI(self: any, turnNo: any) {
+<span class="fstat-no" title="function not covered" >  async </span>putByAI(self: Reversi, turnNo: any) {
     const toPreditionData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
-      const get = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>o: any): number[] =&gt; {</span>
+      const get = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>o: string): number[] =&gt; {</span>
         // console.log(no);
-<span class="cstat-no" title="statement not covered" >        return self.stones.map(<span class="fstat-no" title="function not covered" >(e</span>: any) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return self.stones.map(<span class="fstat-no" title="function not covered" >(e</span>: Stone) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          if (e == null) <span class="cstat-no" title="statement not covered" >return 0;</span></span>
 <span class="cstat-no" title="statement not covered" >          if (e.color == no) <span class="cstat-no" title="statement not covered" >return 1;</span></span>
 <span class="cstat-no" title="statement not covered" >          return 0;</span>
@@ -1291,6 +1297,9 @@ class Stones {
 <span class="cstat-no" title="statement not covered" >    return Enumerable.from(this.stones)</span>
       .where(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >e.x == x &amp;&amp; e.y == y)</span>
       .firstOrDefault();
+  }
+<span class="fstat-no" title="function not covered" >  map&lt;</span>T&gt;(callbackfn: (value: Stone) =&gt; T) {
+<span class="cstat-no" title="statement not covered" >    return this.stones.map(callbackfn);</span>
   }
 <span class="fstat-no" title="function not covered" >  filter(</span>predicate: (value: Stone) =&gt; boolean) {
 <span class="cstat-no" title="statement not covered" >    return this.stones.filter(predicate);</span>
@@ -1438,7 +1447,7 @@ window.onload = <span class="fstat-no" title="function not covered" >() =</span>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jan 20 2021 08:09:52 GMT+0000 (Coordinated Universal Time)
+                at Wed Jan 20 2021 11:55:33 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="prettify.js"></script>
