@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["average","Returns a average of collection."],["shuffle","Returns a shuffled collection."]]});
+initSidebarItems({"fn":[["average","Returns a average of collection."],["order_by","Returns a sort of collection."],["shuffle","Returns a shuffled collection."]]});
