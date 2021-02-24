@@ -1,3 +1,3 @@
 var N = null;var sourcesIndex = {};
-sourcesIndex["ragbag"] = {"name":"","files":["main.rs"]};
+sourcesIndex["ragbag"] = {"name":"","files":["lib.rs"]};
 createSourceSidebar();
