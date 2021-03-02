@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["average","Returns a average of collection."],["qsort","Returns a sorted of collection. using quick sort."],["shuffle","Returns a shuffled collection."]],"trait":[["OrderExt",""]]});
+initSidebarItems({"fn":[["qsort","Returns a sorted of collection. using quick sort."]],"trait":[["OrderExt",""]]});
