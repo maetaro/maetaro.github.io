@@ -1,0 +1,22 @@
+simpleparser package
+====================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   simpleparser.builtin_parsers
+   simpleparser.comb
+   simpleparser.parser
+   simpleparser.parseresult
+   simpleparser.prim
+
+Module contents
+---------------
+
+.. automodule:: simpleparser
+   :members:
+   :undoc-members:
+   :show-inheritance:
