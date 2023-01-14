@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['volumeid_21',['VolumeID',['../classWindowsShortcutParser_1_1Entity_1_1VolumeID.html',1,'WindowsShortcutParser::Entity']]],
-  ['volumeidparser_22',['VolumeIDParser',['../classWindowsShortcutParser_1_1Parser_1_1VolumeIDParser.html',1,'WindowsShortcutParser::Parser']]]
+  ['unittest1_21',['UnitTest1',['../classWindowsShortcutParser_1_1Test_1_1UnitTest1.html',1,'WindowsShortcutParser::Test']]]
 ];

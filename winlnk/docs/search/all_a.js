@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['unittest1_20',['UnitTest1',['../classWindowsShortcutParser_1_1Test_1_1UnitTest1.html',1,'WindowsShortcutParser::Test']]]
+  ['shelllinkheader_18',['ShellLinkHeader',['../classWindowsShortcutParser_1_1Entity_1_1ShellLinkHeader.html',1,'WindowsShortcutParser::Entity']]],
+  ['stringdata_19',['StringData',['../classWindowsShortcutParser_1_1Entity_1_1StringData.html',1,'WindowsShortcutParser::Entity']]],
+  ['stringdataparser_20',['StringDataParser',['../classWindowsShortcutParser_1_1Parser_1_1StringDataParser.html',1,'WindowsShortcutParser::Parser']]]
 ];
